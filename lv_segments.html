@@ -1,103 +1,181 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
-
 <head>
-<!--   ****************************************************************************
-  The Title You Pick Here Shows When You Hover Over Browser Thumbnail
-  **************************************************************************** -->
-  <title>Left Ventricle</title>
-    <meta charset="UTF-8">
+  <title>Left Ventricle – Segments</title>
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" type="text/css" href="./style3.css">
+  <link rel="icon" type="image/png" href="BSW_Thumbnail.png" />
+  <style>
+    /* Same look/feel as perfusion page */
+    #segments-app { max-width: 1100px; margin: 0 auto; padding: 4px 0 12px; }
 
-  <!-- Browser tab thumbnail image -->
-  <link rel="icon" type="image/png" href="BSW_Thumbnail.png"/>
+    /* 1×4 on small screens, 2×2 on desktop, fixed order */
+    .segments-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
+    @media (min-width: 760px){
+      .segments-grid {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-areas: "ap4c ap2c" "ap3c psax";
+      }
+      .card[data-key="ap4c"]{ grid-area: ap4c }
+      .card[data-key="ap2c"]{ grid-area: ap2c }
+      .card[data-key="ap3c"]{ grid-area: ap3c }
+      .card[data-key="psax"]{ grid-area: psax }
+    }
+
+    /* Soft cards */
+    .card { border-radius: 18px; overflow: hidden; border: 1px solid rgba(255,255,255,.1); background: #0b0f16; box-shadow: 0 8px 28px rgba(0,0,0,.28); }
+    .card-media { background: #0b0f16; }
+
+    /* Uniform squares; image contained with soft edges */
+    .imgwrap { position: relative; width: 100%; aspect-ratio: 1 / 1; overflow: hidden; border-radius: 16px; background: #0b0f16; }
+    .imgwrap img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; display: block; border-radius: 16px; }
+
+    /* Lightbox */
+    .modal { position: fixed; inset: 0; background: rgba(6,10,16,.85); backdrop-filter: saturate(120%) blur(4px); display: none; align-items: center; justify-content: center; z-index: 999; }
+    .modal.open { display: flex; }
+    .lightbox { width: min(96vw, 1200px); max-height: 92vh; background: rgba(0,0,0,.45); border: 1px solid rgba(255,255,255,.12); border-radius: 14px; overflow: hidden; }
+    .lightbox-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 8px 10px; border-bottom: 1px solid rgba(255,255,255,.08); }
+    .lightbox-tools { display: flex; gap: 6px; }
+    .tool { cursor: pointer; border-radius: 10px; padding: 6px 10px; border: 1px solid rgba(255,255,255,.12); background: rgba(0,0,0,.25); color: inherit; }
+    .lightbox-body { background: #0b0f16; display: flex; align-items: center; justify-content: center; }
+    .stage { max-height: calc(92vh - 46px); overflow: auto; }
+    .stage img { display: block; max-width: none; transform-origin: center center; user-select: none; pointer-events: none; border-radius: 16px; background: #0b0f16; }
+  </style>
 </head>
-
 <body>
- 
-    <nav class="zone nav-bar">
-      <ul class="main-nav">
-        <li><a class="top-nav" href="index.html">Home</a></li>
-        <!-- <li class="push"><a class="top-nav" href="about.html">About Us</a></li> -->
-        <li class="push"><a class="top-nav" href="lwh_echo.html">Back</a></li>
-      </ul>
+  <nav class="zone nav-bar">
+    <ul class="main-nav">
+      <li><a class="top-nav" href="index.html">Home</a></li>
+      <li class="push"><a class="top-nav" href="lwh_echo.html">Back</a></li>
+    </ul>
+    <div class="container zone body">Left Ventricle:</div>
+    <br>
+    <div class="navbar">
+      <a class="nospace" href="#"></a>
+      <a class="active border" href="lv_segments.html">Segments</a>
+      <a class="border" href="lv_perfusion.html">Perfusion</a>
+      <a class="nospace" href="#"></a>
+    </div>
+  </nav>
 
+  <div class="zone navigation">
+    <div class="final">
+      <section id="segments-app">
+        <div class="segments-grid" id="segments-grid">
+          <!-- 1. AP4C (top or top-left) -->
+          <figure class="card" data-key="ap4c">
+            <div class="card-media">
+              <div class="imgwrap">
+                <img data-label="AP4C" data-src="ap4c_segments.svg" alt="AP4C segments" />
+              </div>
+            </div>
+          </figure>
 
+          <!-- 2. AP2C (second) -->
+          <figure class="card" data-key="ap2c">
+            <div class="card-media">
+              <div class="imgwrap">
+                <img data-label="AP2C" data-src="ap2c_segments.svg" alt="AP2C segments" />
+              </div>
+            </div>
+          </figure>
 
+          <!-- 3. AP3C (third) -->
+          <figure class="card" data-key="ap3c">
+            <div class="card-media">
+              <div class="imgwrap">
+                <img data-label="AP3C" data-src="ap3c_segments.svg" alt="AP3C segments" />
+              </div>
+            </div>
+          </figure>
 
+          <!-- 4. PSAX (bottom or bottom-right) -->
+          <figure class="card" data-key="psax">
+            <div class="card-media">
+              <div class="imgwrap">
+                <img data-label="PSAX" data-src="psax_segments.svg" alt="PSAX segments" />
+              </div>
+            </div>
+          </figure>
+        </div>
+      </section>
 
-
-
-
-<!-- ****************************************************************************
-  This is the main title on thetop of page
-  **************************************************************************** -->
-<div class="container zone body">Left Ventricle:</div>
-
-
-<br>
-
-
-
-
-
-
-
-<!-- ****************************************************************************
-  This is the split selection option on top of page
-  **************************************************************************** -->
-
-          <!-- The navigation menu -->
-      <div class="navbar">
-        <a class="nospace" href="#"></a>
-        <a  class="active border" href="lv_segments.html">Segments</a>
-        <a class="border" href="lv_perfusion.html">Perfusion</a>
-        <a class="nospace" href="#"></a>
+      <!-- Lightbox modal (shared pattern) -->
+      <div class="modal" id="lv-modal" role="dialog" aria-modal="true" aria-labelledby="lv-lb-title">
+        <div class="lightbox">
+          <div class="lightbox-head">
+            <div id="lv-lb-title" class="lightbox-title">Viewer</div>
+            <div class="lightbox-tools">
+              <button class="tool" id="lv-zoom-in">+</button>
+              <button class="tool" id="lv-zoom-out">−</button>
+              <button class="tool" id="lv-reset">Reset</button>
+              <button class="tool" id="lv-prev">←</button>
+              <button class="tool" id="lv-next">→</button>
+              <button class="tool" id="lv-close">✕</button>
+            </div>
+          </div>
+          <div class="lightbox-body"><div class="stage" id="lv-stage"></div></div>
+        </div>
       </div>
 
-    </nav>
+      <script>
+        (function(){
+          // Lazy-load for this page
+          const imgs = Array.from(document.querySelectorAll('#segments-app img[data-src]'));
+          const io = new IntersectionObserver((entries, obs)=>{
+            entries.forEach(e=>{ if(e.isIntersecting){ const el=e.target; el.src=el.dataset.src; obs.unobserve(el);} });
+          }, {rootMargin:'200px'});
+          imgs.forEach(i=>io.observe(i));
 
+          // Lightbox viewer
+          const modal = document.getElementById('lv-modal');
+          const stage = document.getElementById('lv-stage');
+          const title = document.getElementById('lv-lb-title');
+          const order = ['AP4C','AP2C','AP3C','PSAX'];
+          let idx = 0; let zoom = 1;
 
+          function openLightbox(startIdx){
+            idx = startIdx; zoom = 1; stage.innerHTML = '';
+            const src = document.querySelector(`#segments-app img[data-label="${order[idx]}"]`).src;
+            const img = new Image(); img.src = src; img.alt = order[idx] + ' full view';
+            img.style.transform = `scale(${zoom})`;
+            img.style.borderRadius = '16px';
+            img.style.background = '#0b0f16';
+            stage.appendChild(img);
+            title.textContent = `Viewer — ${order[idx]}`;
+            modal.classList.add('open');
+          }
+          function closeLightbox(){ modal.classList.remove('open'); }
+          function navigate(delta){ idx = (idx + delta + order.length) % order.length; openLightbox(idx); }
+          function setZoom(next){ zoom = Math.max(.2, Math.min(6, next)); const img = stage.querySelector('img'); if(img){ img.style.transform = `scale(${zoom})`; } }
 
-      
-      
-      <div class="zone navigation">
-    
+          document.getElementById('lv-zoom-in').onclick = ()=> setZoom(zoom+0.2);
+          document.getElementById('lv-zoom-out').onclick = ()=> setZoom(zoom-0.2);
+          document.getElementById('lv-reset').onclick = ()=> setZoom(1);
+          document.getElementById('lv-prev').onclick = ()=> navigate(-1);
+          document.getElementById('lv-next').onclick = ()=> navigate(1);
+          document.getElementById('lv-close').onclick = closeLightbox;
 
-<div class="final">
-    <p>
-      
-<br>
-      
-       
+          document.addEventListener('keydown',(e)=>{
+            if(!modal.classList.contains('open')) return;
+            if(e.key==='Escape') closeLightbox();
+            else if(e.key==='ArrowLeft') navigate(-1);
+            else if(e.key==='ArrowRight') navigate(1);
+            else if(e.key==='+') setZoom(zoom+0.2);
+            else if(e.key==='-'||e.key==='–') setZoom(zoom-0.2);
+            else if(e.key==='0') setZoom(1);
+          });
 
+          // Click to open
+          document.querySelectorAll('#segments-app .imgwrap img').forEach((im, i)=>{
+            im.addEventListener('click',()=> openLightbox(i))
+          });
+        })();
+      </script>
 
-
-
-      <!-- <img src="lv_segments.svg" alt="lv_segments" style="width: 100%; height: auto;" viewBox="0 0 100 100"> -->
-
-      <br><br>
-
-
-      
-
-      <!-- <br><br>  <em>any note can go here</em> -->
-
-    </p>
-
-
-
-
-      
-      
-
-    <footer class="zone foot bottom-section">
-        <ul class="foot-nav">
-            <!-- <li><a href="privacy-policy.html" target="_blank">Privacy Policy</a></li> -->
-            <!-- <li><a href="terms-of-use.html" target="_blank">Terms of Use</a></li> -->
-        </ul>
-      </footer>
-   
+      <footer class="zone foot bottom-section"><ul class="foot-nav"></ul></footer>
+    </div>
+  </div>
 </body>
 </html>
