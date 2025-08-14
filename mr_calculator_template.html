@@ -1,0 +1,418 @@
+    <!DOCTYPE html>
+<html>
+
+<head>
+<!--   ****************************************************************************
+  The Title You Pick Here Shows When You Hover Over Browser Thumbnail
+  **************************************************************************** -->
+  <title>MR Calculator</title>
+    <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="./style3.css">
+
+  <!-- Browser tab thumbnail image -->
+  <link rel="icon" type="image/png" href="BSW_Thumbnail.png"/>
+</head>
+
+<body>
+ 
+    <nav class="zone nav-bar">
+      <ul class="main-nav">
+        <li><a class="top-nav" href="index.html">Home</a></li>
+        <!-- <li class="push"><a class="top-nav" href="about.html">About Us</a></li> -->
+        <li class="push"><a class="top-nav" href="lwh_echo.html">Back</a></li>
+      </ul>
+
+
+
+<!-- ****************************************************************************
+  This is the main title on thetop of page
+  **************************************************************************** -->
+
+      <div class="container zone body">MR Calculator:</div> 
+      <!-- <div class="container" style="padding: 0px"><em>EROA</em></div>  -->
+
+    
+
+
+
+
+
+
+<!-- ****************************************************************************
+  This is the split selection option on top of page
+  **************************************************************************** -->
+
+       
+
+
+
+
+
+      
+      <div class="zone navigation">
+    
+
+    <div class="final" style="padding: 0px 10% 0px 10%;">
+
+      <br>
+
+          
+              <body>
+                
+                <!-- MR Calculator (centered two-column inputs + side-by-side centered buttons + separate outputs) -->
+<div id="mr-embed">
+  <div class="mr-wrap">
+    <!-- LEFT: Inputs + Buttons -->
+    <div class="mr-panel" id="mr-inputs">
+      <form id="mr-form" novalidate>
+        <!-- Two columns, fifth field centered on a new row -->
+        <div class="mr-grid">
+          <label class="mr-field">
+            <span class="mr-label">LVOT Diameter</span>
+            <input id="lvotDiameter" type="number" step="0.1" min="0" inputmode="decimal" placeholder="cm" />
+          </label>
+
+          <label class="mr-field">
+            <span class="mr-label">LVOT VTI</span>
+            <input id="lvotVti" type="number" step="0.1" min="0" inputmode="decimal" placeholder="cm" />
+          </label>
+
+          <label class="mr-field">
+            <span class="mr-label">Mitral Annular Diameter</span>
+            <input id="mitralDiameter" type="number" step="0.1" min="0" inputmode="decimal" placeholder="cm" />
+          </label>
+
+          <label class="mr-field">
+            <span class="mr-label">MV VTI (PW annular)</span>
+            <input id="mvVti" type="number" step="0.1" min="0" inputmode="decimal" placeholder="cm" />
+          </label>
+
+          <!-- Fifth input centered on its own row -->
+          <label class="mr-field mr-center-span">
+            <span class="mr-label">Largest MR Jet VTI</span>
+            <input id="mrJetVti" type="number" step="0.1" min="0" inputmode="decimal" placeholder="cm" />
+          </label>
+        </div>
+
+        <!-- Buttons: centered, side-by-side, edges align with the input columns -->
+        <div class="mr-actions-row">
+          <button type="button" id="mr-reset" class="mr-btn mr-btn-reset">Reset</button>
+          <button type="button" id="mr-calc" class="mr-btn mr-btn-calc">Calculate</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- RIGHT: Outputs in a separate container -->
+    <div class="mr-panel" id="mr-outputs">
+      <div class="mr-out-row">
+        <div class="mr-out-label">Regurgitant Volume</div>
+        <div class="mr-out-box">
+          <span id="rv">--</span> <span class="mr-unit">ml/beat</span>
+        </div>
+      </div>
+
+      <div class="mr-out-row">
+        <div class="mr-out-label">Regurgitant Fraction</div>
+        <div class="mr-out-box">
+          <span id="rf">--</span> <span class="mr-unit">%</span>
+        </div>
+      </div>
+
+      <div class="mr-out-row">
+        <div class="mr-out-label">EROA</div>
+        <div class="mr-out-box">
+          <span id="eroa">--</span> <span class="mr-unit">cm²</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Scope to avoid conflicts */
+  #mr-embed {
+    --mr-green: #00ff66;
+    --mr-bg: #000;
+    --mr-text: #fff;
+    --mr-in-empty: rgb(178, 212, 163);
+    --mr-in-filled: rgb(105, 148, 98);
+    --mr-red: #ff3333;
+    --mr-box-border: 4px;     /* container borders */
+    --mr-item-border: 2px;    /* input/output field borders */
+    --mr-radius: 18px;
+    --mr-radius-sm: 14px;
+    --field-w: 220px;         /* width of each input column & each button */
+    --grid-gap-x: 16px;
+    --grid-gap-y: 12px;
+
+    background: var(--mr-bg);
+    color: var(--mr-text);
+    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    padding: 5px 15px 0 15px; /* minimal top, more sides, no bottom */
+  }
+  #mr-embed :where(*){box-sizing:border-box}
+
+  /* Two containers with comfortable gap, centered on page */
+  #mr-embed .mr-wrap{
+    display:flex;
+    gap:24px;
+    align-items:flex-start;
+    justify-content:center;
+    flex-wrap:wrap; /* stack on small screens */
+  }
+
+  /* Panels (containers) */
+  #mr-embed .mr-panel{
+    border: var(--mr-box-border) solid var(--mr-green);
+    border-radius: var(--mr-radius);
+    background: var(--mr-bg);
+    padding: 20px 22px;
+  }
+
+  /* INPUTS grid: 2 columns centered; 5th field centered on its own row */
+  #mr-embed .mr-grid{
+    display:grid;
+    grid-template-columns: repeat(2, var(--field-w));
+    gap: var(--grid-gap-y) var(--grid-gap-x);
+    justify-content:center; /* keeps columns centered */
+  }
+  #mr-embed .mr-field{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+    width: var(--field-w);
+  }
+  #mr-embed .mr-field.mr-center-span{
+    grid-column: 1 / -1;     /* take full row */
+    justify-self:center;     /* center the fifth field */
+  }
+  #mr-embed .mr-label{font-size:.85rem; opacity:.95}
+
+  /* INPUTS */
+  #mr-embed input[type="number"]{
+    width:100%;
+    padding:8px 10px;
+    background: var(--mr-in-empty);
+    border: var(--mr-item-border) solid var(--mr-green);
+    border-radius: var(--mr-radius-sm);
+    text-align:center;
+    color:#111;
+    outline:none;
+    appearance:textfield;
+    -moz-appearance:textfield;
+    overflow:hidden; /* no scrollbars */
+    transition: background-color .25s, color .25s, box-shadow .25s, border-color .2s;
+    font-size:.9rem;
+  }
+  /* hide webkit spinners */
+  #mr-embed input[type=number]::-webkit-outer-spin-button,
+  #mr-embed input[type=number]::-webkit-inner-spin-button { -webkit-appearance:none; margin:0; }
+  /* filled */
+  #mr-embed input[type="number"].filled{ background: var(--mr-in-filled); color: var(--mr-text); }
+  #mr-embed input[type="number"]:focus{ box-shadow:0 0 0 3px rgba(0,255,102,.18); }
+
+  /* Missing fields: bold pulsing red outline */
+  #mr-embed .mr-missing{
+    animation: mrPulseRed 1.4s ease-in-out infinite;
+    border-color: var(--mr-red) !important;
+    box-shadow: 0 0 0 5px rgba(255,51,51,.35);
+  }
+  @keyframes mrPulseRed{
+    0%,100% { box-shadow: 0 0 0 5px rgba(255,51,51,.35); }
+    50%     { box-shadow: 0 0 0 8px rgba(255,51,51,.15); }
+  }
+
+  /* BUTTONS: centered, side-by-side; outer edges align with column width */
+  #mr-embed .mr-actions-row{
+    display:grid;
+/*    grid-template-columns: repeat(2, var(--field-w));*/
+    gap: var(--grid-gap-x);
+    justify-content:center;  /* ensures total width matches inputs above */
+    margin-top:16px;
+  }
+  #mr-embed .mr-btn{
+    width:100%;
+    padding:10px 50px;       /* 5x side padding vs top/bottom */
+    border-radius:999px;
+    border:none;             /* per request: filled, no visible border */
+    color: var(--mr-text);
+    font-weight:600;         /* softer than 700 */
+    letter-spacing:.2px;     /* slightly softer feel */
+    font-size:.95rem;
+    cursor:pointer;
+    transition: transform .12s ease, filter .2s ease, box-shadow .3s ease;
+  }
+  #mr-embed .mr-btn:active{ transform: translateY(1px); }
+
+  /* Reset button (filled, soft) */
+  #mr-embed .mr-btn-reset{ background: rgb(163, 192, 212); color:#06131b; }
+  #mr-embed .mr-btn-reset:hover{ filter: brightness(1.05); }
+
+  /* Calculate button (filled, soft constant glow in blue) */
+  #mr-embed .mr-btn-calc{
+    background: rgb(40, 133, 199);
+    box-shadow: 0 0 10px rgba(40,133,199,.35);
+    animation: mrGlowBlue 2.4s ease-in-out infinite;
+  }
+  #mr-embed .mr-btn-calc:hover{
+    box-shadow: 0 0 16px rgba(40,133,199,.55), 0 0 26px rgba(40,133,199,.28);
+    filter: brightness(1.04);
+  }
+  @keyframes mrGlowBlue{
+    0%,100% { box-shadow: 0 0 10px rgba(40,133,199,.35); }
+    50%     { box-shadow: 0 0 18px rgba(40,133,199,.50); }
+  }
+
+  /* OUTPUTS container (separate panel) */
+  #mr-embed #mr-outputs{ min-width:320px; max-width:420px; }
+  #mr-embed .mr-out-row{
+    display:grid;
+    grid-template-columns: 1fr auto; /* label then box */
+    align-items:center;
+    gap:10px;
+    margin-bottom:12px;
+  }
+  #mr-embed .mr-out-label{
+    font-weight:600;
+    font-size:.9rem;
+    opacity:.95;
+    text-align:right;        /* right-align labels */
+  }
+  #mr-embed .mr-out-box{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    padding:8px 12px;
+    border: var(--mr-item-border) solid var(--mr-green);
+    border-radius: var(--mr-radius-sm);
+    background: transparent; /* black underneath */
+    font-weight:800;
+    font-size:.95rem;
+    color: var(--mr-text);
+    justify-self:start;      /* left-align the box so values stack perfectly */
+  }
+  #mr-embed .mr-unit{ color: var(--mr-text); }
+
+  /* Stack containers on narrow screens */
+  @media (max-width: 860px){
+    #mr-embed .mr-wrap{ flex-direction:column; align-items:center; }
+    #mr-embed #mr-outputs, #mr-embed #mr-inputs { width:100%; max-width:560px; }
+    /* Keep buttons side-by-side but shrink with the same column width */
+  }
+</style>
+
+<script>
+  (function(){
+    const $ = (id)=>document.getElementById(id);
+    const fields = {
+      lvotDiameter: $('lvotDiameter'),
+      lvotVti: $('lvotVti'),
+      mitralDiameter: $('mitralDiameter'),
+      mvVti: $('mvVti'),
+      mrJetVti: $('mrJetVti'),
+    };
+    const btnCalc = $('mr-calc');
+    const btnReset = $('mr-reset');
+
+    const rvEl = $('rv');
+    const rfEl = $('rf');
+    const eroaEl = $('eroa');
+
+    // Filled state and 1-decimal normalization on blur
+    Object.values(fields).forEach(inp=>{
+      inp.addEventListener('input', ()=>{
+        if (inp.value.trim() !== '') {
+          inp.classList.add('filled');
+          inp.classList.remove('mr-missing');
+        } else {
+          inp.classList.remove('filled');
+        }
+      });
+      inp.addEventListener('blur', ()=>{
+        const v = parseFloat(inp.value);
+        if (!Number.isNaN(v)) inp.value = v.toFixed(1);
+      });
+      inp.addEventListener('keydown', (e)=>{
+        if (e.key === 'Enter') { e.preventDefault(); btnCalc.click(); }
+      });
+    });
+
+    function validate(){
+      let ok = true;
+      for (const [k,inp] of Object.entries(fields)){
+        const val = inp.value.trim();
+        const zeroDiv = (k === 'mrJetVti' && parseFloat(val) === 0);
+        if (!val || zeroDiv){
+          inp.classList.add('mr-missing');
+          ok = false;
+        } else {
+          inp.classList.remove('mr-missing');
+        }
+      }
+      return ok;
+    }
+
+    function calculate(){
+      const lvotD = parseFloat(fields.lvotDiameter.value);
+      const lvotV = parseFloat(fields.lvotVti.value);
+      const mitralD = parseFloat(fields.mitralDiameter.value);
+      const mvV = parseFloat(fields.mvVti.value);
+      const mrJet = parseFloat(fields.mrJetVti.value);
+
+      const mvFlow   = 0.785 * mitralD * mitralD * mvV;
+      const lvotFlow = 0.785 * lvotD   * lvotD   * lvotV;
+      const regV = mvFlow - lvotFlow;                 // ml/beat
+      const regF = (regV / mvFlow) * 100;             // %
+      const eroa = regV / mrJet;                      // cm²
+
+      rvEl.textContent   = Math.round(regV).toString();                               // 0 dp
+      rfEl.textContent   = Math.round(regF).toString();                               // 0 dp
+      eroaEl.textContent = (Math.round(eroa * 100) / 100).toFixed(2);                 // 2 dp
+    }
+
+    btnCalc.addEventListener('click', ()=>{ if (validate()) calculate(); });
+    btnReset.addEventListener('click', ()=>{
+      Object.values(fields).forEach(inp=>{
+        inp.value = '';
+        inp.classList.remove('filled','mr-missing');
+      });
+      rvEl.textContent='--';
+      rfEl.textContent='--';
+      eroaEl.textContent='--';
+    });
+  })();
+</script>
+
+
+              </body>
+              
+
+
+
+
+
+
+
+
+      <br><br>
+
+
+        
+        
+        
+ 
+      </div>
+
+      
+      
+
+    <footer class="zone foot bottom-section">
+        <ul class="foot-nav">
+            <!-- <li><a href="privacy-policy.html" target="_blank">Privacy Policy</a></li> -->
+            <!-- <li><a href="terms-of-use.html" target="_blank">Terms of Use</a></li> -->
+        </ul>
+      </footer>
+   
+</body>
+</html>
