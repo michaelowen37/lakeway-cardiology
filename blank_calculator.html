@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <!--   ****************************************************************************
+    The Title You Pick Here Shows When You Hover Over Browser Thumbnail
+    **************************************************************************** -->
+  <title>Blank Template</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="./style3.css">
+
+  <!-- Browser tab thumbnail image -->
+  <link rel="icon" type="image/png" href="BSW_Thumbnail.png"/>
+</head>
+
+<body>
+  <nav class="zone nav-bar">
+    <ul class="main-nav">
+      <li><a class="top-nav" href="index.html">Home</a></li>
+      <!-- <li class="push"><a class="top-nav" href="about.html">About Us</a></li> -->
+      <li class="push"><a class="top-nav" href="calculations.html">Back</a></li>
+    </ul>
+  </nav>
+
+  <!-- ****************************************************************************
+    This is the main title on the top of page
+    **************************************************************************** -->
+  <div class="container zone body">Blank Template:</div>
+  <!-- <div class="container" style="padding: 0px"><em>EROA</em></div>  -->
+
+  <div class="zone navigation">
+    <div class="final" style="padding: 0px 10% 0px 10%;">
+      <br>
+
+      <!-- MR Calculator (blank, many fields so you can delete extras) -->
+      <div id="mr-embed">
+        <div class="mr-wrap">
+          <!-- LEFT: Inputs + Buttons -->
+          <div class="mr-panel" id="mr-inputs">
+            <form id="mr-form" novalidate>
+              <div class="mr-grid">
+                <!-- 11 INPUTS: rename labels/ids/units as needed, delete extras freely -->
+                <label class="mr-field">
+                  <span class="mr-label">Input 1</span>
+                  <input id="input1" type="number" step="0.1" min="0" inputmode="decimal" placeholder="" />
+                </label>
+
+                <label class="mr-field">
+                  <span class="mr-label">Input 2</span>
+                  <input id="input2" type="number" step="0.1" min="0" inputmode="decimal" placeholder="" />
+                </label>
+
+                <label class="mr-field">
+                  <span class="mr-label">Input 3</span>
+                  <input id="input3" type="number" step="0.1" min="0" inputmode="decimal" placeholder="" />
+                </label>
+
+                <label class="mr-field">
+                  <span class="mr-label">Input 4</span>
+                  <input id="input4" type="number" step="0.1" min="0" inputmode="decimal" placeholder="" />
+                </label>
+
+                <!-- Keep the 5th centered to mimic your original layout; move/remove as you like -->
+                <label class="mr-field mr-center-span">
+                  <span class="mr-label">Input 5</span>
+                  <input id="input5" type="number" step="0.1" min="0" inputmode="decimal" placeholder="" />
+                </label>
+
+                <label class="mr-field">
+                  <span class="mr-label">Input 6</span>
+                  <input id="input6" type="number" step="0.1" min="0" inputmode="decimal" placeholder="" />
+                </label>
+
+                <label class="mr-field">
+                  <span class="mr-label">Input 7</span>
+                  <input id="input7" type="number" step="0.1" min="0" inputmode="decimal" placeholder="" />
+                </label>
+
+                <label class="mr-field">
+                  <span class="mr-label">Input 8</span>
+                  <input id="input8" type="number" step="0.1" min="0" inputmode="decimal" placeholder="" />
+                </label>
+
+                <label class="mr-field">
+                  <span class="mr-label">Input 9</span>
+                  <input id="input9" type="number" step="0.1" min="0" inputmode="decimal" placeholder="" />
+                </label>
+
+                <label class="mr-field">
+                  <span class="mr-label">Input 10</span>
+                  <input id="input10" type="number" step="0.1" min="0" inputmode="decimal" placeholder="" />
+                </label>
+
+                <label class="mr-field">
+                  <span class="mr-label">Input 11</span>
+                  <input id="input11" type="number" step="0.1" min="0" inputmode="decimal" placeholder="" />
+                </label>
+
+                <!-- Buttons row -->
+                <div class="mr-actions-row mr-center-span">
+                  <button type="button" id="mr-reset" class="mr-btn mr-btn-reset">Reset</button>
+                  <button type="button" id="mr-calc" class="mr-btn mr-btn-calc">Calculate</button>
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <!-- RIGHT: Outputs (11 placeholders; delete extras freely) -->
+          <div class="mr-panel" id="mr-outputs">
+            <div class="mr-out-row">
+              <div class="mr-out-label">Output 1</div>
+              <div class="mr-out-box"><span id="output1">--</span> <span class="mr-unit"></span></div>
+            </div>
+            <div class="mr-out-row">
+              <div class="mr-out-label">Output 2</div>
+              <div class="mr-out-box"><span id="output2">--</span> <span class="mr-unit"></span></div>
+            </div>
+            <div class="mr-out-row">
+              <div class="mr-out-label">Output 3</div>
+              <div class="mr-out-box"><span id="output3">--</span> <span class="mr-unit"></span></div>
+            </div>
+            <div class="mr-out-row">
+              <div class="mr-out-label">Output 4</div>
+              <div class="mr-out-box"><span id="output4">--</span> <span class="mr-unit"></span></div>
+            </div>
+            <div class="mr-out-row">
+              <div class="mr-out-label">Output 5</div>
+              <div class="mr-out-box"><span id="output5">--</span> <span class="mr-unit"></span></div>
+            </div>
+            <div class="mr-out-row">
+              <div class="mr-out-label">Output 6</div>
+              <div class="mr-out-box"><span id="output6">--</span> <span class="mr-unit"></span></div>
+            </div>
+            <div class="mr-out-row">
+              <div class="mr-out-label">Output 7</div>
+              <div class="mr-out-box"><span id="output7">--</span> <span class="mr-unit"></span></div>
+            </div>
+            <div class="mr-out-row">
+              <div class="mr-out-label">Output 8</div>
+              <div class="mr-out-box"><span id="output8">--</span> <span class="mr-unit"></span></div>
+            </div>
+            <div class="mr-out-row">
+              <div class="mr-out-label">Output 9</div>
+              <div class="mr-out-box"><span id="output9">--</span> <span class="mr-unit"></span></div>
+            </div>
+            <div class="mr-out-row">
+              <div class="mr-out-label">Output 10</div>
+              <div class="mr-out-box"><span id="output10">--</span> <span class="mr-unit"></span></div>
+            </div>
+            <div class="mr-out-row">
+              <div class="mr-out-label">Output 11</div>
+              <div class="mr-out-box"><span id="output11">--</span> <span class="mr-unit"></span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <style>
+        /* Base */
+        #mr-embed{
+          --mr-green:#00ff66; --mr-bg:#000; --mr-text:#fff;
+          --mr-in-empty:rgb(178,212,163); --mr-in-filled:rgb(105,148,98);
+          --mr-red:#ff3333; --mr-box-border:4px; --mr-item-border:2px;
+          --mr-radius:18px; --mr-radius-sm:14px; --field-w:220px;
+          --grid-gap-x:16px; --grid-gap-y:12px;
+          background:var(--mr-bg); color:var(--mr-text);
+          font-family:ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+          padding:5px 15px 0 15px;
+        }
+        #mr-embed :where(*){box-sizing:border-box}
+
+        .mr-wrap{display:flex;gap:24px;align-items:flex-start;justify-content:center;flex-wrap:wrap}
+        .mr-panel{border:var(--mr-box-border) solid var(--mr-green);border-radius:var(--mr-radius);background:var(--mr-bg);padding:20px 22px}
+
+        .mr-grid{display:grid;grid-template-columns:repeat(2,var(--field-w));gap:var(--grid-gap-y) var(--grid-gap-x);justify-content:center}
+        .mr-field{display:flex;flex-direction:column;gap:6px;width:var(--field-w)}
+        .mr-center-span{grid-column:1 / -1;justify-self:center}
+        .mr-label{font-size:.85rem;opacity:.95;text-align:center}
+
+        input[type="number"]{
+          width:100%;padding:8px 10px;background:var(--mr-in-empty);
+          border:var(--mr-item-border) solid var(--mr-green);border-radius:var(--mr-radius-sm);
+          text-align:center;color:#111;outline:none;appearance:textfield;-moz-appearance:textfield;overflow:hidden;
+          transition:background-color .25s,color .25s,box-shadow .25s,border-color .2s,font-size .1s ease;
+        }
+        input[type="number"].filled{background:var(--mr-in-filled);color:var(--mr-text)}
+        input[type="number"]:focus{box-shadow:0 0 0 3px rgba(0,255,102,.18)}
+        input[type=number]::-webkit-outer-spin-button,input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+
+        .mr-missing{animation:mrPulseRed 1.4s ease-in-out infinite;border-color:var(--mr-red)!important;box-shadow:0 0 0 5px rgba(255,51,51,.35)}
+        @keyframes mrPulseRed{0%,100%{box-shadow:0 0 0 5px rgba(255,51,51,.35)}50%{box-shadow:0 0 0 8px rgba(255,51,51,.15)}}
+
+        /* Buttons */
+        .mr-actions-row{display:grid;grid-template-columns:repeat(2,var(--field-w));gap:8px;justify-content:center;justify-items:stretch;margin-top:18px}
+        #mr-reset{justify-self:end}
+        #mr-calc{justify-self:start}
+        .mr-btn{
+          width:75%;padding:12px 40px;white-space:nowrap;border-radius:999px;border:none;
+          color:var(--mr-text);font-weight:600;letter-spacing:.2px;font-size:.95rem;
+          cursor:pointer;transition:transform .12s ease,background-color .2s ease;
+        }
+        .mr-btn:active{transform:translateY(1px)}
+
+        /* Reset hover = darker */
+        .mr-btn-reset{
+          background:rgb(163,192,212);
+          color:#06131b;
+        }
+        .mr-btn-reset:hover{
+          background:rgb(100,125,140);
+          filter:none;
+        }
+
+        /* Calc hover = moderately darker */
+        .mr-btn-calc{
+          background:rgb(40,133,199);
+          box-shadow:none;
+        }
+        .mr-btn-calc:hover{
+          background:rgb(25,95,145);
+          filter:none;
+        }
+
+        /* Outputs */
+        #mr-outputs{min-width:320px;max-width:420px}
+        .mr-out-row{display:grid;grid-template-columns:1fr auto;align-items:center;gap:10px;margin-bottom:12px}
+        .mr-out-label{font-weight:600;font-size:.9rem;opacity:.95;text-align:right}
+        .mr-out-box{display:inline-flex;align-items:center;gap:6px;padding:8px 12px;border:var(--mr-item-border) solid var(--mr-green);
+          border-radius:var(--mr-radius-sm);background:transparent;font-weight:800;font-size:.95rem;color:var(--mr-text);justify-self:start}
+        .mr-unit{color:var(--mr-text)}
+
+        /* Equal widths for outputs on desktop only */
+        @media (min-width: 721px) {
+          #mr-outputs .mr-out-box {
+            width: 140px;
+            justify-content: center;
+          }
+        }
+
+        /* Mobile */
+        @media (max-width:720px){
+          .mr-panel{width:94%;max-width:560px;margin:0 auto}
+          .mr-wrap{flex-direction:column;align-items:center;gap:16px}
+          .mr-grid{grid-template-columns:1fr;justify-items:center;gap:var(--grid-gap-y) 10px}
+          .mr-field{width:70%;max-width:240px}
+          .mr-center-span{grid-column:1;justify-self:center}
+          .mr-actions-row{grid-template-columns:1fr !important;justify-items:center;gap:10px;margin-top:16px}
+          #mr-reset,#mr-calc{justify-self:center}
+          .mr-btn{width:33%;min-width:120px;padding:12px 28px;font-size:clamp(.85rem,3.6vw,.95rem);line-height:1.15}
+          #mr-outputs{width:100%;max-width:600px;margin:0 auto;display:flex;flex-direction:column;align-items:center}
+          .mr-out-row{grid-template-columns:1fr;justify-items:center;gap:8px;margin-bottom:14px}
+          .mr-out-label{text-align:center;font-size:.85rem}
+          .mr-out-box{width:40%;min-width:160px;justify-content:center;margin:0 auto;white-space:nowrap}
+        }
+        @media (max-width:380px){
+          .mr-panel{width:98%;max-width:none}
+          .mr-field{width:85%;max-width:200px}
+          .mr-btn{width:40%;min-width:110px;padding:12px 24px;font-size:clamp(.82rem,4.2vw,.92rem)}
+          .mr-out-box{width:48%;min-width:150px}
+        }
+        @media (max-width: 444px){
+          #mr-embed{ padding: 4px 8px 0 8px; }
+          #mr-embed .mr-wrap{ gap: 12px; }
+          #mr-embed .mr-panel{ width: 100%; max-width: none; margin: 0 auto; padding: 16px 14px; }
+          #mr-embed #mr-outputs{ min-width: 0; }
+        }
+        @media (max-width: 417px){
+          #mr-embed .mr-panel{ padding: 14px 12px; }
+          #mr-embed .mr-field{ max-width: 200px; }
+          #mr-embed .mr-btn{ min-width: 110px; }
+          #mr-embed .mr-out-box{ min-width: 140px; }
+        }
+      </style>
+
+      <script>
+        // Blank template JS — safe, generic, and easy to customize.
+        // - Formats number inputs to 1 decimal, dropping ".0"
+        // - "Calculate" does not enforce required fields or formulas (you add later)
+        // - Enter key triggers Calculate
+        document.addEventListener('DOMContentLoaded', function () {
+          const $ = (id) => document.getElementById(id);
+
+          // Collect inputs dynamically so you can add/remove freely
+          const inputEls = Array.from(document.querySelectorAll('#mr-inputs input'));
+          const outputEls = Array.from(document.querySelectorAll('#mr-outputs .mr-out-box span[id]'));
+
+          const btnCalc = $('mr-calc');
+          const btnReset = $('mr-reset');
+
+          function fmt1DecTrimZero(n) {
+            const r = Math.round(n * 10) / 10;
+            return Number.isInteger(r) ? String(r) : r.toFixed(1);
+          }
+
+          // Input behaviors
+          inputEls.forEach(inp => {
+            inp.addEventListener('input', () => {
+              if ((inp.value || '').trim() !== '') {
+                inp.classList.add('filled');
+                inp.classList.remove('mr-missing');
+              } else {
+                inp.classList.remove('filled');
+              }
+            });
+
+            if (inp.type === 'number') {
+              inp.addEventListener('blur', () => {
+                const raw = (inp.value || '').trim();
+                if (raw === '') return;
+                const v = Number(raw);
+                if (Number.isNaN(v)) return;
+                inp.value = fmt1DecTrimZero(v);
+              });
+              inp.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') { e.preventDefault(); btnCalc && btnCalc.click(); }
+              });
+            }
+          });
+
+          // No-op validation (you can add rules later if desired)
+          function validate() { return true; }
+
+          // Placeholder calculate — you’ll replace this with real formulas
+          function calculate() {
+            // Example starter: set Output 1 to Input 1 + Input 2 (if numeric), else '--'
+            const getNum = (id) => {
+              const el = document.getElementById(id);
+              const v = Number((el?.value || '').trim());
+              return Number.isFinite(v) ? v : null;
+            };
+            const setOut = (id, val) => {
+              const el = document.getElementById(id);
+              if (el) el.textContent = (val === null || val === undefined) ? '--' : String(val);
+            };
+
+            const a = getNum('input1');
+            const b = getNum('input2');
+
+            setOut('output1', (a !== null && b !== null) ? Math.round((a + b) * 100) / 100 : '--');
+
+            // Leave the rest unchanged; you’ll wire them up as needed
+          }
+
+          function resetAll() {
+            inputEls.forEach(inp => { inp.value = ''; inp.classList.remove('filled', 'mr-missing'); });
+            outputEls.forEach(span => { span.textContent = '--'; });
+          }
+
+          if (btnCalc) btnCalc.addEventListener('click', (e) => { e.preventDefault(); if (validate()) calculate(); });
+          if (btnReset) btnReset.addEventListener('click', (e) => { e.preventDefault(); resetAll(); });
+        });
+      </script>
+
+      <br><br>
+    </div>
+  </div>
+
+  <footer class="zone foot bottom-section">
+    <ul class="foot-nav">
+      <!-- <li><a href="privacy-policy.html" target="_blank">Privacy Policy</a></li> -->
+      <!-- <li><a href="terms-of-use.html" target="_blank">Terms of Use</a></li> -->
+    </ul>
+  </footer>
+</body>
+</html>
