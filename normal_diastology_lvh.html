@@ -1,86 +1,250 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 
 <head>
-<!--   ****************************************************************************
-  The Title You Pick Here Shows When You Hover Over Browser Thumbnail
-  **************************************************************************** -->
   <title>Diastology</title>
-    <meta charset="UTF-8">
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" type="text/css" href="./style3.css">
-
-  <!-- Browser tab thumbnail image -->
   <link rel="icon" type="image/png" href="BSW_Thumbnail.png"/>
 </head>
 
 <body>
- 
-    <nav class="zone nav-bar">
-      <ul class="main-nav">
-        <li><a class="top-nav" href="index.html">Home</a></li>
-        <!-- <li class="push"><a class="top-nav" href="about.html">About Us</a></li> -->
-        <li class="push"><a class="top-nav" href="normal_diastology.html">Back</a></li>
-      </ul>
+  <nav class="zone nav-bar">
+    <ul class="main-nav">
+      <li><a class="top-nav" href="index.html">Home</a></li>
+      <li class="push"><a class="top-nav" href="normal_diastology.html">Back</a></li>
+    </ul>
 
+    <!-- Title + subtitle -->
+    <div class="title-stack">
+      <div class="container zone body dg-title">Diastology:</div>
+      <div class="container normal-note dg-subtitle" style="padding:0"><em>Normal LVEF</em></div>
+    </div>
 
+    <br>
 
-<!-- ****************************************************************************
-  This is the main title on thetop of page
-  **************************************************************************** -->
+    <!-- Navbar chips (keep/edit as needed) -->
+    <div class="navbar">
+      <a class="nospace" href="#"></a>
+      <a class="border" href="diastology_normal_lvef.html">No LVH or WMAs</a>
+      <a class="active border" href="normal_diastology_lvh.html">LVH and/or WMAs</a>
+      <a class="nospace" href="#"></a>
+    </div>
+  </nav>
 
-      <div class="container zone body">Diastology:</div> <br>
-
-
-
-
-
-
-<!-- ****************************************************************************
-  This is the split selection option on top of page
-  **************************************************************************** -->
-
-          <!-- The navigation menu -->
-      <div class="navbar">
-        <a class="nospace" href="#"></a>
-        <a  class="border" href="diastology_normal_lvef.html">No LVH or WMAs</a>
-        <a class="active border" href="normal_diastology_lvh.html">LVH and/or WMAs</a>
-        <a class="nospace" href="#"></a>
-      </div>
-
-    </nav>
-
-
-
-
-      
-      <div class="zone navigation">
-    
-
-    <div class="final" style="padding: 0px 10% 0px 10%;">
+  <div class="zone navigation">
+    <div class="final" style="padding:0 10%">
 
       <br>
 
-          <img src="normal_diastology_lvh.svg" alt="diastology" style="width: 100%; height: auto;" viewBox="0 0 100 100">
+      <!-- ========================== RESPONSIVE FIXED TABLE ========================== -->
+      <div id="dg-embed">
+        <!-- Blue header band (3 columns) -->
+        <div class="dg-headerwrap">
+          <div class="dg-header" role="row">
+            <div class="dg-hcell" role="columnheader">E/e' &gt; 14</div>
+            <div class="dg-hcell" role="columnheader">TR Velocity &gt; 2.8 m/s</div>
+            <div class="dg-hcell" role="columnheader">LA Volume &gt; 34&nbsp;ml/m&#178;</div>
+          </div>
+        </div>
 
-      <br><br>
-
-
-        
-        
-        
- 
+        <!-- Green table (3 columns, 3 rows) -->
+        <!-- HOW-TO (ROWS): To add one, duplicate a <tr> and edit the <th>/<td> text.
+             HOW-TO (COLUMNS): To add/remove a column, edit: header .dg-header cells,
+             <colgroup> below, and each row's number of <td>. -->
+        <div class="dg-tablewrap">
+          <table class="dg-table" role="table" aria-label="Diastology table — 3 columns">
+            <colgroup>
+              <col class="dg-col1-col">
+              <col class="dg-col2-col">
+              <col class="dg-col3-col">
+            </colgroup>
+            <tbody>
+              <tr>
+                <th scope="row" class="dg-col1">Grade I</th>
+                <td class="dg-c2">0 or 1 Positive</td>
+                <td class="dg-c3">E/A &lt; 2</td>
+              </tr>
+              <tr>
+                <th scope="row" class="dg-col1">Grade II</th>
+                <td class="dg-c2">2 or 3 Positive</td>
+                <td class="dg-c3">E/A &lt; 2</td>
+              </tr>
+              <tr>
+                <th scope="row" class="dg-col1">Grade III</th>
+                <td class="dg-c2">3 Positive</td>
+                <td class="dg-c3">E/A &gt; 2</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
 
-      
-      
+      <style>
+        /* -------- page-scoped styles only (style3.css untouched) -------- */
 
-    <footer class="zone foot bottom-section">
-        <ul class="foot-nav">
-            <!-- <li><a href="privacy-policy.html" target="_blank">Privacy Policy</a></li> -->
-            <!-- <li><a href="terms-of-use.html" target="_blank">Terms of Use</a></li> -->
-        </ul>
-      </footer>
-   
+        /* NAV container: ensure nothing clips/scrolls the title stack */
+        .zone.nav-bar{ overflow: visible !important; height: auto !important; }
+
+        /* Title/subtitle: ultra-tight but safe gap */
+        .title-stack{ 
+          display:flex;
+          flex-direction:column;
+          align-items:center;
+          justify-content:flex-start;
+          gap: clamp(1px, 0.25vw, 6px);
+          margin: 0;
+          padding: 0;
+          max-width: 100%;
+          overflow: visible !important;
+        }
+        .dg-title,
+        .dg-subtitle,
+        .title-stack .container,
+        .title-stack .zone{
+          display:block !important;
+          position:static !important;
+          float:none !important;
+          clear:both !important;
+          margin:0 !important;
+          padding:0 !important;
+          height:auto !important;
+          max-height:none !important;
+          min-height:0 !important;
+          overflow:visible !important;
+          white-space: normal;
+          word-break: normal;
+          overflow-wrap: normal;
+          text-align:center;
+        }
+        .dg-title{ line-height: 1.12; }
+        .dg-subtitle{ line-height: 1.16; }
+        @media (min-width:700px) and (max-width:1000px){
+          .title-stack{ gap: 6px !important; }
+        }
+
+        /* NAV CHIPS */
+        .navbar { height:auto !important; min-height:40px; align-items:stretch; }
+        .navbar a{
+          display:inline-flex; align-items:center; justify-content:center;
+          white-space:nowrap; min-width:0; line-height:1.05;
+          height:auto !important; min-height:36px;
+          font-size: clamp(0.46rem, 2.9vw, 1rem);
+          padding: clamp(5px, 1.2vw, 12px) clamp(6px, 1.8vw, 16px);
+          overflow:hidden; text-overflow:clip; color:#fff; box-sizing:border-box;
+        }
+        .navbar a.border{ border:2px solid green; border-radius:10px; }
+        .navbar a.active{ background-color:#4CAF50; }
+        .navbar a.active.border{ background-color:#4CAF50; border-color:green; }
+        @media (max-width: 420px){
+          .navbar a.border,
+          .navbar a.active.border{
+            padding-left: clamp(12px, 6vw, 24px);
+            padding-right: clamp(12px, 6vw, 24px);
+          }
+        }
+
+        /* Theme variables */
+        #dg-embed{
+          --dg-accent:#00ff66;             /* green border/lines */
+          --dg-head:rgb(40,133,199);       /* header blue */
+          --dg-bg:#000; --dg-text:#fff;
+          --dg-outer:4px; --dg-line:2px; --dg-hsep:2px; --dg-hrim:4px;
+          color:var(--dg-text); background:var(--dg-bg);
+          font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+        }
+        #dg-embed *{ box-sizing:border-box; }
+
+        /* BLUE HEADER (3 columns) */
+        .dg-headerwrap{
+          border:var(--dg-hrim) solid var(--dg-head);
+          border-radius:18px;
+          overflow:hidden;
+          background:var(--dg-bg);
+          margin-bottom:8px;
+        }
+        .dg-header{
+          display:grid;
+          grid-template-columns:repeat(3, minmax(0, 1fr));
+          width:100%;
+        }
+        .dg-hcell{
+          display:flex; align-items:center; justify-content:center;
+          padding:20px 12px;
+          min-height:110px;
+          text-align:center;
+          font-weight:600;
+          line-height:1.14;
+          font-size: clamp(.80rem, 2.6vw, 1.08rem);
+          overflow:hidden;
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+          border-right:var(--dg-hsep) solid var(--dg-head);
+        }
+        .dg-hcell::-webkit-scrollbar{ display:none; }
+        .dg-hcell:last-child{ border-right:none; }
+
+        /* GREEN TABLE */
+        .dg-tablewrap{
+          border:var(--dg-outer) solid var(--dg-accent);
+          border-radius:18px;
+          overflow:hidden;
+          background:var(--dg-bg);
+        }
+        .dg-table{
+          width:100%;
+          border-collapse:collapse;        /* solid grid lines */
+          table-layout:fixed;              /* stable columns */
+          text-align:center;
+        }
+        .dg-table th, .dg-table td{
+          border:var(--dg-line) solid var(--dg-accent);
+          padding:22px 10px;
+          line-height:1.2;
+          background:transparent;
+          text-align:center;
+          white-space: normal;
+          word-break: normal;
+          overflow-wrap: normal;
+          hyphens: none;
+          overflow: hidden;
+          text-overflow: clip;
+        }
+
+        /* Equal widths for 3 columns */
+        .dg-table col{ width:33.3333%; }
+
+        /* First-column text: bold + soft blue tint for contrast */
+        .dg-table th.dg-col1{
+          font-weight:800;
+          font-size:clamp(.95rem, 2.5vw, 1.1rem);
+          background: rgba(40, 133, 199, 0.22);
+        }
+        @media (max-width:360px){
+          .dg-table th.dg-col1{ font-size:clamp(.82rem, 3.0vw, 1.02rem); letter-spacing:-0.006em; }
+        }
+
+        /* Data columns: slightly smaller for contrast */
+        .dg-table td{ font-weight:600; font-size:clamp(.84rem, 2.1vw, .96rem); }
+
+        /* Widen the table zone on phones (trim page padding) */
+        @media (max-width:600px){ .final{ padding-left:6% !important; padding-right:6% !important; } }
+        @media (max-width:400px){ .final{ padding-left:4% !important; padding-right:4% !important; } }
+        @media (max-width:340px){ .final{ padding-left:3% !important; padding-right:3% !important; } }
+      </style>
+      <!-- ======================== END RESPONSIVE FIXED TABLE ======================== -->
+
+      <br><br>
+    </div>
+  </div>
+
+  <footer class="zone foot bottom-section">
+    <ul class="foot-nav">
+      <!-- <li><a href="privacy-policy.html" target="_blank">Privacy Policy</a></li> -->
+      <!-- <li><a href="terms-of-use.html" target="_blank">Terms of Use</a></li> -->
+    </ul>
+  </footer>
+
 </body>
 </html>

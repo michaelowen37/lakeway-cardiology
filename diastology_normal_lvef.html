@@ -127,13 +127,13 @@
         /* NAV container: ensure nothing clips/scrolls the title stack */
         .zone.nav-bar{ overflow: visible !important; height: auto !important; }
 
-        /* Title/subtitle: flex column, guaranteed small gap, and NO inner scrollbars or fixed heights */
+        /* Title/subtitle: flex column, MAX-tight gap, and NO inner scrollbars or fixed heights */
         .title-stack{ 
           display:flex;
           flex-direction:column;
           align-items:center;
           justify-content:flex-start;
-          gap: clamp(2px, 0.4vw, 8px); /* TIGHT version */
+          gap: 0px;                   /* as tight as possible globally */
           margin: 0;
           padding: 0;
           max-width: 100%;
@@ -160,12 +160,13 @@
           overflow-wrap: normal;
           text-align:center;
         }
-        .dg-title{ line-height: 1.15; }
-        .dg-subtitle{ line-height: 1.2; }
+        /* Slightly condensed line boxes to keep the two lines visually snug but readable */
+        .dg-title{ line-height: 1.10; }
+        .dg-subtitle{ line-height: 1.12; }
 
-        /* Keep a safe floor in the mid-width band where contact once occurred (still tight) */
+        /* Safety buffer only in the mid-width band that once had contact */
         @media (min-width:700px) and (max-width:1000px){
-          .title-stack{ gap: 9px !important; }
+          .title-stack{ gap: 3px !important; } /* minimal cushion while still dramatic */
         }
 
         /* NAV CHIPS: shrink text (no overflow), no inner scrollbars */
