@@ -50,7 +50,7 @@
           </div>
         </div>
 
-        <!-- Green table (1 column, 5 rows) -->
+        <!-- Green table (1 column, 5 rows; non-bold text) -->
         <div class="dg-tablewrap">
           <table class="dg-table" role="table" aria-label="Atrial Fibrillation — Diastology (single column)">
             <colgroup>
@@ -58,19 +58,19 @@
             </colgroup>
             <tbody>
               <tr>
-                <th scope="row" class="dg-col1">IVRT &le; 65</th>
+                <td class="dg-c1">IVRT &le; 65</td>
               </tr>
               <tr>
-                <th scope="row" class="dg-col1">Pulmonary Venous D-wave Deceleration Time &le; 220 msec</th>
+                <td class="dg-c1">Pulmonary Venous D-wave Deceleration Time &le; 220 msec</td>
               </tr>
               <tr>
-                <th scope="row" class="dg-col1">Mitral E-wave to Color VP ratio &ge; 1.4</th>
+                <td class="dg-c1">Mitral E-wave to Color VP ratio &ge; 1.4</td>
               </tr>
               <tr>
-                <th scope="row" class="dg-col1">Septal E/e' &ge; 11</th>
+                <td class="dg-c1">Septal E/e' &ge; 11</td>
               </tr>
               <tr>
-                <th scope="row" class="dg-col1">Reduced Beat-to-beat Variations</th>
+                <td class="dg-c1">Reduced Beat-to-beat Variations</td>
               </tr>
             </tbody>
           </table>
@@ -138,12 +138,16 @@
           table-layout:fixed;              /* stable columns */
           text-align:center;
         }
-        .dg-table th{
+        /* Non-bold body text for green rows */
+        .dg-table td{
           border:var(--dg-line) solid var(--dg-accent);
           padding:22px 10px;
           line-height:1.2;
           background:transparent !important;  /* no shading in green section (single column) */
           text-align:center;
+
+          font-weight: 500;  /* not bold; lighter like body cells */
+          font-size: clamp(.84rem, 2.1vw, .96rem);
 
           white-space: normal;
           word-break: normal;
@@ -156,15 +160,7 @@
         /* Single column = full width */
         .dg-table col{ width:100%; }
 
-        /* First (and only) column text weight/size (no tint) */
-        .dg-table th.dg-col1{
-          font-weight:800;
-          font-size:clamp(.95rem, 2.5vw, 1.1rem);
-          /* intentionally no background color here */
-        }
-        @media (max-width:360px){
-          .dg-table th.dg-col1{ font-size:clamp(.86rem, 3.0vw, 1.02rem); letter-spacing:-0.006em; }
-        }
+        /* (No special tint or heavy weight on the lone column) */
       </style>
       <!-- ======================== END RESPONSIVE FIXED TABLE ======================== -->
 
