@@ -39,7 +39,7 @@
       <div id="dg-embed">
         <!-- HOW-TO (single column):
              - Add class "dg-singlecol" to the .dg-header to enable a subtle blue fill on the top row.
-             - Green rows have NO shading in single-column charts by design (see CSS override below). -->
+             - Green rows have NO shading in single-column charts (see CSS override below). -->
 
         <!-- Blue header band (1 column, with subtle blue fill) -->
         <div class="dg-headerwrap">
@@ -50,7 +50,7 @@
           </div>
         </div>
 
-        <!-- Green table (1 column, 5 rows; non-bold text) -->
+        <!-- Green table (1 column, 5 rows; light/normal-weight text) -->
         <div class="dg-tablewrap">
           <table class="dg-table" role="table" aria-label="Atrial Fibrillation — Diastology (single column)">
             <colgroup>
@@ -138,7 +138,7 @@
           table-layout:fixed;              /* stable columns */
           text-align:center;
         }
-        /* Non-bold body text for green rows */
+        /* Light/normal-weight body text for green rows (no shading) */
         .dg-table td{
           border:var(--dg-line) solid var(--dg-accent);
           padding:22px 10px;
@@ -146,7 +146,7 @@
           background:transparent !important;  /* no shading in green section (single column) */
           text-align:center;
 
-          font-weight: 500;  /* not bold; lighter like body cells */
+          font-weight: 400;  /* lighter (normal) */
           font-size: clamp(.84rem, 2.1vw, .96rem);
 
           white-space: normal;
@@ -159,8 +159,6 @@
 
         /* Single column = full width */
         .dg-table col{ width:100%; }
-
-        /* (No special tint or heavy weight on the lone column) */
       </style>
       <!-- ======================== END RESPONSIVE FIXED TABLE ======================== -->
 
