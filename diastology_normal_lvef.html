@@ -1,95 +1,255 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 
 <head>
-<!--   ****************************************************************************
-  The Title You Pick Here Shows When You Hover Over Browser Thumbnail
-  **************************************************************************** -->
   <title>Diastology</title>
-    <meta charset="UTF-8">
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" type="text/css" href="./style3.css">
-
-  <!-- Browser tab thumbnail image -->
   <link rel="icon" type="image/png" href="BSW_Thumbnail.png"/>
 </head>
 
 <body>
- 
-    <nav class="zone nav-bar">
-      <ul class="main-nav">
-        <li><a class="top-nav" href="index.html">Home</a></li>
-        <!-- <li class="push"><a class="top-nav" href="about.html">About Us</a></li> -->
-        <li class="push"><a class="top-nav" href="normal_diastology.html">Back</a></li>
-      </ul>
+  <nav class="zone nav-bar">
+    <ul class="main-nav">
+      <li><a class="top-nav" href="index.html">Home</a></li>
+      <li class="push"><a class="top-nav" href="normal_diastology.html">Back</a></li>
+    </ul>
 
+    <!-- Title + subtitle -->
+    <div class="container zone body">Diastology:</div>
+    <div class="container normal-note" style="padding:0"><em>Normal LVEF</em></div>
 
+    <br>
 
-<!-- ****************************************************************************
-  This is the main title on thetop of page
-  **************************************************************************** -->
+    <!-- Navbar chips (kept as in the working version) -->
+    <div class="navbar">
+      <a class="nospace" href="#"></a>
+      <a class="active border" href="normal_diastology_no_lvh.html">No LVH or WMAs</a>
+      <a class="border" href="normal_diastology_lvh.html">LVH and/or WMAs</a>
+      <a class="nospace" href="#"></a>
+    </div>
+  </nav>
 
-      <div class="container zone body">Diastology:</div> 
-      <div class="container" style="padding: 0px"><em>Normal LVEF</em></div> 
+  <div class="zone navigation">
+    <div class="final" style="padding:0 10%">
 
       <br>
 
+      <!-- ========================== RESPONSIVE FIXED TABLE ========================== -->
+      <div id="dg-embed">
+        <!-- Blue header band -->
+        <div class="dg-headerwrap">
+          <div class="dg-header" role="row">
+            <div class="dg-hcell" role="columnheader">E/e' &gt; 14</div>
+            <div class="dg-hcell" role="columnheader">Septal e' &lt; cm/s OR Lateral e' &lt; 10 cm/s</div>
+            <div class="dg-hcell" role="columnheader">TR &gt; 2.8 m/s</div>
+            <div class="dg-hcell" role="columnheader">LA Volume &gt; 34 ml/m<sup>2</sup></div>
+          </div>
+        </div>
 
-
-
-
-<!-- ****************************************************************************
-  This is the split selection option on top of page
-  **************************************************************************** -->
-
-          <!-- The navigation menu -->
-      <div class="navbar">
-        <a class="nospace" href="#"></a>
-        <a  class="active border" href="normal_diastology_no_lvh.html">No LVH or WMAs</a>
-        <a class="border" href="normal_diastology_lvh.html">LVH and/or WMAs</a>
-        <a class="nospace" href="#"></a>
+        <!-- Green table -->
+        <div class="dg-tablewrap">
+          <table class="dg-table" role="table" aria-label="Diastology: Normal LVEF — No LVH or WMAs">
+            <!-- Colgroup to bias width toward the first column on tiny screens -->
+            <colgroup>
+              <col class="dg-col1-col">
+              <col class="dg-col2-col">
+              <col class="dg-col3-col">
+              <col class="dg-col4-col">
+            </colgroup>
+            <tbody>
+              <tr>
+                <th scope="row" class="dg-col1">Normal</th>
+                <td class="dg-c2">1/4 Positive</td>
+                <td class="dg-c3">E/A &gt; 0.8</td>
+                <td class="dg-c4">-</td>
+              </tr>
+              <tr>
+                <th scope="row" class="dg-col1">Indeterminate</th>
+                <td class="dg-c2">2/4 Positive</td>
+                <td class="dg-c3">E/A &gt; 0.8</td>
+                <td class="dg-c4">-</td>
+              </tr>
+              <tr>
+                <th scope="row" class="dg-col1">Grade I</th>
+                <td class="dg-c2">2/4 Positive</td>
+                <td class="dg-c3">E/A &lt; 0.8</td>
+                <td class="dg-c4">E/A &lt; 2</td>
+              </tr>
+              <tr>
+                <th scope="row" class="dg-col1">Grade II</th>
+                <td class="dg-c2">3 or More Positive</td>
+                <td class="dg-c3">E/A &lt; 2</td>
+                <td class="dg-c4">-</td>
+              </tr>
+              <tr>
+                <th scope="row" class="dg-col1">Grade III</th>
+                <td class="dg-c2">100% Positive</td>
+                <td class="dg-c3">E/A &gt; 2</td>
+                <td class="dg-c4">-</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
 
-    </nav>
+      <style>
+        /* -------- page-scoped styles only (style3.css untouched) -------- */
 
+        /* Keep subtitle close to title */
+        .container.zone.body + .normal-note {
+          margin-top: clamp(4px, 0.8vw, 10px) !important;
+          margin-bottom: 0 !important;
+          text-align: center;
+        }
 
+        /* NAV CHIPS: shrink text (no overflow), no inner scrollbars */
+        .navbar { height:auto !important; min-height:40px; align-items:stretch; }
+        .navbar a{
+          display:inline-flex; align-items:center; justify-content:center;
+          white-space:nowrap; min-width:0; line-height:1.05;
+          height:auto !important; min-height:36px;
+          font-size: clamp(0.46rem, 2.9vw, 1rem);
+          padding: clamp(5px, 1.2vw, 12px) clamp(6px, 1.8vw, 16px);
+          overflow:hidden; text-overflow:clip; color:#fff; box-sizing:border-box;
+        }
+        .navbar a.border{ border:2px solid green; border-radius:10px; }
+        .navbar a.active{ background-color:#4CAF50; }
+        .navbar a.active.border{ background-color:#4CAF50; border-color:green; }
 
+        /* Theme variables for the table */
+        #dg-embed{
+          --dg-accent:#00ff66;             /* green */
+          --dg-head:rgb(40,133,199);       /* blue */
+          --dg-bg:#000; --dg-text:#fff;
+          --dg-outer:4px; --dg-line:2px; --dg-hsep:2px; --dg-hrim:4px;
+          color:var(--dg-text); background:var(--dg-bg);
+          font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+        }
+        #dg-embed *{ box-sizing:border-box; }
 
-      
-      <div class="zone navigation">
-    
-    
+        /* BLUE HEADER */
+        .dg-headerwrap{
+          border:var(--dg-hrim) solid var(--dg-head);
+          border-radius:18px;
+          overflow:hidden;                 /* no inner scrollbars */
+          background:var(--dg-bg);
+          margin-bottom:8px;
+        }
+        .dg-header{
+          display:grid;
+          grid-template-columns:repeat(4, minmax(0, 1fr));
+          width:100%;
+        }
+        .dg-hcell{
+          display:flex; align-items:center; justify-content:center;
+          padding:20px 12px;
+          min-height:120px;
+          text-align:center;
+          font-weight:500;
+          line-height:1.14;
+          font-size: clamp(.80rem, 2.6vw, 1.08rem);
 
-    <div class="final" style="padding: 0px 10% 0px 10%;">
+          /* wrap only at spaces; never mid-word; never scroll */
+          white-space: normal;
+          word-break: normal;
+          overflow-wrap: normal;
+          hyphens: none;
+          overflow: hidden;
 
-      <br>
+          border-right:var(--dg-hsep) solid var(--dg-head);
+        }
+        .dg-hcell:last-child{ border-right:none; }
+        .dg-hcell sup{ line-height:0; position: relative; top: -0.35em; }
 
-          <img src="normal_diastology_no_lvh.svg" alt="diastology" style="width: 100%; height: auto;" viewBox="0 0 100 100">
+        @media (max-width:400px){
+          .dg-hcell{
+            padding:18px 10px;
+            min-height:128px;
+            font-size:clamp(.70rem, 3.0vw, 1.02rem);
+          }
+        }
+        @media (max-width:340px){
+          .dg-hcell{
+            padding:16px 8px;
+            min-height:130px;
+            font-size:clamp(.66rem, 3.2vw, .98rem);
+          }
+        }
+
+        /* GREEN TABLE */
+        .dg-tablewrap{
+          border:var(--dg-outer) solid var(--dg-accent);
+          border-radius:18px;
+          overflow:hidden;                 /* clean rounded frame */
+          background:var(--dg-bg);
+        }
+        .dg-table{
+          width:100%;
+          border-collapse:collapse;        /* solid grid lines */
+          table-layout:fixed;              /* stable columns */
+          text-align:center;               /* default center */
+        }
+        .dg-table th, .dg-table td{
+          border:var(--dg-line) solid var(--dg-accent);
+          padding:22px 10px;
+          line-height:1.2;
+          background:transparent;
+          text-align:center;
+
+          /* keep words intact; wrap only at spaces; never scroll */
+          white-space: normal;
+          word-break: normal;
+          overflow-wrap: normal;
+          hyphens: none;
+          overflow: hidden;
+          text-overflow: clip;
+        }
+
+        /* Default equal widths */
+        .dg-table col{ width:25%; }
+
+        /* On small screens: reduce col 1 a bit to remove side space and give room to cols 2–4 */
+        @media (max-width:400px){
+          .dg-table col.dg-col1-col{ width:31%; }
+          .dg-table col.dg-col2-col, .dg-table col.dg-col3-col, .dg-table col.dg-col4-col{ width:23%; }
+        }
+        @media (max-width:340px){
+          .dg-table col.dg-col1-col{ width:33.5%; }
+          .dg-table col.dg-col2-col, .dg-table col.dg-col3-col, .dg-table col.dg-col4-col{ width:22.17%; }
+        }
+        @media (max-width:320px){
+          .dg-table col.dg-col1-col{ width:35.5%; } /* ensures “Indeterminate” fits without extra side space */
+          .dg-table col.dg-col2-col, .dg-table col.dg-col3-col, .dg-table col.dg-col4-col{ width:21.5%; }
+        }
+
+        /* First-column text: bold; allow a slightly smaller min at tiny widths */
+        .dg-table th.dg-col1{ font-weight:800; font-size:clamp(.95rem, 2.5vw, 1.1rem); }
+        @media (max-width:360px){
+          .dg-table th.dg-col1{ font-size:clamp(.82rem, 3.0vw, 1.02rem); letter-spacing:-0.006em; }
+        }
+
+        /* Data columns: slightly smaller for contrast */
+        .dg-table td{ font-weight:600; font-size:clamp(.84rem, 2.1vw, .96rem); }
+
+        /* Widen the table zone on phones (trim page padding) */
+        @media (max-width:600px){ .final{ padding-left:6% !important; padding-right:6% !important; } }
+        @media (max-width:400px){ .final{ padding-left:4% !important; padding-right:4% !important; } }
+        @media (max-width:340px){ .final{ padding-left:3% !important; padding-right:3% !important; } }
+      </style>
+      <!-- ======================== END RESPONSIVE FIXED TABLE ======================== -->
 
       <br><br>
+    </div>
+  </div>
 
+  <footer class="zone foot bottom-section">
+    <ul class="foot-nav">
+      <!-- <li><a href="privacy-policy.html" target="_blank">Privacy Policy</a></li> -->
+      <!-- <li><a href="terms-of-use.html" target="_blank">Terms of Use</a></li> -->
+    </ul>
+  </footer>
 
-
-        
-        <!-- <div class="box zone grow"><a href=""class="words">Button Title</a></div> -->
-        <!-- <div class="box zone grow"><a href=""class="words">Button Title</a></div> -->
-        <!-- <div class="box zone grow"><a href=""class="words">Button Title</a></div> -->
-        <!-- <div class="box zone grow"><a href=""class="words">Button Title</a></div> -->
-        
-        
-        
- 
-      </div>
-
-      
-      
-
-    <footer class="zone foot bottom-section">
-        <ul class="foot-nav">
-            <!-- <li><a href="privacy-policy.html" target="_blank">Privacy Policy</a></li> -->
-            <!-- <li><a href="terms-of-use.html" target="_blank">Terms of Use</a></li> -->
-        </ul>
-      </footer>
-   
 </body>
 </html>
