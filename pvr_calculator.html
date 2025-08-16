@@ -168,6 +168,28 @@
         @media (min-width: 721px) {
           #mr-outputs .mr-out-box { width: 140px; justify-content: center; }
         }
+
+
+        /* Dramatically shrink subtitle on smaller screens (Qp:Qs page) */
+.calc-note{
+  /* desktop/tablet */
+  font-size: clamp(0.95rem, 2.2vw, 1.4rem) !important;
+}
+
+@media (max-width: 700px){
+  .calc-note{
+    /* noticeably smaller under 700px */
+    font-size: clamp(0.72rem, 2.8vw, 1.05rem) !important;
+  }
+}
+
+@media (max-width: 400px){
+  .calc-note{
+    /* dramatic on very small phones */
+    font-size: clamp(0.62rem, 4.2vw, 0.95rem) !important;
+  }
+}
+
       </style>
 
       <script>
