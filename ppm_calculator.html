@@ -20,17 +20,18 @@
     </ul>
   </nav>
 
-  <!-- Page heading in your site style -->
-  <div class="container zone body">Patient Prosthesis Mismatch:</div>
-  <!-- Notes (same styling as used for Qp:Qs / PVR) -->
-  <div class="calc-note" style="margin: 2px 0 2px 0; font-style: italic; font-size: 1.25rem; text-align: center; color: #c9c9c9; text-shadow: 0 1px 2px rgba(0,0,0,.6); position: relative; z-index: 10; line-height: 1.15;">EOAI &lt; 0.85 Suggests Moderate PPM</div>
-  <div class="calc-note" style="margin: 2px 0 6px 0; font-style: italic; font-size: 1.25rem; text-align: center; color: #c9c9c9; text-shadow: 0 1px 2px rgba(0,0,0,.6); position: relative; z-index: 10; line-height: 1.15;">EOAI &lt; 0.65 Suggests Severe PPM</div>
+  <!-- Title + subtitles (stacked like the other page) -->
+  <div class="title-stack">
+    <div class="container zone body ppm-title">Patient Prosthesis Mismatch:</div>
+    <div class="calc-note ppm-subtitle">EOAI &lt; 0.85 Suggests Moderate PPM</div>
+    <div class="calc-note ppm-subtitle">EOAI &lt; 0.65 Suggests Severe PPM</div>
+  </div>
+
   <br>
 
   <div class="zone navigation">
     <div class="final" style="padding: 0px 10% 0px 10%">
       <!-- ====================== PATIENT PROSTHESIS MISMATCH ===================== -->
-      <!-- MR Calculator (desktop preserved; minimal, responsive mobile fixes) -->
       <div id="mr-embed" style="margin-top: 2px;">
         <div class="mr-wrap">
           <!-- LEFT: Inputs + Buttons -->
@@ -79,12 +80,56 @@
       </div>
       <!-- ==================== END PATIENT PROSTHESIS MISMATCH =================== -->
 
-      <!-- Note 3 under the calculator, with extra spacing above and updated text -->
+      <!-- Note 3 under the calculator -->
       <br>
       <div class="calc-note" title="Supportive findings: LVOT AcT < 100 ms & Peak AoV velocity > 3 m/s" style="margin: 8px 0 4px 0; font-style: italic; font-size: 1.4rem; text-align: center; color: #c9c9c9; text-shadow: 0 1px 2px rgba(0,0,0,.6); position: relative; z-index: 10; line-height: 1.15;">Supportive findings: LVOT AcT &lt; 100 ms &amp; Peak AoV velocity &gt; 3 m/s</div>
 
       <style>
-        /* Base */
+        /* ===== TITLE/SUBTITLE STACK (same behavior as your other page) ===== */
+        .title-stack{
+          display:flex;
+          flex-direction:column;
+          align-items:center;
+          justify-content:flex-start;
+          gap: clamp(1px, 0.25vw, 6px);   /* tight, but safe */
+          margin: 0;
+          padding: 0;
+          max-width: 100%;
+          overflow: visible !important;
+        }
+        .title-stack > *{
+          display:block !important;
+          position:static !important;
+          float:none !important;
+          clear:both !important;
+          margin:0 !important;
+          padding:0 !important;
+          height:auto !important;
+          max-height:none !important;
+          min-height:0 !important;
+          overflow:visible !important;
+
+          width:100%;
+          text-align:center !important;
+          white-space: normal !important;
+          word-break: normal !important;
+          overflow-wrap:anywhere !important;  /* long tokens wrap instead of pushing */
+          hyphens:auto;
+        }
+        .ppm-title{ line-height:1.12; }
+        .ppm-subtitle{
+          line-height:1.16;
+          font-style: italic;
+          font-size: 1.25rem;
+          color: #c9c9c9;
+          text-shadow: 0 1px 2px rgba(0,0,0,.6);
+        }
+        /* If you ever see crowding between ~700–1000px, tiny cushion: */
+        @media (min-width:700px) and (max-width:1000px){
+          .title-stack{ gap: 6px !important; }
+        }
+
+        /* ===== CALCULATOR STYLES (unchanged) ===== */
         #mr-embed{
           --mr-green:#00ff66; --mr-bg:#000; --mr-text:#fff;
           --mr-in-empty:rgb(178,212,163); --mr-in-filled:rgb(105,148,98);
@@ -118,7 +163,6 @@
         .mr-missing{animation:mrPulseRed 1.4s ease-in-out infinite;border-color:var(--mr-red)!important;box-shadow:0 0 0 5px rgba(255,51,51,.35)}
         @keyframes mrPulseRed{0%,100%{box-shadow:0 0 0 5px rgba(255,51,51,.35)}50%{box-shadow:0 0 0 8px rgba(255,51,51,.15)}}
 
-        /* Buttons */
         .mr-actions-row{display:grid;grid-template-columns:repeat(2,var(--field-w));gap:8px;justify-content:center;justify-items:stretch;margin-top:18px}
         #mr-reset{justify-self:end}
         #mr-calc{justify-self:start}
@@ -129,15 +173,12 @@
         }
         .mr-btn:active{transform:translateY(1px)}
 
-        /* Reset hover = darker */
         .mr-btn-reset{ background:rgb(163,192,212); color:#06131b; }
         .mr-btn-reset:hover{ background:rgb(100,125,140); filter:none; }
 
-        /* Calc hover = moderately darker */
         .mr-btn-calc{ background:rgb(40,133,199); box-shadow:none; }
         .mr-btn-calc:hover{ background:rgb(25,95,145); filter:none; }
 
-        /* Outputs */
         #mr-outputs{min-width:320px;max-width:420px}
         .mr-out-row{display:grid;grid-template-columns:1fr auto;align-items:center;gap:10px;margin-bottom:12px}
         .mr-out-label{font-weight:600;font-size:.9rem;opacity:.95;text-align:right}
@@ -182,6 +223,24 @@
         @media (min-width: 721px) {
           #mr-outputs .mr-out-box { width: 140px; justify-content: center; }
         }
+
+        /* Dramatically smaller subtitle on small screens */
+.ppm-subtitle{
+  /* desktop/tablet stays ~1.25rem, scales down smoothly */
+  font-size: clamp(0.78rem, 2.4vw, 1.25rem) !important;
+}
+
+/* tighten more below common breakpoints */
+@media (max-width:700px){
+  .ppm-subtitle{ font-size: clamp(0.70rem, 2.9vw, 1.12rem) !important; }
+}
+@media (max-width:480px){
+  .ppm-subtitle{ font-size: clamp(0.60rem, 3.8vw, 1.02rem) !important; }
+}
+@media (max-width:360px){
+  .ppm-subtitle{ font-size: clamp(0.56rem, 4.4vw, 0.96rem) !important; }
+}
+
       </style>
 
       <script>
@@ -199,13 +258,11 @@
           const btnReset = $('mr-reset');
           const eoaiEl = $('eoai');
 
-          // Helper: always show two decimals
           function fmt2Fixed(n) {
             if (!Number.isFinite(n)) return '--';
             return (Math.round(n * 100) / 100).toFixed(2);
           }
 
-          // Attach behaviors to existing inputs only
           Object.values(fields).filter(Boolean).forEach((inp) => {
             inp.addEventListener('input', () => {
               if ((inp.value || '').trim() !== '') {
@@ -216,7 +273,6 @@
               }
             });
 
-            // SAFE BLUR: keep string type; 1dp; drop ".0"
             inp.addEventListener('blur', () => {
               const raw = (inp.value || '').trim();
               if (raw === '') return;
@@ -226,7 +282,6 @@
               inp.value = Number.isInteger(r) ? String(r) : r.toFixed(1);
             });
 
-            // Enter triggers Calculate
             inp.addEventListener('keydown', (e) => {
               if (e.key === 'Enter') { e.preventDefault(); btnCalc && btnCalc.click(); }
             });
@@ -237,7 +292,7 @@
             for (const [key, inp] of Object.entries(fields)) {
               if (!inp) continue;
               const val = (inp.value || '').trim();
-              if (!val || Number(val) <= 0) { // require > 0, avoid divide-by-zero for AoV VTI & BSA
+              if (!val || Number(val) <= 0) {
                 inp.classList.add('mr-missing');
                 ok = false;
               } else {
@@ -253,8 +308,6 @@
             const aovV  = Number(fields.aovVti?.value);
             const bsa   = Number(fields.bsa?.value);
 
-            // EOA = 0.785 * (LVOT D)^2 * LVOT VTI / AoV VTI
-            // EOAI = EOA / BSA
             const lvotArea = 0.785 * lvotD * lvotD;
             const EOA = (lvotArea * lvotV) / aovV;
             const EOAI = EOA / bsa;
@@ -271,19 +324,14 @@
             if (eoaiEl) eoaiEl.textContent = '--';
           }
 
-          // Button handlers
-          if (btnCalc) {
-            btnCalc.addEventListener('click', (e) => {
-              e.preventDefault();
-              if (validate()) calculate();
-            });
-          }
-          if (btnReset) {
-            btnReset.addEventListener('click', (e) => {
-              e.preventDefault();
-              resetAll();
-            });
-          }
+          if (btnCalc) btnCalc.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (validate()) calculate();
+          });
+          if (btnReset) btnReset.addEventListener('click', (e) => {
+            e.preventDefault();
+            resetAll();
+          });
         });
       </script>
 
