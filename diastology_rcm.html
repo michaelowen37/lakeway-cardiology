@@ -19,11 +19,11 @@
       <!-- <li class="push"><a class="top-nav" href="about.html">About Us</a></li> -->
       <li class="push"><a class="top-nav" href="special_population_diastology.html">Back</a></li>
     </ul>
-  </nav>
 
-  <!-- Title + subtitle (kept as-is) -->
-  <div class="container zone body">Diastology:</div>
-  <div class="container" style="padding: 0px"><em>Restrictive Cardiomyopathy</em></div>
+    <!-- Title + subtitle formatted exactly like the AFib page -->
+    <div class="container zone body">Diastology:</div>
+    <div class="container" style="padding: 0px"><em>Restrictive Cardiomyopathy</em></div>
+  </nav>
 
   <div class="zone navigation">
     <div class="final" style="padding: 0 10%">
@@ -86,7 +86,7 @@
                       <span class="bar" aria-hidden="true"></span>
                       <span class="den">Forward-flow Velocity</span>
                     </span>
-                    <span class="cp-comp">&ge; 8</span>
+                    <span class="cp-comp">is &ge; 8</span>
                   </span>
                   <span class="cp-outcome"> = <em>Definite Constrictive Pericarditis</em></span>
                 </td>
@@ -108,7 +108,7 @@
         /* Shared theme */
         #dg-embed, #dg-embed-cp{
           --dg-accent:#00ff66;             /* default green for Chart 1 */
-          --dg-head:rgb(40,133,199);       /* header blue */
+          --dg-head:rgb(40,133,199);       /* header/blue accent */
           --dg-bg:#000; --dg-text:#fff;
           --dg-outer:4px; --dg-line:2px; --dg-hsep:2px; --dg-hrim:4px;
           color:var(--dg-text); background:var(--dg-bg);
@@ -118,7 +118,7 @@
 
         .chart-gap{ height: clamp(22px, 5vw, 44px); }
 
-        /* Header shell (used only on Chart 1) */
+        /* Header shell (Chart 1) */
         .dg-headerwrap{
           border:var(--dg-hrim) solid var(--dg-head);
           border-radius:18px;
@@ -172,7 +172,7 @@
           table-layout:fixed;
           text-align:center;
         }
-        /* Light (not bold) body text; no shading; prevent scrollbars */
+        /* Light (not bold) body text; no cell shading */
         .dg-table td{
           border:var(--dg-line) solid var(--dg-accent);
           padding:22px 10px;
@@ -187,35 +187,35 @@
           word-break: normal;
           overflow-wrap: anywhere;
           hyphens: auto;
-          overflow: hidden;             /* hide any inner overflow */
+          overflow: hidden;
           text-overflow: clip;
 
-          -ms-overflow-style: none;     /* IE/Edge hide scrollbar */
-          scrollbar-width: none;        /* Firefox hide scrollbar */
+          -ms-overflow-style: none;
+          scrollbar-width: none;
         }
         .dg-table col{ width:100%; }
         .dg-table td::-webkit-scrollbar{ display:none; }
 
         /* =================== Special styling for Chart 2 (blue outline, 90% width, no header) =================== */
         #dg-embed-cp{
-          --dg-accent: rgb(40,133,199); /* override accent to blue */
+          --dg-accent: rgb(40,133,199); /* blue outline */
         }
         .dg-narrow{ width:90%; margin:0 auto; }
 
-        /* Smaller text for contrast in Chart 2 */
+        /* Slightly smaller text for contrast in Chart 2 */
         #dg-embed-cp .dg-table td{
-          font-size: clamp(.76rem, 1.8vw, .90rem); /* slightly smaller baseline */
+          font-size: clamp(.76rem, 1.8vw, .90rem);
           padding:18px 10px;
         }
         /* Ensure <em> text in Chart 2 is NOT larger than surrounding text */
         #dg-embed-cp .dg-table td em{
-          font-size: inherit;       /* same size as surrounding text */
-          font-weight: inherit;     /* do not embolden */
-          font-style: italic;       /* keep italics only */
+          font-size: inherit;
+          font-weight: inherit;
+          font-style: italic;
           line-height: inherit;
         }
 
-        /* Fraction formatter (inline grid) — wraps well, no scrollbars, shrinks faster */
+        /* Fraction formatter — wraps well, no scrollbars, shrinks faster */
         .frac{
           display:inline-grid;
           grid-template-rows:auto 1px auto;
@@ -234,7 +234,7 @@
           overflow-wrap:anywhere;
           word-break:break-word;
           white-space:normal;
-          font-size: clamp(.62rem, 1.6vw, .88rem); /* shrinks more aggressively */
+          font-size: clamp(.62rem, 1.6vw, .88rem);
           -ms-overflow-style:none; scrollbar-width:none;
         }
         .frac .num::-webkit-scrollbar,
@@ -254,7 +254,7 @@
           white-space:normal;
           margin-left:.25em;          /* inline spacing on larger screens */
         }
-        /* ▼ NEW: Move outcome below the formula on screens <= 650px */
+        /* Move outcome below the formula on screens <= 650px */
         @media (max-width:650px){
           #dg-embed-cp .cp-outcome{
             display:block;

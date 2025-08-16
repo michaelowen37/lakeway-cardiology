@@ -22,13 +22,13 @@
       <!-- <li class="push"><a class="top-nav" href="about.html">About Us</a></li> -->
       <li class="push"><a class="top-nav" href="special_population_diastology.html">Back</a></li>
     </ul>
-  </nav>
 
-  <!-- ****************************************************************************
-    This is the main title on the top of page (kept the same)
-  **************************************************************************** -->
-  <div class="container zone body">Diastology:</div> 
-  <div class="container" style="padding: 0px"><em>Hypertrophic Cardiomyopathy</em></div> 
+    <!-- ****************************************************************************
+      Title and subtitle (formatted exactly like the AFib page)
+    **************************************************************************** -->
+    <div class="container zone body">Diastology:</div> 
+    <div class="container" style="padding: 0px"><em>Hypertrophic Cardiomyopathy</em></div> 
+  </nav>
 
   <div class="zone navigation">
     <div class="final" style="padding: 0px 10% 0px 10%;">
@@ -109,24 +109,17 @@
           font-weight:600;
           line-height:1.14;
           font-size: clamp(.80rem, 2.6vw, 1.08rem);
-
-          /* prevent inner scrollbars & weird wrapping */
-          white-space: normal;
-          word-break: normal;
-          overflow-wrap: normal;
-          hyphens: none;
-          overflow: hidden;
+          overflow:hidden;                 /* prevent inner scrollbars */
           -ms-overflow-style: none;
           scrollbar-width: none;
-
           border-right:var(--dg-hsep) solid var(--dg-head);
         }
         .dg-hcell:last-child{ border-right:none; }
         .dg-hcell::-webkit-scrollbar{ display:none; }
 
-        /* Single-column header fill (subtle blue) */
+        /* Single-column header fill (applies when .dg-header has .dg-singlecol) */
         .dg-header.dg-singlecol .dg-hcell{
-          background: rgba(40, 133, 199, 0.18);
+          background: rgba(40, 133, 199, 0.18); /* subtle blue shading for the top row */
         }
 
         /* GREEN TABLE (1 column) */
@@ -142,15 +135,15 @@
           table-layout:fixed;              /* stable columns */
           text-align:center;
         }
-        /* Light (not bold) body text; no shading */
+        /* Light/normal-weight body text for green rows (no shading) */
         .dg-table td{
           border:var(--dg-line) solid var(--dg-accent);
           padding:22px 10px;
           line-height:1.2;
-          background:transparent !important;
+          background:transparent !important;  /* no shading in green section (single column) */
           text-align:center;
 
-          font-weight: 400;
+          font-weight: 400;  /* lighter (normal) */
           font-size: clamp(.84rem, 2.1vw, .96rem);
 
           white-space: normal;
@@ -167,6 +160,7 @@
       <!-- ======================== END RESPONSIVE FIXED TABLE ======================== -->
 
       <br><br>
+
     </div>
   </div>
 

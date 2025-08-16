@@ -16,7 +16,7 @@
       <li class="push"><a class="top-nav" href="normal_diastology.html">Back</a></li>
     </ul>
 
-    <!-- Title + subtitle -->
+    <!-- Title + subtitle (preferred tight stack) -->
     <div class="title-stack">
       <div class="container zone body dg-title">Diastology:</div>
       <div class="container normal-note dg-subtitle" style="padding:0"><em>Normal LVEF</em></div>
@@ -24,7 +24,7 @@
 
     <br>
 
-    <!-- Navbar chips -->
+    <!-- Navbar chips (preferred sharp, touching, responsive) -->
     <div class="navbar">
       <a class="nospace" href="#"></a>
       <a class="active border" href="normal_diastology_no_lvh.html">No LVH or WMAs</a>
@@ -40,14 +40,7 @@
 
       <!-- ========================== RESPONSIVE FIXED TABLE ========================== -->
       <div id="dg-embed">
-        <!-- Blue header band
-             HOW-TO (COLUMNS): To ADD a column:
-               1) Duplicate one of the <div class="dg-hcell" role="columnheader">...</div> blocks below.
-               2) Paste it at the end of this header row and change the text.
-               3) In the <colgroup> further down, add another <col> (copy an existing one).
-               4) In every body row <tr>, add a new <td> in the same position.
-             To REMOVE a column: delete the header cell, the matching <col>, and each row’s <td>.
-             Where to change header TEXT: inside each dg-hcell below. -->
+        <!-- Blue header band (4 columns) -->
         <div class="dg-headerwrap">
           <div class="dg-header" role="row">
             <div class="dg-hcell" role="columnheader">E/e' &gt; 14</div>
@@ -63,22 +56,16 @@
 
             <div class="dg-hcell" role="columnheader">TR &gt; 2.8 m/s</div>
 
-            <!-- Use Unicode superscript ² to avoid clipping/drift -->
+            <!-- Unicode superscript ² -->
             <div class="dg-hcell" role="columnheader">
               LA Volume &gt; 34&nbsp;ml/m&#178;
             </div>
           </div>
         </div>
 
-        <!-- Green table (body)
-             HOW-TO (ROWS): To ADD a row:
-               1) Copy one entire <tr>...</tr> block below and paste it where you want.
-               2) Change the text inside the <th> (first column) and each <td>.
-             To REMOVE a row: delete the entire <tr>...</tr> block.
-             Where to change BODY TEXT/VALUES: inside each <th> or <td> below. -->
+        <!-- Green table (4 columns) -->
         <div class="dg-tablewrap">
           <table class="dg-table" role="table" aria-label="Diastology: Normal LVEF — No LVH or WMAs">
-            <!-- Colgroup defines how wide each column is. If you add/remove columns, update this list too. -->
             <colgroup>
               <col class="dg-col1-col">
               <col class="dg-col2-col">
@@ -124,80 +111,154 @@
       <style>
         /* -------- page-scoped styles only (style3.css untouched) -------- */
 
-        /* NAV container: ensure nothing clips/scrolls the title stack */
+        /* NAV container & title stack safety */
         .zone.nav-bar{ overflow: visible !important; height: auto !important; }
 
-        /* Title/subtitle: flex column, MAX-tight gap, and NO inner scrollbars or fixed heights */
-        .title-stack{ 
-          display:flex;
-          flex-direction:column;
-          align-items:center;
-          justify-content:flex-start;
-          gap: 0px;                   /* as tight as possible globally */
-          margin: 0;
-          padding: 0;
-          max-width: 100%;
-          min-height: auto;
-          overflow: visible !important;
+        .title-stack{
+          display:flex; flex-direction:column; align-items:center; justify-content:flex-start;
+          gap:0; margin:0; padding:0; max-width:100%; overflow:visible !important;
         }
-        /* Hard overrides on the two lines so they can never scroll/clip */
-        .dg-title,
-        .dg-subtitle,
-        .title-stack .container,
-        .title-stack .zone{
-          display:block !important;
-          position:static !important;
-          float:none !important;
-          clear:both !important;
-          margin:0 !important;
-          padding:0 !important;
-          height:auto !important;
-          max-height:none !important;
-          min-height:0 !important;
+        .dg-title, .dg-subtitle, .title-stack .container, .title-stack .zone{
+          display:block !important; position:static !important; float:none !important; clear:both !important;
+          margin:0 !important; padding:0 !important; height:auto !important; max-height:none !important; min-height:0 !important;
+          overflow:visible !important; white-space:normal; word-break:normal; overflow-wrap:normal; text-align:center;
+        }
+        .dg-title{ line-height:1.10; }
+        .dg-subtitle{ line-height:1.12; }
+
+        /* Tight, AFib-like stack on wider screens too */
+        @media (min-width:700px){
+          .title-stack{ gap:0 !important; }
+          .dg-title{ line-height:1.06 !important; }
+          .dg-subtitle{
+            line-height:1.06 !important;
+            margin-top: clamp(-4px, -0.45vw, -8px) !important; /* pull subtitle closer without overlap */
+          }
+        }
+        @media (max-width:700px){
+          .dg-subtitle{ font-size:clamp(.72rem, 2.6vw, .95rem); }
+        }
+        @media (max-width:400px){
+          .dg-subtitle{ font-size:clamp(.62rem, 3.4vw, .88rem); }
+        }
+
+        /* ======================= CHIPS: centered, touching, responsive (preferred) ======================= */
+        .navbar{
+          display:flex; justify-content:center; align-items:stretch; gap:0 !important;
+          height:auto !important; min-height:40px; padding:0; margin:0 auto; width:100%;
           overflow:visible !important;
-          white-space: normal;
-          word-break: normal;
-          overflow-wrap: normal;
-          text-align:center;
         }
-        /* Slightly condensed line boxes to keep the two lines visually snug but readable */
-        .dg-title{ line-height: 1.10; }
-        .dg-subtitle{ line-height: 1.12; }
+        .navbar a.nospace{ display:none !important; }  /* hide spacers so chips can touch */
 
-        /* Safety buffer only in the mid-width band that once had contact */
-        @media (min-width:700px) and (max-width:1000px){
-          .title-stack{ gap: 3px !important; } /* minimal cushion while still dramatic */
+        .navbar a.border,
+        .navbar a.active.border{
+          position: static !important;
+          float: none !important;
+          display: inline-flex !important;
+          box-sizing: border-box !important;
+
+          /* default sizing (tablet/desktop): one-line, size to content */
+          width: auto !important;
+          min-width: 0 !important;
+          max-width: none !important;
+          white-space: nowrap !important;
+
+          height: auto !important;
+          margin: 0 !important;
+          overflow: visible !important;
+          word-break: normal !important;
+          text-overflow: clip !important;
+          align-items: center !important;
+          justify-content: center !important;
+
+          /* Visuals */
+          border: 2px solid green !important;
+          border-radius: 0 !important;                /* sharp corners */
+          background: transparent !important;
+          color: #fff !important;
+
+          /* Readability */
+          font-size: clamp(.66rem, 2.4vw, 1rem) !important;
+          line-height: 1.05 !important;
+          padding: clamp(6px, 1.1vw, 12px) clamp(12px, 2.2vw, 20px) !important;
+
+          /* Keep them from stretching weirdly; seam handled below */
+          flex: 0 0 auto !important;
+          text-align:center !important;
         }
+        .navbar a.active.border{ background-color:#4CAF50 !important; border-color:green !important; }
 
-        /* NAV CHIPS: shrink text (no overflow), no inner scrollbars */
-        .navbar { height:auto !important; min-height:40px; align-items:stretch; }
-        .navbar a{
-          display:inline-flex; align-items:center; justify-content:center;
-          white-space:nowrap; min-width:0; line-height:1.05;
-          height:auto !important; min-height:36px;
-          font-size: clamp(0.46rem, 2.9vw, 1rem);
-          padding: clamp(5px, 1.2vw, 12px) clamp(6px, 1.8vw, 16px);
-          overflow:hidden; text-overflow:clip; color:#fff; box-sizing:border-box;
-        }
-        .navbar a.border{ border:2px solid green; border-radius:10px; }
-        .navbar a.active{ background-color:#4CAF50; }
-        .navbar a.active.border{ background-color:#4CAF50; border-color:green; }
+        /* Touching seam (shared border) */
+        .navbar a.border + .navbar a.border{ margin-left:-2px !important; }
 
-        /* Extra breathing room for bordered chips on small phones (left/right padding only) */
-        @media (max-width: 420px){
+        /* ▼ Narrower below 700px (meet-in-the-middle), allow wrapping for long label */
+        @media (max-width:700px){
           .navbar a.border,
           .navbar a.active.border{
-            padding-left: clamp(12px, 6vw, 24px);
-            padding-right: clamp(12px, 6vw, 24px);
+            white-space: normal !important;           /* allow wrapping */
+            overflow-wrap: anywhere !important;
+            line-height: 1.12 !important;
+
+            /* narrower base width for two-chip layout */
+            flex-basis: clamp(150px, 30vw, 230px) !important;
+
+            /* Slightly tighter padding so two chips stay tidy */
+            padding: 6px 10px !important;
           }
         }
 
-        /* Theme variables for the table */
+        /* ▼ Further shorten under 500px so borders don't look too long */
+        @media (max-width:500px){
+          .navbar a.border,
+          .navbar a.active.border{
+            flex-basis: clamp(120px, 26vw, 180px) !important;  /* shorter width */
+            padding-left: 8px !important;
+            padding-right: 8px !important;
+          }
+        }
+
+        /* Extra-small phones: slightly smaller text/padding */
+        @media (max-width:420px){
+          .navbar a.border,
+          .navbar a.active.border{
+            font-size: clamp(.58rem, 2vw, .88rem) !important;
+            padding: 5px 8px !important; /* keep narrow look consistent */
+          }
+        }
+        @media (max-width:340px){
+          .navbar a.border,
+          .navbar a.active.border{
+            font-size: clamp(.54rem, 2vw, .84rem) !important;
+            padding: 4px 8px !important;
+          }
+        }
+
+        /* Mid-band widening: 700–999 px (roomier chips) */
+        @media (min-width:700px) and (max-width:999px){
+          .navbar a.border,
+          .navbar a.active.border{
+            flex-basis: clamp(220px, 30vw, 320px) !important;
+            padding-left: clamp(16px, 1.8vw, 28px) !important;
+            padding-right: clamp(16px, 1.8vw, 28px) !important;
+            font-size: clamp(.85rem, 1.2vw, 1.02rem) !important;
+          }
+        }
+
+        /* Desktop widening: ≥1000px */
+        @media (min-width:1000px){
+          .navbar a.border,
+          .navbar a.active.border{
+            flex-basis: clamp(320px, 22vw, 420px) !important;
+            padding-left: clamp(22px, 1.4vw, 34px) !important;
+            padding-right: clamp(22px, 1.4vw, 34px) !important;
+            font-size: clamp(.9rem, 1.05vw, 1.08rem) !important;
+          }
+        }
+
+        /* ======================= TABLE THEME (unchanged) ======================= */
         #dg-embed{
-          --dg-accent:#00ff66;             /* green border */
-          --dg-head:rgb(40,133,199);       /* header blue */
-          --dg-bg:#000; --dg-text:#fff;
-          --dg-outer:4px; --dg-line:2px; --dg-hsep:2px; --dg-hrim:4px;
+          --dg-accent:#00ff66; --dg-head:rgb(40,133,199);
+          --dg-bg:#000; --dg-text:#fff; --dg-outer:4px; --dg-line:2px; --dg-hsep:2px; --dg-hrim:4px;
           color:var(--dg-text); background:var(--dg-bg);
           font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
         }
@@ -207,96 +268,36 @@
         .dg-headerwrap{
           border:var(--dg-hrim) solid var(--dg-head);
           border-radius:18px;
-          overflow:hidden;                 /* clean rounded frame, no inner scrollbars */
-          background:var(--dg-bg);
-          margin-bottom:8px;
+          overflow:hidden; background:var(--dg-bg); margin-bottom:8px;
         }
-        .dg-header{
-          display:grid;
-          grid-template-columns:repeat(4, minmax(0, 1fr));
-          width:100%;
-        }
+        .dg-header{ display:grid; grid-template-columns:repeat(4, minmax(0, 1fr)); width:100%; }
         .dg-hcell{
-          display:flex; align-items:center; justify-content:center;
-          padding:20px 12px;
-          min-height:120px;
-          text-align:center;
-          font-weight:500;
-          line-height:1.14;
-          font-size: clamp(.80rem, 2.6vw, 1.08rem);
-
-          /* no scrollbars in header cells */
-          overflow:hidden;
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-          border-right:var(--dg-hsep) solid var(--dg-head);
+          display:flex; align-items:center; justify-content:center; padding:20px 12px; min-height:120px;
+          text-align:center; font-weight:500; line-height:1.14; font-size: clamp(.80rem, 2.6vw, 1.08rem);
+          overflow:hidden; -ms-overflow-style: none; scrollbar-width: none; border-right:var(--dg-hsep) solid var(--dg-head);
         }
         .dg-hcell::-webkit-scrollbar{ display:none; }
         .dg-hcell:last-child{ border-right:none; }
 
         /* Centered 3-line criteria layout */
-        .dg-crit{
-          display:grid;
-          grid-template-rows:auto auto auto;
-          row-gap: 6px;
-          width:100%;
-          justify-items:center;  /* center each line horizontally */
-          align-items:center;    /* nice vertical balance */
-          overflow:hidden;
-        }
-        .dg-crit .dg-line,
-        .dg-crit .dg-or{
-          max-width:100%;
-          overflow:hidden;
-          text-align:center;
-        }
-        .dg-crit .dg-or{
-          font-weight:800;
-          letter-spacing:.02em;
-        }
+        .dg-crit{ display:grid; grid-template-rows:auto auto auto; row-gap: 6px; width:100%; justify-items:center; align-items:center; overflow:hidden; }
+        .dg-crit .dg-line, .dg-crit .dg-or{ max-width:100%; overflow:hidden; text-align:center; }
+        .dg-crit .dg-or{ font-weight:800; letter-spacing:.02em; }
 
         @media (max-width:400px){
-          .dg-hcell{
-            padding:18px 10px;
-            min-height:128px;
-            font-size:clamp(.70rem, 3.0vw, 1.02rem);
-          }
+          .dg-hcell{ padding:18px 10px; min-height:128px; font-size:clamp(.70rem, 3.0vw, 1.02rem); }
           .dg-crit{ row-gap: 4px; }
         }
         @media (max-width:340px){
-          .dg-hcell{
-            padding:16px 8px;
-            min-height:130px;
-            font-size:clamp(.66rem, 3.2vw, .98rem);
-          }
+          .dg-hcell{ padding:16px 8px; min-height:130px; font-size:clamp(.66rem, 3.2vw, .98rem); }
         }
 
         /* GREEN TABLE */
-        .dg-tablewrap{
-          border:var(--dg-outer) solid var(--dg-accent);
-          border-radius:18px;
-          overflow:hidden;
-          background:var(--dg-bg);
-        }
-        .dg-table{
-          width:100%;
-          border-collapse:collapse;        /* solid grid lines */
-          table-layout:fixed;              /* stable columns */
-          text-align:center;
-        }
+        .dg-tablewrap{ border:var(--dg-outer) solid var(--dg-accent); border-radius:18px; overflow:hidden; background:var(--dg-bg); }
+        .dg-table{ width:100%; border-collapse:collapse; table-layout:fixed; text-align:center; }
         .dg-table th, .dg-table td{
-          border:var(--dg-line) solid var(--dg-accent);
-          padding:22px 10px;
-          line-height:1.2;
-          background:transparent;
-          text-align:center;
-
-          white-space: normal;
-          word-break: normal;
-          overflow-wrap: normal;
-          hyphens: none;
-          overflow: hidden;
-          text-overflow: clip;
+          border:var(--dg-line) solid var(--dg-accent); padding:22px 10px; line-height:1.2; background:transparent; text-align:center;
+          white-space: normal; word-break: normal; overflow-wrap: normal; hyphens: none; overflow: hidden; text-overflow: clip;
         }
 
         /* Default equal widths */
@@ -312,14 +313,13 @@
           .dg-table col.dg-col2-col, .dg-table col.dg-col3-col, .dg-table col.dg-col4-col{ width:22.17%; }
         }
         @media (max-width:320px){
-          .dg-table col.dg-col1-col{ width:35.5%; } /* ensures “Indeterminate” fits without extra side space */
+          .dg-table col.dg-col1-col{ width:35.5%; }
           .dg-table col.dg-col2-col, .dg-table col.dg-col3-col, .dg-table col.dg-col4-col{ width:21.5%; }
         }
 
-        /* First-column text: bold + blue tint (derived from header blue) */
+        /* First-column text: bold + blue tint */
         .dg-table th.dg-col1{
-          font-weight:800;
-          font-size:clamp(.95rem, 2.5vw, 1.1rem);
+          font-weight:800; font-size:clamp(.95rem, 2.5vw, 1.1rem);
           background: rgba(40, 133, 199, 0.22);
         }
         @media (max-width:360px){

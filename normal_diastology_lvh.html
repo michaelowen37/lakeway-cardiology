@@ -16,7 +16,7 @@
       <li class="push"><a class="top-nav" href="normal_diastology.html">Back</a></li>
     </ul>
 
-    <!-- Title + subtitle -->
+    <!-- Title + subtitle (preferred tight stack) -->
     <div class="title-stack">
       <div class="container zone body dg-title">Diastology:</div>
       <div class="container normal-note dg-subtitle" style="padding:0"><em>Normal LVEF</em></div>
@@ -24,7 +24,7 @@
 
     <br>
 
-    <!-- Navbar chips (keep/edit as needed) -->
+    <!-- Navbar chips (preferred sharp, touching, responsive) -->
     <div class="navbar">
       <a class="nospace" href="#"></a>
       <a class="border" href="diastology_normal_lvef.html">No LVH or WMAs</a>
@@ -50,9 +50,6 @@
         </div>
 
         <!-- Green table (3 columns, 3 rows) -->
-        <!-- HOW-TO (ROWS): To add one, duplicate a <tr> and edit the <th>/<td> text.
-             HOW-TO (COLUMNS): To add/remove a column, edit: header .dg-header cells,
-             <colgroup> below, and each row's number of <td>. -->
         <div class="dg-tablewrap">
           <table class="dg-table" role="table" aria-label="Diastology table — 3 columns">
             <colgroup>
@@ -84,148 +81,185 @@
       <style>
         /* -------- page-scoped styles only (style3.css untouched) -------- */
 
-        /* NAV container: ensure nothing clips/scrolls the title stack */
+        /* NAV container & title stack safety */
         .zone.nav-bar{ overflow: visible !important; height: auto !important; }
 
-        /* Title/subtitle: ultra-tight but safe gap */
-        .title-stack{ 
-          display:flex;
-          flex-direction:column;
-          align-items:center;
-          justify-content:flex-start;
-          gap: clamp(1px, 0.25vw, 6px);
-          margin: 0;
-          padding: 0;
-          max-width: 100%;
-          overflow: visible !important;
+        .title-stack{
+          display:flex; flex-direction:column; align-items:center; justify-content:flex-start;
+          gap:0; margin:0; padding:0; max-width:100%; overflow:visible !important;
         }
-        .dg-title,
-        .dg-subtitle,
-        .title-stack .container,
-        .title-stack .zone{
-          display:block !important;
-          position:static !important;
-          float:none !important;
-          clear:both !important;
-          margin:0 !important;
-          padding:0 !important;
-          height:auto !important;
-          max-height:none !important;
-          min-height:0 !important;
-          overflow:visible !important;
-          white-space: normal;
-          word-break: normal;
-          overflow-wrap: normal;
-          text-align:center;
+        .dg-title, .dg-subtitle, .title-stack .container, .title-stack .zone{
+          display:block !important; position:static !important; float:none !important; clear:both !important;
+          margin:0 !important; padding:0 !important; height:auto !important; max-height:none !important; min-height:0 !important;
+          overflow:visible !important; white-space:normal; word-break:normal; overflow-wrap:normal; text-align:center;
         }
-        .dg-title{ line-height: 1.12; }
-        .dg-subtitle{ line-height: 1.16; }
-        @media (min-width:700px) and (max-width:1000px){
-          .title-stack{ gap: 6px !important; }
+        .dg-title{ line-height:1.10; }
+        .dg-subtitle{ line-height:1.12; }
+
+        /* Tight, AFib-like stack on wider screens too */
+        @media (min-width:700px){
+          .title-stack{ gap:0 !important; }
+          .dg-title{ line-height:1.06 !important; }
+          .dg-subtitle{
+            line-height:1.06 !important;
+            margin-top: clamp(-4px, -0.45vw, -8px) !important; /* pull subtitle closer without overlap */
+          }
+        }
+        @media (max-width:700px){
+          .dg-subtitle{ font-size:clamp(.72rem, 2.6vw, .95rem); }
+        }
+        @media (max-width:400px){
+          .dg-subtitle{ font-size:clamp(.62rem, 3.4vw, .88rem); }
         }
 
-        /* NAV CHIPS */
-        .navbar { height:auto !important; min-height:40px; align-items:stretch; }
-        .navbar a{
-          display:inline-flex; align-items:center; justify-content:center;
-          white-space:nowrap; min-width:0; line-height:1.05;
-          height:auto !important; min-height:36px;
-          font-size: clamp(0.46rem, 2.9vw, 1rem);
-          padding: clamp(5px, 1.2vw, 12px) clamp(6px, 1.8vw, 16px);
-          overflow:hidden; text-overflow:clip; color:#fff; box-sizing:border-box;
+        /* ======================= CHIPS: centered, touching, responsive (preferred) ======================= */
+        .navbar{
+          display:flex; justify-content:center; align-items:stretch; gap:0 !important;
+          height:auto !important; min-height:40px; padding:0; margin:0 auto; width:100%;
+          overflow:visible !important;
         }
-        .navbar a.border{ border:2px solid green; border-radius:10px; }
-        .navbar a.active{ background-color:#4CAF50; }
-        .navbar a.active.border{ background-color:#4CAF50; border-color:green; }
-        @media (max-width: 420px){
+        .navbar a.nospace{ display:none !important; }  /* hide spacers so chips can touch */
+
+        .navbar a.border,
+        .navbar a.active.border{
+          position: static !important;
+          float: none !important;
+          display: inline-flex !important;
+          box-sizing: border-box !important;
+
+          /* default sizing (tablet/desktop): one-line, size to content */
+          width: auto !important;
+          min-width: 0 !important;
+          max-width: none !important;
+          white-space: nowrap !important;
+
+          height: auto !important;
+          margin: 0 !important;
+          overflow: visible !important;
+          word-break: normal !important;
+          text-overflow: clip !important;
+          align-items: center !important;
+          justify-content: center !important;
+
+          /* Visuals */
+          border: 2px solid green !important;
+          border-radius: 0 !important;                /* sharp corners */
+          background: transparent !important;
+          color: #fff !important;
+
+          /* Readability */
+          font-size: clamp(.66rem, 2.4vw, 1rem) !important;
+          line-height: 1.05 !important;
+          padding: clamp(6px, 1.1vw, 12px) clamp(12px, 2.2vw, 20px) !important;
+
+          /* Keep them from stretching weirdly; seam handled below */
+          flex: 0 0 auto !important;
+          text-align:center !important;
+        }
+        .navbar a.active.border{ background-color:#4CAF50 !important; border-color:green !important; }
+
+        /* Touching seam (shared border) */
+        .navbar a.border + .navbar a.border{ margin-left:-2px !important; }
+
+        /* ▼ Narrower below 700px (meet-in-the-middle), allow wrapping for long label */
+        @media (max-width:700px){
           .navbar a.border,
           .navbar a.active.border{
-            padding-left: clamp(12px, 6vw, 24px);
-            padding-right: clamp(12px, 6vw, 24px);
+            white-space: normal !important;           /* allow wrapping */
+            overflow-wrap: anywhere !important;
+            line-height: 1.12 !important;
+
+            /* narrower base width for two-chip layout */
+            flex-basis: clamp(150px, 30vw, 230px) !important;
+
+            /* Slightly tighter padding so two chips stay tidy */
+            padding: 6px 10px !important;
           }
         }
 
-        /* Theme variables */
+        /* ▼ Further shorten under 500px so borders don't look too long */
+        @media (max-width:500px){
+          .navbar a.border,
+          .navbar a.active.border{
+            flex-basis: clamp(120px, 26vw, 180px) !important;  /* shorter width */
+            padding-left: 8px !important;
+            padding-right: 8px !important;
+          }
+        }
+
+        /* Extra-small phones: slightly smaller text/padding */
+        @media (max-width:420px){
+          .navbar a.border,
+          .navbar a.active.border{
+            font-size: clamp(.58rem, 2vw, .88rem) !important;
+            padding: 5px 8px !important; /* keep narrow look consistent */
+          }
+        }
+        @media (max-width:340px){
+          .navbar a.border,
+          .navbar a.active.border{
+            font-size: clamp(.54rem, 2vw, .84rem) !important;
+            padding: 4px 8px !important;
+          }
+        }
+
+        /* Mid-band widening: 700–999 px (roomier chips) */
+        @media (min-width:700px) and (max-width:999px){
+          .navbar a.border,
+          .navbar a.active.border{
+            flex-basis: clamp(220px, 30vw, 320px) !important;
+            padding-left: clamp(16px, 1.8vw, 28px) !important;
+            padding-right: clamp(16px, 1.8vw, 28px) !important;
+            font-size: clamp(.85rem, 1.2vw, 1.02rem) !important;
+          }
+        }
+
+        /* Desktop widening: ≥1000px */
+        @media (min-width:1000px){
+          .navbar a.border,
+          .navbar a.active.border{
+            flex-basis: clamp(320px, 22vw, 420px) !important;
+            padding-left: clamp(22px, 1.4vw, 34px) !important;
+            padding-right: clamp(22px, 1.4vw, 34px) !important;
+            font-size: clamp(.9rem, 1.05vw, 1.08rem) !important;
+          }
+        }
+
+        /* ======================= TABLE THEME ======================= */
         #dg-embed{
-          --dg-accent:#00ff66;             /* green border/lines */
-          --dg-head:rgb(40,133,199);       /* header blue */
-          --dg-bg:#000; --dg-text:#fff;
+          --dg-accent:#00ff66; --dg-head:rgb(40,133,199); --dg-bg:#000; --dg-text:#fff;
           --dg-outer:4px; --dg-line:2px; --dg-hsep:2px; --dg-hrim:4px;
           color:var(--dg-text); background:var(--dg-bg);
           font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
         }
         #dg-embed *{ box-sizing:border-box; }
 
-        /* BLUE HEADER (3 columns) */
-        .dg-headerwrap{
-          border:var(--dg-hrim) solid var(--dg-head);
-          border-radius:18px;
-          overflow:hidden;
-          background:var(--dg-bg);
-          margin-bottom:8px;
-        }
-        .dg-header{
-          display:grid;
-          grid-template-columns:repeat(3, minmax(0, 1fr));
-          width:100%;
-        }
+        .dg-headerwrap{ border:var(--dg-hrim) solid var(--dg-head); border-radius:18px; overflow:hidden; background:var(--dg-bg); margin-bottom:8px; }
+        .dg-header{ display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); width:100%; }
         .dg-hcell{
-          display:flex; align-items:center; justify-content:center;
-          padding:20px 12px;
-          min-height:110px;
-          text-align:center;
-          font-weight:600;
-          line-height:1.14;
-          font-size: clamp(.80rem, 2.6vw, 1.08rem);
-          overflow:hidden;
-          -ms-overflow-style: none;
-          scrollbar-width: none;
+          display:flex; align-items:center; justify-content:center; padding:20px 12px; min-height:110px;
+          text-align:center; font-weight:600; line-height:1.14; font-size: clamp(.80rem, 2.6vw, 1.08rem);
+          overflow:hidden; -ms-overflow-style:none; scrollbar-width:none;
           border-right:var(--dg-hsep) solid var(--dg-head);
         }
         .dg-hcell::-webkit-scrollbar{ display:none; }
         .dg-hcell:last-child{ border-right:none; }
 
-        /* GREEN TABLE */
-        .dg-tablewrap{
-          border:var(--dg-outer) solid var(--dg-accent);
-          border-radius:18px;
-          overflow:hidden;
-          background:var(--dg-bg);
-        }
-        .dg-table{
-          width:100%;
-          border-collapse:collapse;        /* solid grid lines */
-          table-layout:fixed;              /* stable columns */
-          text-align:center;
-        }
+        .dg-tablewrap{ border:var(--dg-outer) solid var(--dg-accent); border-radius:18px; overflow:hidden; background:var(--dg-bg); }
+        .dg-table{ width:100%; border-collapse:collapse; table-layout:fixed; text-align:center; }
         .dg-table th, .dg-table td{
           border:var(--dg-line) solid var(--dg-accent);
-          padding:22px 10px;
-          line-height:1.2;
-          background:transparent;
-          text-align:center;
-          white-space: normal;
-          word-break: normal;
-          overflow-wrap: normal;
-          hyphens: none;
-          overflow: hidden;
-          text-overflow: clip;
+          padding:22px 10px; line-height:1.2; background:transparent; text-align:center;
+          white-space:normal; word-break:normal; overflow-wrap:normal; hyphens:none; overflow:hidden; text-overflow:clip;
         }
-
-        /* Equal widths for 3 columns */
         .dg-table col{ width:33.3333%; }
-
-        /* First-column text: bold + soft blue tint for contrast */
         .dg-table th.dg-col1{
-          font-weight:800;
-          font-size:clamp(.95rem, 2.5vw, 1.1rem);
+          font-weight:800; font-size:clamp(.95rem, 2.5vw, 1.1rem);
           background: rgba(40, 133, 199, 0.22);
         }
         @media (max-width:360px){
           .dg-table th.dg-col1{ font-size:clamp(.82rem, 3.0vw, 1.02rem); letter-spacing:-0.006em; }
         }
-
-        /* Data columns: slightly smaller for contrast */
         .dg-table td{ font-weight:600; font-size:clamp(.84rem, 2.1vw, .96rem); }
 
         /* Widen the table zone on phones (trim page padding) */
