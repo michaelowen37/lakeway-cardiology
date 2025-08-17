@@ -1313,3 +1313,15 @@ li {
     font-size: clamp(.64rem, 3.0vw, .90rem);
   }
 }
+
+
+/* Widen the table zone on phones (match stenosis page) */
+@media (max-width:600px){ .final{ padding-left:6% !important; padding-right:6% !important; } }
+@media (max-width:400px){ .final{ padding-left:4% !important; padding-right:4% !important; } }
+@media (max-width:340px){ .final{ padding-left:3% !important; padding-right:3% !important; } }
+@media (max-width:320px){ .final{ padding-left:2.5% !important; padding-right:2.5% !important; } }
+
+
+#dg-embed .dg-header .dg-wrap{
+  display:inline; white-space:nowrap; -webkit-line-clamp:unset; -webkit-box-orient:initial;
+}
