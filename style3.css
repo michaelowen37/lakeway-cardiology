@@ -1326,3 +1326,27 @@ li {
   display:inline; white-space:nowrap; -webkit-line-clamp:unset; -webkit-box-orient:initial;
 }
 
+/* ===== Expand table cell text to 4 lines (rows auto-grow) ===== */
+#dg-embed .dg-table th .dg-wrap,
+#dg-embed .dg-table td .dg-wrap{
+  -webkit-line-clamp: 4 !important; /* was 3 */
+  display: -webkit-box !important;
+  -webkit-box-orient: vertical !important;
+  overflow: hidden !important;
+}
+
+/* Keep header labels on one line (don’t clamp) */
+#dg-embed .dg-header .dg-wrap{
+  display: inline !important;
+  -webkit-line-clamp: unset !important;
+  -webkit-box-orient: initial !important;
+  white-space: nowrap !important;
+}
+
+/* Ensure soft hyphens &shy; still work in cells */
+#dg-embed .dg-table .dg-wrap{
+  -webkit-hyphens: manual !important;
+  hyphens: manual !important;
+  word-break: normal !important;
+  overflow-wrap: normal !important;
+}
