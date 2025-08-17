@@ -1291,3 +1291,25 @@ li {
     font-size: clamp(.86rem, 1vw, 1.06rem) !important;
   }
 }
+
+
+/* ===== Fix: prevent header clamp from clipping single words like "MODERATE" ===== */
+#dg-embed .dg-header .dg-wrap{
+  display: inline;                 /* cancel the -webkit-box used for 3-line clamp */
+  -webkit-line-clamp: unset;
+  -webkit-box-orient: initial;
+  white-space: nowrap;             /* never break MODERATE */
+}
+
+/* Give headers a touch more room on small screens without breaking the word */
+@media (max-width:480px){
+  #dg-embed .dg-header .dg-hcell{
+    font-size: clamp(.68rem, 2.8vw, .94rem);
+    padding: 16px 8px;             /* slightly narrower padding */
+  }
+}
+@media (max-width:360px){
+  #dg-embed .dg-header .dg-hcell{
+    font-size: clamp(.64rem, 3.0vw, .90rem);
+  }
+}
