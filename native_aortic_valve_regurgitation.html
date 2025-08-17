@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
   <title>Native Aortic Valve</title>
@@ -24,7 +24,7 @@
 
     <br>
 
-    <!-- Navbar chips (preferred sharp, touching, responsive) -->
+    <!-- Navbar chips (shared styles live in style3.css) -->
     <div class="navbar">
       <a class="nospace" href="#"></a>
       <a class="border" href="native_aortic_valve_stenosis.html">Stenosis</a>
@@ -38,12 +38,7 @@
 
       <br>
 
-      <!-- ========================== DG TABLE (replaces the .svg) ==========================
-           HOW TO EDIT (plain-English friendly):
-           • Change ONLY the words/numbers inside each <div class="dg-wrap">…</div>.
-           • Superscripts: write cm<sup>2</sup>. Use &lt; and &gt; for < and >.
-           • Long words allowed to break nicely: Inter-<wbr>mediate, Holo-<wbr>diastolic.
-      ==================================================================================== -->
+      <!-- ========================== DG TABLE (replaces the .svg) ========================== -->
       <div id="dg-embed" aria-label="Native Aortic Valve — Aortic Regurgitation severity table">
 
         <!-- Blue header band (4 columns) -->
@@ -96,8 +91,9 @@
               <tr>
                 <th scope="row" class="dg-col1"><div class="dg-wrap">Diastolic Flow Reversal (DAO)</div></th>
                 <td class="dg-c2"><div class="dg-wrap">Brief early-diastolic reversal</div></td>
-                <td class="dg-c3"><div class="dg-wrap">Inter-<wbr>mediate</div></td>
-                <td class="dg-c4"><div class="dg-wrap">Holo-<wbr>diastolic reversal</div></td>
+                <!-- Soft hyphens: show only when the word actually wraps (e.g., <500px) -->
+                <td class="dg-c3"><div class="dg-wrap">Inter&shy;mediate</div></td>
+                <td class="dg-c4"><div class="dg-wrap">Holo&shy;diastolic reversal</div></td>
               </tr>
               <tr>
                 <th scope="row" class="dg-col1"><div class="dg-wrap">Vena Contracta Width</div></th>
@@ -121,6 +117,18 @@
       <!-- <li><a href="terms-of-use.html" target="_blank">Terms of Use</a></li> -->
     </ul>
   </footer>
+
+  <!-- Page-scoped patch to honor soft hyphens in cells -->
+  <style>
+    /* Let &shy; work in wrapped cells (overrides any global hyphens:none) */
+    #dg-embed .dg-table th .dg-wrap,
+    #dg-embed .dg-table td .dg-wrap{
+      -webkit-hyphens: manual !important;
+      hyphens: manual !important;
+      word-break: normal !important;
+      overflow-wrap: normal !important;
+    }
+  </style>
 
 </body>
 </html>

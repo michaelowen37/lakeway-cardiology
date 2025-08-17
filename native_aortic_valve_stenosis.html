@@ -24,7 +24,7 @@
 
     <br>
 
-    <!-- Navbar chips (preferred sharp, touching, responsive) -->
+    <!-- Navbar chips -->
     <div class="navbar">
       <a class="nospace" href="#"></a>
       <a class="active border" href="native_aortic_valve_stenosis.html">Stenosis</a>
@@ -38,23 +38,13 @@
 
       <br>
 
-      <!-- ========================== RESPONSIVE FIXED TABLE (replaces the .svg) ==========================
-           HOW TO EDIT (non-coder friendly):
-           • Edit the visible words/numbers INSIDE each <div class="dg-wrap">…</div> below.
-           • Superscripts: use cm<sup>2</sup>, m<sup>2</sup>.
-           • Use &lt; for < and &gt; for > in HTML.
-           • Keep <span class="dg-nb">cm<sup>2</sup>/m<sup>2</sup></span> together so it never splits.
-           • Add <wbr> after slashes if you want optional breaks (e.g., m/<wbr>s).
-      ================================================================================================ -->
+      <!-- ========================== DG TABLE (replaces the .svg) ========================== -->
       <div id="dg-embed" aria-label="Native Aortic Valve — Stenosis severity table">
 
         <!-- Blue header band (4 columns) -->
         <div class="dg-headerwrap">
           <div class="dg-header" role="row">
-            <!-- Top-left header intentionally blank to align with label column -->
             <div class="dg-hcell" role="columnheader"><div class="dg-wrap"></div></div>
-
-            <!-- Column headers -->
             <div class="dg-hcell" role="columnheader"><div class="dg-wrap">MILD</div></div>
             <div class="dg-hcell" role="columnheader"><div class="dg-wrap">MODERATE</div></div>
             <div class="dg-hcell" role="columnheader"><div class="dg-wrap">SEVERE</div></div>
@@ -65,7 +55,6 @@
         <div class="dg-tablewrap">
           <table class="dg-table" role="table" aria-label="Aortic stenosis severity criteria">
             <colgroup>
-              <!-- Column widths (1st column a bit wider on tiny screens) -->
               <col class="dg-col1-col">
               <col class="dg-col2-col">
               <col class="dg-col3-col">
@@ -90,12 +79,27 @@
                 <td class="dg-c3"><div class="dg-wrap">1.0 – 1.5&nbsp;cm<sup>2</sup></div></td>
                 <td class="dg-c4"><div class="dg-wrap">&lt; 1.0&nbsp;cm<sup>2</sup></div></td>
               </tr>
+
+              <!-- Indexed AVA (turn OFF clamping in just these three cells to avoid tiny scrollbars) -->
               <tr>
                 <th scope="row" class="dg-col1"><div class="dg-wrap">Indexed AVA</div></th>
-                <td class="dg-c2"><div class="dg-wrap">&gt; 0.85 <span class="dg-nb">cm<sup>2</sup>/m<sup>2</sup></span></div></td>
-                <td class="dg-c3"><div class="dg-wrap">0.60 – 0.85 <span class="dg-nb">cm<sup>2</sup>/m<sup>2</sup></span></div></td>
-                <td class="dg-c4"><div class="dg-wrap">&lt; 0.60 <span class="dg-nb">cm<sup>2</sup>/m<sup>2</sup></span></div></td>
+                <td class="dg-c2">
+                  <div class="dg-wrap" style="-webkit-line-clamp:unset; display:block; overflow:visible;">
+                    &gt; 0.85 <span class="dg-nb">cm<sup>2</sup>/m<sup>2</sup></span>
+                  </div>
+                </td>
+                <td class="dg-c3">
+                  <div class="dg-wrap" style="-webkit-line-clamp:unset; display:block; overflow:visible;">
+                    0.60 – 0.85 <span class="dg-nb">cm<sup>2</sup>/m<sup>2</sup></span>
+                  </div>
+                </td>
+                <td class="dg-c4">
+                  <div class="dg-wrap" style="-webkit-line-clamp:unset; display:block; overflow:visible;">
+                    &lt; 0.60 <span class="dg-nb">cm<sup>2</sup>/m<sup>2</sup></span>
+                  </div>
+                </td>
               </tr>
+
               <tr>
                 <th scope="row" class="dg-col1"><div class="dg-wrap">Dimensionless Index</div></th>
                 <td class="dg-c2"><div class="dg-wrap">&gt; 0.50</div></td>
@@ -106,7 +110,7 @@
           </table>
         </div>
       </div>
-      <!-- ======================== END RESPONSIVE FIXED TABLE ======================== -->
+      <!-- ======================== END DG TABLE ======================== -->
 
       <br><br>
     </div>
@@ -118,238 +122,6 @@
       <!-- <li><a href="terms-of-use.html" target="_blank">Terms of Use</a></li> -->
     </ul>
   </footer>
-
-  <style>
-    /* -------- page-scoped styles only (style3.css untouched) -------- */
-
-    /* NAV container & title stack safety */
-    .zone.nav-bar{ overflow: visible !important; height: auto !important; }
-    .title-stack{
-      display:flex; flex-direction:column; align-items:center; justify-content:flex-start;
-      gap:0; margin:0; padding:0; max-width:100%; overflow:visible !important;
-    }
-    .dg-title, .title-stack .container, .title-stack .zone{
-      display:block !important; position:static !important; float:none !important; clear:both !important;
-      margin:0 !important; padding:0 !important; height:auto !important; max-height:none !important; min-height:0 !important;
-      overflow:visible !important; white-space:normal; word-break:normal; overflow-wrap:normal; text-align:center; line-height:1.08;
-    }
-    @media (min-width:700px){ .dg-title{ line-height:1.04 !important; } }
-
-    /* ======================= CHIPS: centered, touching, responsive (preferred) ======================= */
-    .navbar{
-      display:flex; justify-content:center; align-items:stretch; gap:0 !important;
-      height:auto !important; min-height:40px; padding:0; margin:0 auto; width:100%;
-      overflow:visible !important;
-    }
-    .navbar a.nospace{ display:none !important; }  /* hide spacers so chips can touch */
-
-    .navbar a.border,
-    .navbar a.active.border{
-      position: static !important;
-      float: none !important;
-      display: inline-flex !important;
-      box-sizing: border-box !important;
-
-      width: auto !important; min-width: 0 !important; max-width: none !important; white-space: nowrap !important;
-
-      height: auto !important;
-      margin: 0 !important;
-      overflow: visible !important; word-break: normal !important; text-overflow: clip !important;
-      align-items: center !important; justify-content: center !important;
-
-      border: 2px solid green !important;
-      border-radius: 0 !important;                /* sharp corners */
-      background: transparent !important;
-      color: #fff !important;
-
-      font-size: clamp(.66rem, 2.4vw, 1rem) !important;
-      line-height: 1.05 !important;
-      padding: clamp(6px, 1.1vw, 12px) clamp(12px, 2.2vw, 20px) !important;
-
-      flex: 0 0 auto !important;
-      text-align:center !important;
-    }
-    .navbar a.active.border{ background-color:#4CAF50 !important; border-color:green !important; }
-
-    .navbar a.border + .navbar a.border{ margin-left:-2px !important; }
-
-    @media (max-width:700px){
-      .navbar a.border,
-      .navbar a.active.border{
-        white-space: normal !important;
-        overflow-wrap: anywhere !important;
-        line-height: 1.12 !important;
-
-        flex-basis: clamp(150px, 30vw, 230px) !important;
-
-        padding: 6px 10px !important;
-      }
-    }
-    @media (max-width:500px){
-      .navbar a.border,
-      .navbar a.active.border{
-        flex-basis: clamp(120px, 26vw, 180px) !important;
-        padding-left: 8px !important;
-        padding-right: 8px !important;
-      }
-    }
-    @media (max-width:420px){
-      .navbar a.border,
-      .navbar a.active.border{
-        font-size: clamp(.58rem, 2vw, .88rem) !important;
-        padding: 5px 8px !important;
-      }
-    }
-    @media (max-width:340px){
-      .navbar a.border,
-      .navbar a.active.border{
-        font-size: clamp(.54rem, 2vw, .84rem) !important;
-        padding: 4px 8px !important;
-      }
-    }
-    @media (min-width:700px) and (max-width:999px){
-      .navbar a.border,
-      .navbar a.active.border{
-        flex-basis: clamp(220px, 30vw, 320px) !important;
-        padding-left: clamp(16px, 1.8vw, 28px) !important;
-        padding-right: clamp(16px, 1.8vw, 28px) !important;
-        font-size: clamp(.85rem, 1.2vw, 1.02rem) !important;
-      }
-    }
-    @media (min-width:1000px){
-      .navbar a.border,
-      .navbar a.active.border{
-        flex-basis: clamp(320px, 22vw, 420px) !important;
-        padding-left: clamp(22px, 1.4vw, 34px) !important;
-        padding-right: clamp(22px, 1.4vw, 34px) !important;
-        font-size: clamp(.9rem, 1.05vw, 1.08rem) !important;
-      }
-    }
-
-    /* 700–999px: narrower chips (match NMR page feel) */
-    @media (min-width:700px) and (max-width:999px){
-      .navbar a.border,
-      .navbar a.active.border{
-        flex-basis: clamp(180px, 22vw, 260px) !important;
-        padding-left: clamp(14px, 1.6vw, 24px) !important;
-        padding-right: clamp(14px, 1.6vw, 24px) !important;
-        font-size: clamp(.82rem, 1.1vw, 1rem) !important;
-      }
-    }
-
-    /* ≥1000px: narrower desktop chips */
-    @media (min-width:1000px){
-      .navbar a.border,
-      .navbar a.active.border{
-        flex-basis: clamp(220px, 16vw, 300px) !important;
-        padding-left: clamp(18px, 1.2vw, 28px) !important;
-        padding-right: clamp(18px, 1.2vw, 28px) !important;
-        font-size: clamp(.86rem, 1vw, 1.06rem) !important;
-      }
-    }
-
-    /* ======================= TABLE THEME (ORDER MATTERS) ======================= */
-    #dg-embed{
-      --dg-accent:#00ff66; --dg-head:rgb(40,133,199);
-      --dg-bg:#000; --dg-text:#fff; --dg-outer:4px; --dg-line:2px; --dg-hsep:2px; --dg-hrim:4px;
-      color:var(--dg-text); background:var(--dg-bg);
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-    }
-    #dg-embed *{ box-sizing:border-box; }
-
-    /* BLUE HEADER */
-    .dg-headerwrap{
-      border:var(--dg-hrim) solid var(--dg-head);
-      border-radius:18px; overflow:hidden; background:var(--dg-bg); margin-bottom:8px;
-    }
-    .dg-header{ display:grid; grid-template-columns:repeat(4, minmax(0, 1fr)); width:100%; }
-    .dg-hcell{
-      display:flex; align-items:center; justify-content:center; padding:20px 12px; min-height:88px;
-      text-align:center; font-weight:700; line-height:1.12; font-size: clamp(.82rem, 2.6vw, 1.08rem);
-      overflow:hidden; -ms-overflow-style: none; scrollbar-width: none; border-right:var(--dg-hsep) solid var(--dg-head);
-    }
-    .dg-hcell::-webkit-scrollbar{ display:none; }
-    .dg-hcell:last-child{ border-right:none; }
-
-    /* GREEN TABLE — generic first so background is transparent by default */
-    .dg-tablewrap{ border:var(--dg-outer) solid var(--dg-accent); border-radius:18px; overflow:hidden; background:var(--dg-bg); }
-    .dg-table{ width:100%; border-collapse:collapse; table-layout:fixed; text-align:center; }
-    .dg-table th, .dg-table td{
-      border:var(--dg-line) solid var(--dg-accent); padding:22px 10px; line-height:1.2; background:transparent; text-align:center;
-      white-space: normal; word-break: normal; overflow-wrap: normal; hyphens: none; overflow: hidden; text-overflow: clip;
-    }
-
-    /* FIRST-COLUMN BASE — blue tint + base font (must come BEFORE the shrink rule) */
-    .dg-table th.dg-col1{
-      font-weight:800; font-size:clamp(.95rem, 2.5vw, 1.08rem);
-      background: rgba(40, 133, 199, 0.22);
-    }
-
-    /* Three-line clamp for all wrapped content (headers + cells) */
-    .dg-wrap{
-      display:-webkit-box;
-      -webkit-box-orient: vertical;
-      -webkit-line-clamp: 3;   /* max 3 lines */
-      overflow: hidden;
-      white-space: normal;
-    }
-
-    /* Keep cm²/m² together (no internal line breaks) */
-    .dg-nb{ white-space: nowrap; display: inline-block; }
-
-    /* Column width bias for small screens */
-    .dg-table col{ width:25%; }
-    @media (max-width:400px){
-      .dg-table col.dg-col1-col{ width:31%; }
-      .dg-table col.dg-col2-col, .dg-table col.dg-col3-col, .dg-table col.dg-col4-col{ width:23%; }
-    }
-    @media (max-width:340px){
-      .dg-table col.dg-col1-col{ width:33.5%; }
-      .dg-table col.dg-col2-col, .dg-table col.dg-col3-col, .dg-table col.dg-col4-col{ width:22.17%; }
-    }
-    @media (max-width:320px){
-      .dg-table col.dg-col1-col{ width:36.5%; }
-      .dg-table col.dg-col2-col, .dg-table col.dg-col3-col, .dg-table col.dg-col4-col{ width:21.17%; }
-    }
-
-    /* Data columns a touch smaller for contrast */
-    .dg-table td{ font-weight:600; font-size:clamp(.84rem, 2.1vw, .96rem); }
-
-    /* Header fit under 440px (keeps MILD / MODERATE / SEVERE on one line) */
-    @media (max-width:440px){
-      .dg-header .dg-hcell{
-        font-size: clamp(.72rem, 2.6vw, .96rem);
-        padding: 18px 8px;
-      }
-      .dg-header .dg-wrap{ white-space: nowrap; }
-    }
-
-    /* Widen the table zone on phones (trim page padding) */
-    @media (max-width:600px){ .final{ padding-left:6% !important; padding-right:6% !important; } }
-    @media (max-width:400px){ .final{ padding-left:4% !important; padding-right:4% !important; } }
-    @media (max-width:340px){ .final{ padding-left:3% !important; padding-right:3% !important; } }
-
-    /* Ultra-small phone tuning (keep th.dg-col1 sizing controlled only by the rule below) */
-    @media (max-width:360px){
-      .dg-hcell{ font-size: clamp(.70rem, 3.0vw, .98rem); padding: 18px 10px; min-height: 84px; line-height: 1.10; }
-      .dg-table td{ font-size: clamp(.72rem, 2.8vw, .92rem); padding: 16px 8px; line-height: 1.16; }
-    }
-    @media (max-width:320px){
-      .dg-hcell{ font-size: clamp(.60rem, 3.2vw, .92rem); padding: 14px 8px; min-height: 72px; line-height: 1.10; }
-      .dg-table td{ font-size: clamp(.62rem, 3.0vw, .88rem); padding: 14px 6px; line-height: 1.16; }
-      .final{ padding-left:2.5% !important; padding-right:2.5% !important; }
-    }
-
-    /* ****** IMPORTANT: PLACE THIS LAST ******
-       First-column shrink under 745px — overrides only font-size/padding, NOT background */
-    @media (max-width:745px){
-      .dg-table th.dg-col1{
-        font-size: clamp(.58rem, 1.9vw, .86rem);
-        padding: 16px 8px;
-        line-height: 1.12;
-      }
-    }
-  </style>
 
 </body>
 </html>
