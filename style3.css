@@ -1152,3 +1152,142 @@ li {
     line-height: 1.12;
   }
 }
+
+/* ================= NAV CHIPS KIT (shared) =================
+   Paste at the very bottom of style3.css. Order matters.
+   Applies to the <div class="navbar">…</div> chips on all pages.
+============================================================ */
+
+.navbar{
+  display:flex; justify-content:center; align-items:stretch; gap:0 !important;
+  height:auto !important; min-height:40px; padding:0; margin:0 auto; width:100%;
+  overflow:visible !important;
+}
+.navbar a.nospace{ display:none !important; }  /* hide spacers so chips can touch */
+
+.navbar a.border,
+.navbar a.active.border{
+  position: static !important;
+  float: none !important;
+  display: inline-flex !important;
+  box-sizing: border-box !important;
+
+  /* default sizing (tablet/desktop): one-line, size to content */
+  width: auto !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  white-space: nowrap !important;
+
+  height: auto !important;
+  margin: 0 !important;
+  overflow: visible !important;
+  word-break: normal !important;
+  text-overflow: clip !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  /* Visuals */
+  border: 2px solid green !important;
+  border-radius: 0 !important;                /* sharp corners */
+  background: transparent !important;
+  color: #fff !important;
+
+  /* Readability */
+  font-size: clamp(.66rem, 2.4vw, 1rem) !important;
+  line-height: 1.05 !important;
+  padding: clamp(6px, 1.1vw, 12px) clamp(12px, 2.2vw, 20px) !important;
+
+  /* Keep them from stretching weirdly; seam handled below */
+  flex: 0 0 auto !important;
+  text-align:center !important;
+}
+.navbar a.active.border{ background-color:#4CAF50 !important; border-color:green !important; }
+
+/* Touching seam (shared border) */
+.navbar a.border + .navbar a.border{ margin-left:-2px !important; }
+
+/* ▼ Narrower below 700px (meet-in-the-middle), allow wrapping for long label */
+@media (max-width:700px){
+  .navbar a.border,
+  .navbar a.active.border{
+    white-space: normal !important;           /* allow wrapping */
+    overflow-wrap: anywhere !important;
+    line-height: 1.12 !important;
+
+    /* narrower base width for two-chip layout */
+    flex-basis: clamp(150px, 30vw, 230px) !important;
+
+    /* Slightly tighter padding so two chips stay tidy */
+    padding: 6px 10px !important;
+  }
+}
+
+/* ▼ Further shorten under 500px so borders don't look too long */
+@media (max-width:500px){
+  .navbar a.border,
+  .navbar a.active.border{
+    flex-basis: clamp(120px, 26vw, 180px) !important;  /* shorter width */
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+  }
+}
+
+/* Extra-small phones: slightly smaller text/padding */
+@media (max-width:420px){
+  .navbar a.border,
+  .navbar a.active.border{
+    font-size: clamp(.58rem, 2vw, .88rem) !important;
+    padding: 5px 8px !important; /* keep narrow look consistent */
+  }
+}
+@media (max-width:340px){
+  .navbar a.border,
+  .navbar a.active.border{
+    font-size: clamp(.54rem, 2vw, .84rem) !important;
+    padding: 4px 8px !important;
+  }
+}
+
+/* Mid-band widening: 700–999 px (roomier chips) */
+@media (min-width:700px) and (max-width:999px){
+  .navbar a.border,
+  .navbar a.active.border{
+    flex-basis: clamp(220px, 30vw, 320px) !important;
+    padding-left: clamp(16px, 1.8vw, 28px) !important;
+    padding-right: clamp(16px, 1.8vw, 28px) !important;
+    font-size: clamp(.85rem, 1.2vw, 1.02rem) !important;
+  }
+}
+
+/* Desktop widening: ≥1000px */
+@media (min-width:1000px){
+  .navbar a.border,
+  .navbar a.active.border{
+    flex-basis: clamp(320px, 22vw, 420px) !important;
+    padding-left: clamp(22px, 1.4vw, 34px) !important;
+    padding-right: clamp(22px, 1.4vw, 34px) !important;
+    font-size: clamp(.9rem, 1.05vw, 1.08rem) !important;
+  }
+}
+
+/* 700–999px: narrower chips (match NMR page feel) */
+@media (min-width:700px) and (max-width:999px){
+  .navbar a.border,
+  .navbar a.active.border{
+    flex-basis: clamp(180px, 22vw, 260px) !important;
+    padding-left: clamp(14px, 1.6vw, 24px) !important;
+    padding-right: clamp(14px, 1.6vw, 24px) !important;
+    font-size: clamp(.82rem, 1.1vw, 1rem) !important;
+  }
+}
+
+/* ≥1000px: narrower desktop chips */
+@media (min-width:1000px){
+  .navbar a.border,
+  .navbar a.active.border{
+    flex-basis: clamp(220px, 16vw, 300px) !important;
+    padding-left: clamp(18px, 1.2vw, 28px) !important;
+    padding-right: clamp(18px, 1.2vw, 28px) !important;
+    font-size: clamp(.86rem, 1vw, 1.06rem) !important;
+  }
+}
