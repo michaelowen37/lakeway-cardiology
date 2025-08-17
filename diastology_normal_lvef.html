@@ -74,34 +74,34 @@
             </colgroup>
             <tbody>
               <tr>
-                <th scope="row" class="dg-col1">Normal</th>
-                <td class="dg-c2">1/4 Positive</td>
-                <td class="dg-c3">E/A &gt; 0.8</td>
-                <td class="dg-c4">-</td>
+                <th scope="row" class="dg-col1"><div class="dg-wrap">Normal</div></th>
+                <td class="dg-c2"><div class="dg-wrap">1/4 Positive</div></td>
+                <td class="dg-c3"><div class="dg-wrap">E/A &gt; 0.8</div></td>
+                <td class="dg-c4"><div class="dg-wrap">-</div></td>
               </tr>
               <tr>
-                <th scope="row" class="dg-col1">Indeterminate</th>
-                <td class="dg-c2">2/4 Positive</td>
-                <td class="dg-c3">E/A &gt; 0.8</td>
-                <td class="dg-c4">-</td>
+                <th scope="row" class="dg-col1"><div class="dg-wrap">Indeterminate</div></th>
+                <td class="dg-c2"><div class="dg-wrap">2/4 Positive</div></td>
+                <td class="dg-c3"><div class="dg-wrap">E/A &gt; 0.8</div></td>
+                <td class="dg-c4"><div class="dg-wrap">-</div></td>
               </tr>
               <tr>
-                <th scope="row" class="dg-col1">Grade I</th>
-                <td class="dg-c2">2/4 Positive</td>
-                <td class="dg-c3">E/A &lt; 0.8</td>
-                <td class="dg-c4">E/A &lt; 2</td>
+                <th scope="row" class="dg-col1"><div class="dg-wrap">Grade I</div></th>
+                <td class="dg-c2"><div class="dg-wrap">2/4 Positive</div></td>
+                <td class="dg-c3"><div class="dg-wrap">E/A &lt; 0.8</div></td>
+                <td class="dg-c4"><div class="dg-wrap">E/A &lt; 2</div></td>
               </tr>
               <tr>
-                <th scope="row" class="dg-col1">Grade II</th>
-                <td class="dg-c2">3 or More Positive</td>
-                <td class="dg-c3">E/A &lt; 2</td>
-                <td class="dg-c4">-</td>
+                <th scope="row" class="dg-col1"><div class="dg-wrap">Grade II</div></th>
+                <td class="dg-c2"><div class="dg-wrap">3 or More Positive</div></td>
+                <td class="dg-c3"><div class="dg-wrap">E/A &lt; 2</div></td>
+                <td class="dg-c4"><div class="dg-wrap">-</div></td>
               </tr>
               <tr>
-                <th scope="row" class="dg-col1">Grade III</th>
-                <td class="dg-c2">100% Positive</td>
-                <td class="dg-c3">E/A &gt; 2</td>
-                <td class="dg-c4">-</td>
+                <th scope="row" class="dg-col1"><div class="dg-wrap">Grade III</div></th>
+                <td class="dg-c2"><div class="dg-wrap">100% Positive</div></td>
+                <td class="dg-c3"><div class="dg-wrap">E/A &gt; 2</div></td>
+                <td class="dg-c4"><div class="dg-wrap">-</div></td>
               </tr>
             </tbody>
           </table>
@@ -255,7 +255,7 @@
           }
         }
 
-        /* ======================= TABLE THEME (unchanged) ======================= */
+        /* ======================= TABLE THEME (ORDER MATTERS) ======================= */
         #dg-embed{
           --dg-accent:#00ff66; --dg-head:rgb(40,133,199);
           --dg-bg:#000; --dg-text:#fff; --dg-outer:4px; --dg-line:2px; --dg-hsep:2px; --dg-hrim:4px;
@@ -292,7 +292,7 @@
           .dg-hcell{ padding:16px 8px; min-height:130px; font-size:clamp(.66rem, 3.2vw, .98rem); }
         }
 
-        /* GREEN TABLE */
+        /* GREEN TABLE (generic first) */
         .dg-tablewrap{ border:var(--dg-outer) solid var(--dg-accent); border-radius:18px; overflow:hidden; background:var(--dg-bg); }
         .dg-table{ width:100%; border-collapse:collapse; table-layout:fixed; text-align:center; }
         .dg-table th, .dg-table td{
@@ -300,10 +300,28 @@
           white-space: normal; word-break: normal; overflow-wrap: normal; hyphens: none; overflow: hidden; text-overflow: clip;
         }
 
+        /* First column: blue tint + base font (keep ABOVE the shrink rule) */
+        .dg-table th.dg-col1{
+          font-weight:800; font-size:clamp(.95rem, 2.5vw, 1.1rem);
+          background: rgba(40, 133, 199, 0.22);
+        }
+        @media (max-width:360px){
+          .dg-table th.dg-col1{ font-size:clamp(.82rem, 3.0vw, 1.02rem); letter-spacing:-0.006em; }
+        }
+
+        /* 3-line clamp for all cell content (use <div class="dg-wrap">…</div>) */
+        .dg-wrap{
+          display:-webkit-box;
+          -webkit-box-orient: vertical;
+          -webkit-line-clamp: 3;
+          overflow: hidden;
+          white-space: normal;
+        }
+
         /* Default equal widths */
         .dg-table col{ width:25%; }
 
-        /* On small screens: bias widths as before */
+        /* On small screens: bias widths (match other tables) */
         @media (max-width:400px){
           .dg-table col.dg-col1-col{ width:31%; }
           .dg-table col.dg-col2-col, .dg-table col.dg-col3-col, .dg-table col.dg-col4-col{ width:23%; }
@@ -313,17 +331,8 @@
           .dg-table col.dg-col2-col, .dg-table col.dg-col3-col, .dg-table col.dg-col4-col{ width:22.17%; }
         }
         @media (max-width:320px){
-          .dg-table col.dg-col1-col{ width:35.5%; }
-          .dg-table col.dg-col2-col, .dg-table col.dg-col3-col, .dg-table col.dg-col4-col{ width:21.5%; }
-        }
-
-        /* First-column text: bold + blue tint */
-        .dg-table th.dg-col1{
-          font-weight:800; font-size:clamp(.95rem, 2.5vw, 1.1rem);
-          background: rgba(40, 133, 199, 0.22);
-        }
-        @media (max-width:360px){
-          .dg-table th.dg-col1{ font-size:clamp(.82rem, 3.0vw, 1.02rem); letter-spacing:-0.006em; }
+          .dg-table col.dg-col1-col{ width:36.5%; }   /* unified with other pages */
+          .dg-table col.dg-col2-col, .dg-table col.dg-col3-col, .dg-table col.dg-col4-col{ width:21.17%; }
         }
 
         /* Data columns: slightly smaller for contrast */
@@ -333,6 +342,16 @@
         @media (max-width:600px){ .final{ padding-left:6% !important; padding-right:6% !important; } }
         @media (max-width:400px){ .final{ padding-left:4% !important; padding-right:4% !important; } }
         @media (max-width:340px){ .final{ padding-left:3% !important; padding-right:3% !important; } }
+
+        /* ****** IMPORTANT: PLACE THIS LAST ******
+           First-column shrink under 745px — overrides only font-size/padding, NOT background */
+        @media (max-width:745px){
+          .dg-table th.dg-col1{
+            font-size: clamp(.58rem, 1.9vw, .86rem);
+            padding: 16px 8px;
+            line-height: 1.12;
+          }
+        }
       </style>
       <!-- ======================== END RESPONSIVE FIXED TABLE ======================== -->
 

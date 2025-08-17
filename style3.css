@@ -1051,3 +1051,104 @@ li {
     padding: 4%;
 }
 
+
+/* ======================= DG TABLE KIT (shared) =======================
+   Put this at the very bottom of style3.css. Order matters.
+   Page HTML should wrap tables in #dg-embed and use .dg-* classes as shown.
+====================================================================== */
+
+#dg-embed{
+  --dg-accent:#00ff66; --dg-head:rgb(40,133,199);
+  --dg-bg:#000; --dg-text:#fff;
+  --dg-outer:4px; --dg-line:2px; --dg-hsep:2px; --dg-hrim:4px;
+  color:var(--dg-text); background:var(--dg-bg);
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+}
+#dg-embed *{ box-sizing:border-box; }
+
+/* ---------- BLUE HEADER BAND ---------- */
+.dg-headerwrap{
+  border:var(--dg-hrim) solid var(--dg-head);
+  border-radius:18px; overflow:hidden; background:var(--dg-bg); margin-bottom:8px;
+}
+.dg-header{ display:grid; grid-template-columns:repeat(4, minmax(0, 1fr)); width:100%; }
+.dg-hcell{
+  display:flex; align-items:center; justify-content:center;
+  padding:20px 12px; min-height:88px;
+  text-align:center; font-weight:700; line-height:1.12;
+  font-size: clamp(.82rem, 2.6vw, 1.08rem);
+  overflow:hidden; border-right:var(--dg-hsep) solid var(--dg-head);
+}
+.dg-hcell:last-child{ border-right:none; }
+/* Keep column headers on one line under 440px */
+@media (max-width:440px){
+  .dg-header .dg-hcell{ font-size: clamp(.72rem, 2.6vw, .96rem); padding: 18px 8px; }
+  .dg-header .dg-wrap{ white-space: nowrap; }
+}
+
+/* ---------- GREEN TABLE ---------- */
+.dg-tablewrap{ border:var(--dg-outer) solid var(--dg-accent); border-radius:18px; overflow:hidden; background:var(--dg-bg); }
+.dg-table{ width:100%; border-collapse:collapse; table-layout:fixed; text-align:center; }
+.dg-table th, .dg-table td{
+  border:var(--dg-line) solid var(--dg-accent);
+  padding:22px 10px; line-height:1.2; background:transparent; text-align:center;
+  white-space: normal; word-break: normal; overflow-wrap: normal; hyphens: none;
+  overflow: hidden; text-overflow: clip;
+}
+
+/* First column: blue tint + base size (do NOT move this below the shrink rule) */
+.dg-table th.dg-col1{
+  font-weight:800;
+  font-size:clamp(.95rem, 2.5vw, 1.08rem);
+  background: rgba(40, 133, 199, 0.22);
+}
+@media (max-width:360px){
+  .dg-table th.dg-col1{ font-size:clamp(.82rem, 3.0vw, 1.02rem); letter-spacing:-0.006em; }
+}
+
+/* Data columns a touch smaller for contrast */
+.dg-table td{ font-weight:600; font-size:clamp(.84rem, 2.1vw, .96rem); }
+
+/* Wrap content to max 3 lines — wrap each cell’s text in <div class="dg-wrap">…</div> */
+.dg-wrap{
+  display:-webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3;
+  overflow:hidden; white-space: normal;
+}
+
+/* Non-breaking unit helper: <span class="dg-nb">cm²/m²</span> */
+.dg-nb{ white-space: nowrap; display:inline-block; }
+
+/* Column width bias on tiny screens */
+.dg-table col{ width:25%; }
+@media (max-width:400px){
+  .dg-table col.dg-col1-col{ width:31%; }
+  .dg-table col.dg-col2-col, .dg-table col.dg-col3-col, .dg-table col.dg-col4-col{ width:23%; }
+}
+@media (max-width:340px){
+  .dg-table col.dg-col1-col{ width:33.5%; }
+  .dg-table col.dg-col2-col, .dg-table col.dg-col3-col, .dg-table col.dg-col4-col{ width:22.17%; }
+}
+@media (max-width:320px){
+  .dg-table col.dg-col1-col{ width:36.5%; }
+  .dg-table col.dg-col2-col, .dg-table col.dg-col3-col, .dg-table col.dg-col4-col{ width:21.17%; }
+}
+
+/* Tiny header/data tuning (does NOT touch first-column size) */
+@media (max-width:360px){
+  .dg-hcell{ font-size: clamp(.70rem, 3.0vw, .98rem); padding: 18px 10px; min-height: 84px; line-height: 1.10; }
+  .dg-table td{ font-size: clamp(.72rem, 2.8vw, .92rem); padding: 16px 8px; line-height: 1.16; }
+}
+@media (max-width:320px){
+  .dg-hcell{ font-size: clamp(.60rem, 3.2vw, .92rem); padding: 14px 8px; min-height: 72px; line-height: 1.10; }
+  .dg-table td{ font-size: clamp(.62rem, 3.0vw, .88rem); padding: 14px 6px; line-height: 1.16; }
+}
+
+/* ****** KEEP THIS LAST ******
+   First-column shrink under 745px — overrides font-size/padding ONLY (keeps blue background) */
+@media (max-width:745px){
+  .dg-table th.dg-col1{
+    font-size: clamp(.58rem, 1.9vw, .86rem);
+    padding: 16px 8px;
+    line-height: 1.12;
+  }
+}
