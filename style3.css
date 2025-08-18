@@ -1527,3 +1527,21 @@ li {
   vertical-align: baseline !important;
   line-height: inherit !important;
 }
+
+/* Single-column header: force 1 track + true centering + full-width blue fill */
+#dg-embed .dg-header.dg-singlecol{ 
+  grid-template-columns: 1fr !important;
+}
+#dg-embed .dg-header.dg-singlecol .dg-hcell{
+  justify-content: center !important;
+  text-align: center !important;
+  background: rgba(40,133,199,0.18); /* subtle blue fill */
+}
+
+/* (Optional but robust) If you wrap header text: center that block too */
+#dg-embed .dg-header.dg-singlecol .dg-hcell > .dg-wrap{
+  display: block;
+  margin: 0 auto;
+  text-align: center;
+  width: 100%;
+}

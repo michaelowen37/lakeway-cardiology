@@ -2,15 +2,10 @@
 <html>
 
 <head>
-  <!--   ****************************************************************************
-    The Title You Pick Here Shows When You Hover Over Browser Thumbnail
-  **************************************************************************** -->
   <title>Diastology</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" type="text/css" href="./style3.css">
-
-  <!-- Browser tab thumbnail image -->
   <link rel="icon" type="image/png" href="BSW_Thumbnail.png"/>
 </head>
 
@@ -19,20 +14,13 @@
   <nav class="zone nav-bar">
     <ul class="main-nav">
       <li><a class="top-nav" href="index.html">Home</a></li>
-      <!-- <li class="push"><a class="top-nav" href="about.html">About Us</a></li> -->
       <li class="push"><a class="top-nav" href="normal_diastology.html">Back</a></li>
     </ul>
 
-    <!-- ****************************************************************************
-      This is the main title on the top of page
-    **************************************************************************** -->
     <div class="container zone body">Diastology:</div>
     <div class="container" style="padding:0"><em>Reduced LVEF</em></div>
   </nav>
 
-  <!-- ****************************************************************************
-    Content
-  **************************************************************************** -->
   <div class="zone navigation">
     <div class="final" style="padding:0 10%">
 
@@ -40,19 +28,22 @@
 
       <!-- ========================== RESPONSIVE FIXED TABLE (3 columns) ========================== -->
       <div id="dg-embed">
-        <!-- Blue header band (3 columns) -->
+        <!-- Blue header band (3 equal columns) -->
         <div class="dg-headerwrap">
-          <div class="dg-header" role="row">
-            <div class="dg-hcell" role="columnheader">E/e' &gt; 14</div>
-            <div class="dg-hcell" role="columnheader">TR Velocity &gt; 2.8 m/s</div>
-            <div class="dg-hcell" role="columnheader">LA Volume &gt; 34&nbsp;ml/m&#178;</div>
+          <div class="dg-header dg-3fixed" role="row">
+            <div class="dg-hcell" role="columnheader">
+              <div class="dg-wrap">E/e' &gt; 14</div>
+            </div>
+            <div class="dg-hcell" role="columnheader">
+              <div class="dg-wrap">TR Velocity &gt; <span class="dg-nb">2.8&nbsp;m/s</span></div>
+            </div>
+            <div class="dg-hcell" role="columnheader">
+              <div class="dg-wrap dg-free">LA Volume &gt; 34&nbsp;<span class="dg-nb">ml/m<sup>2</sup></span></div>
+            </div>
           </div>
         </div>
 
         <!-- Green table (3 columns, 3 rows) -->
-        <!-- HOW-TO (ROWS): To add one, duplicate a <tr> and edit the <th>/<td> text.
-             HOW-TO (COLUMNS): To add/remove a column, edit: header .dg-header cells,
-             <colgroup> below, and each row’s number of <td>. -->
         <div class="dg-tablewrap">
           <table class="dg-table" role="table" aria-label="Diastology table — 3 columns">
             <colgroup>
@@ -82,12 +73,11 @@
       </div>
 
       <style>
-        /* -------- page-scoped styles only (style3.css untouched) -------- */
+        /* -------- page-scoped overrides (style3.css untouched) -------- */
 
-        /* Theme variables for the table */
+        /* Keep the existing theme */
         #dg-embed{
-          --dg-accent:#00ff66;             /* green border/lines */
-          --dg-head:rgb(40,133,199);       /* header blue */
+          --dg-accent:#00ff66; --dg-head:rgb(40,133,199);
           --dg-bg:#000; --dg-text:#fff;
           --dg-outer:4px; --dg-line:2px; --dg-hsep:2px; --dg-hrim:4px;
           color:var(--dg-text); background:var(--dg-bg);
@@ -95,85 +85,55 @@
         }
         #dg-embed *{ box-sizing:border-box; }
 
-        /* BLUE HEADER (3 columns) */
+        /* Header chrome */
         .dg-headerwrap{
           border:var(--dg-hrim) solid var(--dg-head);
-          border-radius:18px;
-          overflow:hidden;
-          background:var(--dg-bg);
-          margin-bottom:8px;
+          border-radius:18px; overflow:hidden; background:var(--dg-bg); margin-bottom:8px;
         }
-        .dg-header{
-          display:grid;
-          grid-template-columns:repeat(3, minmax(0, 1fr));
-          width:100%;
-        }
-        .dg-hcell{
-          display:flex; align-items:center; justify-content:center;
-          padding:20px 12px;
-          min-height:110px;
-          text-align:center;
-          font-weight:600;
-          line-height:1.14;
-          font-size: clamp(.80rem, 2.6vw, 1.08rem);
 
-          /* no scrollbars in header cells */
-          overflow:hidden;
-          -ms-overflow-style: none;
-          scrollbar-width: none;
+        /* === FORCE 3 equal header boxes (don’t rely on any grid rules) === */
+        .dg-header.dg-3fixed{
+          display:flex !important; width:100%; gap:0;
+          /* neutralize any inherited grid */
+          grid-template-columns:none !important;
+          grid-auto-columns:unset !important;
+          grid-auto-flow:unset !important;
+        }
+        .dg-header.dg-3fixed .dg-hcell{
+          flex:1 1 0 !important; min-width:0;
+          display:flex; align-items:center; justify-content:center; /* center text both ways */
+          padding:20px 12px; min-height:110px;
+          text-align:center; font-weight:600; line-height:1.14;
+          font-size: clamp(.80rem, 2.6vw, 1.08rem);
+          overflow:hidden; -ms-overflow-style:none; scrollbar-width:none;
           border-right:var(--dg-hsep) solid var(--dg-head);
         }
-        .dg-hcell::-webkit-scrollbar{ display:none; }
-        .dg-hcell:last-child{ border-right:none; }
+        .dg-header.dg-3fixed .dg-hcell:last-child{ border-right:none; }
+        .dg-header.dg-3fixed .dg-hcell::-webkit-scrollbar{ display:none; }
 
-        /* GREEN TABLE */
-        .dg-tablewrap{
-          border:var(--dg-outer) solid var(--dg-accent);
-          border-radius:18px;
-          overflow:hidden;
-          background:var(--dg-bg);
-        }
-        .dg-table{
-          width:100%;
-          border-collapse:collapse;        /* solid grid lines */
-          table-layout:fixed;              /* stable columns */
-          text-align:center;
-        }
+        /* Green table (unchanged) */
+        .dg-tablewrap{ border:var(--dg-outer) solid var(--dg-accent); border-radius:18px; overflow:hidden; background:var(--dg-bg); }
+        .dg-table{ width:100%; border-collapse:collapse; table-layout:fixed; text-align:center; }
         .dg-table th, .dg-table td{
           border:var(--dg-line) solid var(--dg-accent);
-          padding:22px 10px;
-          line-height:1.2;
-          background:transparent;
-          text-align:center;
-
-          white-space: normal;
-          word-break: normal;
-          overflow-wrap: normal;
-          hyphens: none;
-          overflow: hidden;
-          text-overflow: clip;
+          padding:22px 10px; line-height:1.2; background:transparent; text-align:center;
+          white-space:normal; word-break:normal; overflow-wrap:normal; hyphens:none; overflow:hidden; text-overflow:clip;
         }
-
-        /* Equal widths for 3 columns */
         .dg-table col{ width:33.3333%; }
-
-        /* First-column text: bold + soft blue tint for contrast */
         .dg-table th.dg-col1{
-          font-weight:800;
-          font-size:clamp(.95rem, 2.5vw, 1.1rem);
+          font-weight:800; font-size:clamp(.95rem, 2.5vw, 1.1rem);
           background: rgba(40, 133, 199, 0.22);
         }
-        @media (max-width:360px){
-          .dg-table th.dg-col1{ font-size:clamp(.82rem, 3.0vw, 1.02rem); letter-spacing:-0.006em; }
-        }
-
-        /* Data columns: slightly smaller for contrast */
         .dg-table td{ font-weight:600; font-size:clamp(.84rem, 2.1vw, .96rem); }
 
-        /* Widen the table zone on phones (trim page padding) */
-        @media (max-width:600px){ .final{ padding-left:6% !important; padding-right:6% !important; } }
-        @media (max-width:400px){ .final{ padding-left:4% !important; padding-right:4% !important; } }
-        @media (max-width:340px){ .final{ padding-left:3% !important; padding-right:3% !important; } }
+        /* Wrapping / unit safety */
+        .dg-wrap{
+          display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:4;
+          overflow:hidden; white-space:normal; scrollbar-width:none; -ms-overflow-style:none;
+        }
+        .dg-wrap::-webkit-scrollbar{ width:0; height:0; }
+        .dg-free{ display:block !important; -webkit-line-clamp:unset !important; -webkit-box-orient:initial !important; overflow:visible !important; }
+        .dg-nb{ white-space:nowrap; display:inline; vertical-align:baseline; }
       </style>
       <!-- ======================== END RESPONSIVE FIXED TABLE ======================== -->
 
@@ -182,10 +142,7 @@
   </div>
 
   <footer class="zone foot bottom-section">
-    <ul class="foot-nav">
-      <!-- <li><a href="privacy-policy.html" target="_blank">Privacy Policy</a></li> -->
-      <!-- <li><a href="terms-of-use.html" target="_blank">Terms of Use</a></li> -->
-    </ul>
+    <ul class="foot-nav"></ul>
   </footer>
 
 </body>

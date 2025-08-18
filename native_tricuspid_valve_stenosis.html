@@ -43,7 +43,7 @@
 
         <!-- Blue header band (1 column) -->
         <div class="dg-headerwrap">
-          <div class="dg-header dg-1col" role="row">
+          <div class="dg-header dg-singlecol" role="row">
             <div class="dg-hcell" role="columnheader">
               <div class="dg-wrap">Hemodynamically Significant Parameters:</div>
             </div>
@@ -107,7 +107,6 @@
     /* BLUE HEADER */
     .dg-headerwrap{ border:var(--dg-hrim) solid var(--dg-head); border-radius:18px; overflow:hidden; background:var(--dg-bg); margin-bottom:8px; }
     .dg-header{ display:grid; width:100%; }
-    .dg-header.dg-1col{ grid-template-columns: 100%; } /* align exactly with the single table column */
 
     .dg-hcell{
       display:flex; align-items:center; justify-content:center; padding:20px 12px; min-height:88px;
@@ -124,7 +123,7 @@
       white-space: normal; word-break: normal; overflow-wrap: normal; hyphens: manual; overflow:hidden; text-overflow:clip;
     }
 
-    /* Single column gets full width; mirror in header via .dg-1col above */
+    /* Single column gets full width; header width is driven by your global .dg-singlecol rule */
     .dg-table col.dg-col1-single{ width:100%; }
 
     /* Wrap up to 4 lines (plenty of headroom) */
