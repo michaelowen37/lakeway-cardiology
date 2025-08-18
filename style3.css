@@ -1435,3 +1435,95 @@ li {
     padding-right: 4px !important;
   }
 }
+
+/* ===================== GLOBAL FIX: single-column tables + unit scrollbars ===================== */
+
+/* 1) Single-column headers: center the text and disable header clamping */
+#dg-embed .dg-header.dg-1col { grid-template-columns: 100% !important; }
+
+#dg-embed .dg-header.dg-1col .dg-hcell {
+  justify-content: center !important;
+  text-align: center !important;
+  line-height: 1.16 !important;        /* prevent tall glyph clipping (n/t etc.) */
+  padding: 22px 12px !important;        /* a bit more vertical room */
+}
+
+/* Header text wrapper: no clamp, full width, no clipping */
+#dg-embed .dg-header.dg-1col .dg-hcell > .dg-wrap {
+  display: block !important;
+  -webkit-line-clamp: unset !important;
+  -webkit-box-orient: initial !important;
+  overflow: visible !important;
+  white-space: normal !important;
+  width: 100% !important;
+}
+
+/* 2) Units with superscripts (e.g., cm²): remove clamp to kill micro-scrollbars */
+#dg-embed .dg-table .dg-wrap:has(sup),
+#dg-embed .dg-table .dg-wrap:has(.dg-nb) {
+  display: block !important;
+  -webkit-line-clamp: unset !important;
+  -webkit-box-orient: initial !important;
+  overflow: visible !important;
+}
+
+/* Keep unit clusters together and baseline aligned */
+#dg-embed .dg-nb {
+  white-space: nowrap !important;
+  display: inline !important;
+  vertical-align: baseline !important;
+  line-height: inherit !important;
+}
+
+/* Hide any residual tiny scrollbars in clamped wrappers */
+#dg-embed .dg-wrap { scrollbar-width: none; -ms-overflow-style: none; }
+#dg-embed .dg-wrap::-webkit-scrollbar { width: 0; height: 0; }
+
+/* ===================== GLOBAL: single-column header + unit scrollbars ===================== */
+
+/* Treat .dg-singlecol and .dg-1col the same */
+#dg-embed .dg-header.dg-singlecol,
+#dg-embed .dg-header.dg-1col {
+  grid-template-columns: 100% !important;     /* header width matches table */
+}
+
+/* Make the single-column header cell fill the full width and center its text */
+#dg-embed .dg-header.dg-singlecol .dg-hcell,
+#dg-embed .dg-header.dg-1col .dg-hcell {
+  width: 100% !important;
+  justify-self: stretch !important;
+  justify-content: center !important;
+  text-align: center !important;
+  line-height: 1.16 !important;               /* prevents tall glyph clipping (n/t etc.) */
+  padding: 22px 12px !important;
+  background: rgba(40,133,199,0.18) !important; /* consistent blue fill across the full bar */
+  border-right: 0 !important;                 /* no right seam for a single column */
+}
+
+/* If a header uses a .dg-wrap, disable clamping there so it never becomes a scrollbox */
+#dg-embed .dg-header.dg-singlecol .dg-hcell > .dg-wrap,
+#dg-embed .dg-header.dg-1col      .dg-hcell > .dg-wrap {
+  display: block !important;
+  -webkit-line-clamp: unset !important;
+  -webkit-box-orient: initial !important;
+  overflow: visible !important;
+  white-space: normal !important;
+  width: 100% !important;
+}
+
+/* Kill tiny scrollbars for unit cells (cm², m², cm²/m², etc.) whether or not .dg-wrap exists */
+#dg-embed .dg-table td,
+#dg-embed .dg-table th {
+  scrollbar-width: none;           /* Firefox */
+  -ms-overflow-style: none;        /* IE/Edge legacy */
+}
+#dg-embed .dg-table td::-webkit-scrollbar,
+#dg-embed .dg-table th::-webkit-scrollbar { width: 0; height: 0; }
+
+/* Keep unit clusters together and baseline-aligned (use this span when you can) */
+#dg-embed .dg-nb {
+  white-space: nowrap !important;
+  display: inline !important;
+  vertical-align: baseline !important;
+  line-height: inherit !important;
+}
