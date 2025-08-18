@@ -1350,3 +1350,36 @@ li {
   word-break: normal !important;
   overflow-wrap: normal !important;
 }
+
+/* ===== BLUE–GREEN LOCKSTEP: keep header columns aligned to table columns ===== */
+
+/* Default: 4 equal columns (matches table's default 25% each) */
+#dg-embed .dg-header{
+  grid-template-columns: 25% 25% 25% 25% !important;
+}
+
+/* When the table gives the first column extra room, do the same for the header */
+@media (max-width:400px){
+  /* Table colgroup uses: 31% | 23% | 23% | 23% */
+  #dg-embed .dg-header{ grid-template-columns: 31% 23% 23% 23% !important; }
+}
+@media (max-width:340px){
+  /* Table colgroup uses: 33.5% | 22.17% | 22.17% | 22.17% */
+  #dg-embed .dg-header{ grid-template-columns: 33.5% 22.17% 22.17% 22.17% !important; }
+}
+@media (max-width:320px){
+  /* Table colgroup uses: 36.5% | 21.17% | 21.17% | 21.17% */
+  #dg-embed .dg-header{ grid-template-columns: 36.5% 21.17% 21.17% 21.17% !important; }
+}
+
+/* Safety: ensure both wrappers stretch full width so percentages resolve identically */
+#dg-embed,
+#dg-embed .dg-headerwrap,
+#dg-embed .dg-tablewrap,
+#dg-embed .dg-table{
+  width:100% !important;
+  max-width:none !important;
+}
+
+/* Make sure there’s no stray right border on the last header cell (aligns with table) */
+#dg-embed .dg-header .dg-hcell:last-child{ border-right:none !important; }
