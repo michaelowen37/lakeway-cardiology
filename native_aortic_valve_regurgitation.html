@@ -24,7 +24,7 @@
 
     <br>
 
-    <!-- Navbar chips (shared styles live in style3.css) -->
+    <!-- Navbar chips -->
     <div class="navbar">
       <a class="nospace" href="#"></a>
       <a class="border" href="native_aortic_valve_stenosis.html">Stenosis</a>
@@ -38,16 +38,13 @@
 
       <br>
 
-      <!-- ========================== DG TABLE (replaces the .svg) ========================== -->
+      <!-- ========================== DG TABLE ========================== -->
       <div id="dg-embed" aria-label="Native Aortic Valve — Aortic Regurgitation severity table">
 
         <!-- Blue header band (4 columns) -->
         <div class="dg-headerwrap">
           <div class="dg-header" role="row">
-            <!-- Top-left header intentionally blank to align with label column -->
             <div class="dg-hcell" role="columnheader"><div class="dg-wrap"></div></div>
-
-            <!-- Column headers -->
             <div class="dg-hcell" role="columnheader"><div class="dg-wrap">MILD</div></div>
             <div class="dg-hcell" role="columnheader"><div class="dg-wrap">MODERATE</div></div>
             <div class="dg-hcell" role="columnheader"><div class="dg-wrap">SEVERE</div></div>
@@ -66,9 +63,9 @@
             <tbody>
               <tr>
                 <th scope="row" class="dg-col1"><div class="dg-wrap">Regurgitant Volume</div></th>
-                <td class="dg-c2"><div class="dg-wrap">&lt; 30&nbsp;ml/beat</div></td>
-                <td class="dg-c3"><div class="dg-wrap">30 – 59&nbsp;ml/beat</div></td>
-                <td class="dg-c4"><div class="dg-wrap">&ge; 60&nbsp;ml/beat</div></td>
+                <td class="dg-c2"><div class="dg-wrap">&lt; 30&nbsp;<span class="dg-nb">ml/beat</span></div></td>
+                <td class="dg-c3"><div class="dg-wrap">30 – 59&nbsp;<span class="dg-nb">ml/beat</span></div></td>
+                <td class="dg-c4"><div class="dg-wrap">&ge; 60&nbsp;<span class="dg-nb">ml/beat</span></div></td>
               </tr>
               <tr>
                 <th scope="row" class="dg-col1"><div class="dg-wrap">Regurgitant Fraction</div></th>
@@ -78,9 +75,9 @@
               </tr>
               <tr>
                 <th scope="row" class="dg-col1"><div class="dg-wrap">EROA</div></th>
-                <td class="dg-c2"><div class="dg-wrap">&lt; 0.10&nbsp;cm<sup>2</sup></div></td>
-                <td class="dg-c3"><div class="dg-wrap">0.10 – 0.29&nbsp;cm<sup>2</sup></div></td>
-                <td class="dg-c4"><div class="dg-wrap">&ge; 0.30&nbsp;cm<sup>2</sup></div></td>
+                <td class="dg-c2"><div class="dg-wrap dg-free">&lt; 0.10&nbsp;cm<sup>2</sup></div></td>
+                <td class="dg-c3"><div class="dg-wrap dg-free">0.10 – 0.29&nbsp;cm<sup>2</sup></div></td>
+                <td class="dg-c4"><div class="dg-wrap dg-free">&ge; 0.30&nbsp;cm<sup>2</sup></div></td>
               </tr>
               <tr>
                 <th scope="row" class="dg-col1"><div class="dg-wrap">Jet Deceleration Rate (PHT)</div></th>
@@ -91,7 +88,6 @@
               <tr>
                 <th scope="row" class="dg-col1"><div class="dg-wrap">Diastolic Flow Reversal (DAO)</div></th>
                 <td class="dg-c2"><div class="dg-wrap">Brief early-diastolic reversal</div></td>
-                <!-- Soft hyphens: show only when the word actually wraps (e.g., <500px) -->
                 <td class="dg-c3"><div class="dg-wrap">Inter&shy;mediate</div></td>
                 <td class="dg-c4"><div class="dg-wrap">Holo&shy;diastolic reversal</div></td>
               </tr>
@@ -118,16 +114,29 @@
     </ul>
   </footer>
 
-  <!-- Page-scoped patch to honor soft hyphens in cells -->
+  <!-- Page-scoped safety for units + soft hyphens -->
   <style>
-    /* Let &shy; work in wrapped cells (overrides any global hyphens:none) */
+    #dg-embed .dg-nb{ white-space:nowrap; display:inline; vertical-align:baseline; }
+
+    /* Free only the sup-bearing cells from clamp to avoid WebKit scrollbars */
+    #dg-embed .dg-free{
+      display:block !important;
+      -webkit-line-clamp: unset !important;
+      -webkit-box-orient: initial !important;
+      overflow:visible !important;
+    }
+
+    /* Let &shy; work when needed */
     #dg-embed .dg-table th .dg-wrap,
     #dg-embed .dg-table td .dg-wrap{
       -webkit-hyphens: manual !important;
       hyphens: manual !important;
       word-break: normal !important;
       overflow-wrap: normal !important;
+      scrollbar-width:none; -ms-overflow-style:none;
     }
+    #dg-embed .dg-table th .dg-wrap::-webkit-scrollbar,
+    #dg-embed .dg-table td .dg-wrap::-webkit-scrollbar{ width:0; height:0; }
   </style>
 
 </body>

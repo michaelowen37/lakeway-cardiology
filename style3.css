@@ -1383,3 +1383,55 @@ li {
 
 /* Make sure there’s no stray right border on the last header cell (aligns with table) */
 #dg-embed .dg-header .dg-hcell:last-child{ border-right:none !important; }
+
+/* ===== Compact columns 2–4 on narrow phones (keeps ml/beat intact) ===== */
+@media (max-width:420px){
+  #dg-embed .dg-table td.dg-c2,
+  #dg-embed .dg-table td.dg-c3,
+  #dg-embed .dg-table td.dg-c4{
+    font-size: clamp(.60rem, 2.2vw, .84rem) !important;
+    line-height: 1.12 !important;
+    padding-top: 16px !important;
+    padding-bottom: 16px !important;
+  }
+}
+
+/* Optional: a tiny extra squeeze for ultra-small screens */
+@media (max-width:360px){
+  #dg-embed .dg-table td.dg-c2,
+  #dg-embed .dg-table td.dg-c3,
+  #dg-embed .dg-table td.dg-c4{
+    font-size: clamp(.58rem, 2.4vw, .80rem) !important;
+  }
+}
+/* Never break unit clusters anywhere inside tables */
+#dg-embed .dg-nb{ white-space: nowrap !important; display: inline-block; }
+
+/* ===== Header label fit (all tables) ===== */
+/* Keep top-row labels on one line */
+#dg-embed .dg-header .dg-wrap{
+  white-space: nowrap !important;
+}
+
+/* Squeeze header text progressively on smaller screens */
+@media (max-width:520px){
+  #dg-embed .dg-header .dg-hcell{
+    font-size: clamp(.60rem, 2.2vw, .88rem) !important;
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+  }
+}
+@media (max-width:440px){
+  #dg-embed .dg-header .dg-hcell{
+    font-size: clamp(.56rem, 2.4vw, .84rem) !important;
+    padding-left: 6px !important;
+    padding-right: 6px !important;
+  }
+}
+@media (max-width:360px){
+  #dg-embed .dg-header .dg-hcell{
+    font-size: clamp(.52rem, 2.6vw, .80rem) !important;
+    padding-left: 4px !important;
+    padding-right: 4px !important;
+  }
+}
