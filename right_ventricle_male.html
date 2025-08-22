@@ -35,8 +35,75 @@
 
   <div class="zone navigation">
     <div class="final" style="padding:0 10%">
+
       <br>
-      <img src="rv.svg" alt="right_ventricle" style="width:100%; height:auto;" viewBox="0 0 100 100">
+
+      <!-- ========================== DG TABLE (3 columns) ========================== -->
+      <div id="dg-embed" aria-label="Right Ventricle (Male) — Normal vs Abnormal">
+
+        <!-- Blue header band (now a real table to match column widths) -->
+        <div class="dg-headerwrap">
+          <table class="dg-headertable" role="presentation" aria-hidden="true">
+            <colgroup>
+              <col class="dg-col1-col">
+              <col class="dg-col2-col">
+              <col class="dg-col3-col">
+            </colgroup>
+            <thead>
+              <tr>
+                <th class="dg-hcell"><div class="dg-wrap"></div></th>
+                <th class="dg-hcell"><div class="dg-wrap">NORMAL</div></th>
+                <th class="dg-hcell"><div class="dg-wrap">ABNORMAL</div></th>
+              </tr>
+            </thead>
+          </table>
+        </div>
+
+        <!-- Green table (3 columns) -->
+        <div class="dg-tablewrap">
+          <table class="dg-table" role="table" aria-label="Right ventricle (male) measurements">
+            <colgroup>
+              <col class="dg-col1-col">
+              <col class="dg-col2-col">
+              <col class="dg-col3-col">
+            </colgroup>
+            <tbody>
+              <tr>
+                <th scope="row" class="dg-col1"><div class="dg-wrap">TAPSE</div></th>
+                <td class="dg-c2"><div class="dg-wrap">&ge; 1.6&nbsp;<span class="dg-nb">cm</span></div></td>
+                <td class="dg-c3"><div class="dg-wrap">&lt; 1.6&nbsp;<span class="dg-nb">cm</span></div></td>
+              </tr>
+
+              <tr>
+                <th scope="row" class="dg-col1"><div class="dg-wrap">Fractional Area Change</div></th>
+                <td class="dg-c2"><div class="dg-wrap">&ge; 35%</div></td>
+                <td class="dg-c3"><div class="dg-wrap">&lt; 35%</div></td>
+              </tr>
+
+              <tr>
+                <th scope="row" class="dg-col1"><div class="dg-wrap">S'</div></th>
+                <!-- (keeping your requested unit as given) -->
+                <td class="dg-c2"><div class="dg-wrap dg-free">&ge; 9.5&nbsp;<span class="dg-nb">cm<sup>2</sup></span></div></td>
+                <td class="dg-c3"><div class="dg-wrap dg-free">9.5&nbsp;<span class="dg-nb">cm<sup>2</sup></span></div></td>
+              </tr>
+
+              <tr>
+                <th scope="row" class="dg-col1"><div class="dg-wrap">Basal Diameter</div></th>
+                <td class="dg-c2"><div class="dg-wrap">&le; 4.1&nbsp;<span class="dg-nb">cm</span></div></td>
+                <td class="dg-c3"><div class="dg-wrap">&gt; 4.1&nbsp;<span class="dg-nb">cm</span></div></td>
+              </tr>
+
+              <tr>
+                <th scope="row" class="dg-col1"><div class="dg-wrap">Free Wall Thickness</div></th>
+                <td class="dg-c2"><div class="dg-wrap">0.1 – 0.5&nbsp;<span class="dg-nb">cm</span></div></td>
+                <td class="dg-c3"><div class="dg-wrap">&gt; 0.5&nbsp;<span class="dg-nb">cm</span></div></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <!-- ======================== END DG TABLE ======================== -->
+
       <br><br>
     </div>
   </div>
@@ -48,130 +115,155 @@
     </ul>
   </footer>
 
+  <!-- Page-scoped header/table lock + unit safety -->
   <style>
-    /* -------- page-scoped styles only (style3.css untouched) -------- */
-
-    /* NAV container & title stack safety */
-    .zone.nav-bar{ overflow: visible !important; height: auto !important; }
-
-    .title-stack{
-      display:flex; flex-direction:column; align-items:center; justify-content:flex-start;
-      gap:0; margin:0; padding:0; max-width:100%; overflow:visible !important;
-    }
-    .dg-title, .title-stack .container, .title-stack .zone{
-      display:block !important; position:static !important; float:none !important; clear:both !important;
-      margin:0 !important; padding:0 !important; height:auto !important; max-height:none !important; min-height:0 !important;
-      overflow:visible !important; white-space:normal; word-break:normal; overflow-wrap:normal; text-align:center;
-      line-height:1.08;
-    }
-    @media (min-width:700px){
-      .dg-title{ line-height:1.04 !important; }
+    /* Chips: keep single-line like the aortic pages */
+    .navbar a.border, .navbar a.active.border{
+      white-space: nowrap !important;
+      overflow-wrap: normal !important;
+      word-break: normal !important;
     }
 
-    /* ======================= CHIPS: centered, touching, responsive ======================= */
-    .navbar{
-      display:flex; justify-content:center; align-items:stretch; gap:0 !important;
-      height:auto !important; min-height:40px; padding:0; margin:0 auto; width:100%;
+    /* ===== Theme + shared column widths ===== */
+    #dg-embed{
+      --dg-accent:#00ff66; --dg-head:rgb(40,133,199);
+      --dg-bg:#000; --dg-text:#fff;
+      --dg-outer:4px; --dg-line:2px; --dg-hsep:2px; --dg-hrim:4px;
+
+      /* EXACT same widths for header + body via colgroup */
+      --c1:33.3333%;
+      --c2:33.3333%;
+      --c3:33.3333%;
+
+      color:var(--dg-text); background:var(--dg-bg);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    }
+    #dg-embed *{ box-sizing:border-box; }
+
+    /* ===== BLUE HEADER (as a collapsed table) ===== */
+    .dg-headerwrap{
+      border:var(--dg-hrim) solid var(--dg-head);
+      border-radius:18px; overflow:hidden; background:var(--dg-bg); margin-bottom:8px;
+    }
+    .dg-headertable{
+      width:100%; table-layout:fixed; border-collapse:collapse; background:transparent;
+    }
+    .dg-headertable col.dg-col1-col{ width: var(--c1); }
+    .dg-headertable col.dg-col2-col{ width: var(--c2); }
+    .dg-headertable col.dg-col3-col{ width: var(--c3); }
+
+    .dg-hcell{
+      border-right:var(--dg-hsep) solid var(--dg-head);
+      padding:20px 12px; min-height:88px; text-align:center;
+      font-weight:700; line-height:1.12; font-size: clamp(.82rem, 2.6vw, 1.08rem);
+      color:var(--dg-text); background:transparent;
+      white-space:nowrap; overflow:hidden;
+    }
+    .dg-headertable th:last-child{ border-right:none; }
+
+    /* ===== GREEN TABLE ===== */
+    .dg-tablewrap{ border:var(--dg-outer) solid var(--dg-accent); border-radius:18px; overflow:hidden; background:var(--dg-bg); }
+    .dg-table{ width:100%; border-collapse:collapse; table-layout:fixed; text-align:center; background:transparent; }
+    .dg-table col.dg-col1-col{ width: var(--c1); }
+    .dg-table col.dg-col2-col{ width: var(--c2); }
+    .dg-table col.dg-col3-col{ width: var(--c3); }
+
+    .dg-table th, .dg-table td{
+      border:var(--dg-line) solid var(--dg-accent);
+      padding:22px 10px; line-height:1.2; background:transparent; text-align:center;
+      white-space: normal; word-break: normal; overflow-wrap: normal; hyphens: manual; overflow:hidden; text-overflow:clip;
+      color:var(--dg-text);
+    }
+
+    /* First column: bold + soft blue tint */
+    .dg-table th.dg-col1{
+      font-weight:800; font-size:clamp(.95rem, 2.5vw, 1.08rem);
+      background: rgba(40,133,199,0.22);
+    }
+
+    /* Wrapping helpers + hide scrollbars */
+    .dg-wrap{
+      display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:4;
+      overflow:hidden; white-space:normal;
+      scrollbar-width:none; -ms-overflow-style:none;
+    }
+    .dg-wrap::-webkit-scrollbar{ width:0; height:0; }
+
+    /* “Units” that must not break */
+    #dg-embed .dg-nb{ white-space:nowrap; display:inline; vertical-align:baseline; }
+
+    /* Turn OFF clamp where superscripts could trigger tiny scrollbars */
+    #dg-embed .dg-free{
+      display:block !important;
+      -webkit-line-clamp: unset !important;
+      -webkit-box-orient: initial !important;
       overflow:visible !important;
     }
-    .navbar a.nospace{ display:none !important; }  /* hide spacers so chips can touch */
 
-    .navbar a.border,
-    .navbar a.active.border{
-      position: static !important;
-      float: none !important;
-      display: inline-flex !important;
-      box-sizing: border-box !important;
-
-      width: auto !important;       /* base: size-to-content */
-      min-width: 0 !important;
-      max-width: none !important;
-
-      height: auto !important;
-      margin: 0 !important;
-      overflow: visible !important;
-      white-space: nowrap !important;
-      word-break: normal !important;
-      text-overflow: clip !important;
-      align-items: center !important;
-      justify-content: center !important;
-
-      /* Visuals */
-      border: 2px solid green !important;
-      border-radius: 0 !important;                /* sharp corners */
-      background: transparent !important;
-      color: #fff !important;
-
-      /* Readability */
-      font-size: clamp(.66rem, 2.4vw, 1rem) !important;
-      line-height: 1.05 !important;
-      padding: clamp(6px, 1.1vw, 12px) clamp(12px, 2.2vw, 20px) !important;
-
-      flex: 0 0 auto !important; /* no stretching */
-      text-align:center !important;
+    /* Narrow header squeezes (like your aortic fit rules) */
+    @media (max-width:520px){
+      .dg-hcell{ font-size: clamp(.60rem, 2.2vw, .88rem); padding-left:8px; padding-right:8px; }
     }
-    .navbar a.active.border{ background-color:#4CAF50 !important; border-color:green !important; }
-
-    /* Touching seam (shared border) */
-    .navbar a.border + .navbar a.border{ margin-left:-2px !important; } /* 2px = border width */
-
-    /* ===== Under 700px: SIGNIFICANTLY shorter chips ===== */
-    @media (max-width:700px){
-      .navbar a.border,
-      .navbar a.active.border{
-        white-space: normal !important;           /* allow 2-line labels if needed */
-        overflow-wrap: anywhere !important;
-        line-height: 1.12 !important;
-
-        /* shorter lengths */
-        flex-basis: clamp(100px, 24vw, 160px) !important;
-
-        /* tighter padding + smaller type */
-        font-size: clamp(.58rem, 2.6vw, .9rem) !important;
-        padding: 6px 10px !important;
-      }
+    @media (max-width:440px){
+      .dg-hcell{ font-size: clamp(.56rem, 2.4vw, .84rem); padding-left:6px; padding-right:6px; }
+    }
+    @media (max-width:360px){
+      .dg-hcell{ font-size: clamp(.52rem, 2.6vw, .80rem); padding-left:4px; padding-right:4px; }
     }
 
-    /* Extra tightening for small phones */
-    @media (max-width:500px){
-      .navbar a.border,
-      .navbar a.active.border{
-        flex-basis: clamp(92px, 22vw, 140px) !important;
-        padding: 5px 8px !important;
-        min-height: 30px !important;
-      }
+    /* Defensive: hide any residual scrollbars on clamped wrappers in body cells */
+    #dg-embed .dg-table th .dg-wrap,
+    #dg-embed .dg-table td .dg-wrap{
+      scrollbar-width:none; -ms-overflow-style:none;
     }
-    @media (max-width:430px){
-      .navbar a.border,
-      .navbar a.active.border{
-        flex-basis: clamp(86px, 21vw, 126px) !important;
-        padding: 4px 8px !important;
-        font-size: clamp(.54rem, 3.2vw, .82rem) !important;
-        min-height: 28px !important;
-      }
-    }
+    #dg-embed .dg-table th .dg-wrap::-webkit-scrollbar,
+    #dg-embed .dg-table td .dg-wrap::-webkit-scrollbar{ width:0; height:0; }
 
-    /* ===== 700–999px: NARROWED MORE ===== */
-    @media (min-width:700px) and (max-width:999px){
-      .navbar a.border,
-      .navbar a.active.border{
-        flex-basis: clamp(180px, 22vw, 260px) !important;  /* narrower mid band */
-        padding-left: clamp(14px, 1.6vw, 24px) !important;
-        padding-right: clamp(14px, 1.6vw, 24px) !important;
-        font-size: clamp(.82rem, 1.1vw, 1rem) !important;
-      }
-    }
+    /* ==== RV header band: force single row + exact column lock ==== */
+#dg-embed .dg-headertable{
+  width:100%;
+  table-layout:fixed;
+  border-collapse:collapse;
+}
 
-    /* ===== ≥1000px: NARROWED MORE ===== */
-    @media (min-width:1000px){
-      .navbar a.border,
-      .navbar a.active.border{
-        flex-basis: clamp(220px, 16vw, 300px) !important;  /* narrower desktop range */
-        padding-left: clamp(18px, 1.2vw, 28px) !important;
-        padding-right: clamp(18px, 1.2vw, 28px) !important;
-        font-size: clamp(.86rem, 1.0vw, 1.06rem) !important;
-      }
-    }
+/* Make sure the header is a real table row, not blocks */
+#dg-embed .dg-headertable thead{ display:table-header-group !important; }
+#dg-embed .dg-headertable tr{ display:table-row !important; }
+
+/* Crucial: header cells must be table-cells (not block/flex) */
+#dg-embed .dg-headertable th{
+  display:table-cell !important;
+  float:none !important;
+  vertical-align:middle;
+}
+
+/* Keep labels on one line (they’re short: NORMAL / ABNORMAL) */
+#dg-embed .dg-headertable .dg-wrap{
+  white-space:nowrap;
+}
+
+/* Preserve your spacing/weight; you can tweak if you want it thinner */
+#dg-embed .dg-headertable th.dg-hcell{
+  padding:20px 12px;
+  font-weight:700;
+  line-height:1.12;
+}
+
+/* First column text shrink on narrow screens */
+@media (max-width:500px){
+  #dg-embed .dg-table th.dg-col1{
+    font-size: clamp(.58rem, 3.2vw, .78rem);
+    padding: 14px 6px;
+    line-height: 1.12;
+    letter-spacing: -0.01em;
+  }
+  #dg-embed .dg-table th.dg-col1 .dg-wrap{
+    -webkit-line-clamp: 4;   /* allow extra wrap without overflow */
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+  }
+}
+
   </style>
 
 </body>
