@@ -36,7 +36,30 @@
   <div class="zone navigation">
     <div class="final" style="padding:0 10%">
       <br>
-      <img src="ra_female.svg" alt="right_atrium" style="width:100%; height:auto;" viewBox="0 0 100 100">
+
+      <!-- ========================== DG TABLE (2 columns, no blue header row) ========================== -->
+      <div id="dg-embed" aria-label="Right Atrium — Male reference values">
+        <div class="dg-tablewrap">
+          <table class="dg-table" role="table" aria-label="Right atrial reference values (male)">
+            <colgroup>
+              <col class="dg-col1-col">
+              <col class="dg-col2-col">
+            </colgroup>
+            <tbody>
+              <tr>
+                <th scope="row" class="dg-col1"><div class="dg-wrap">Indexed Volume</div></th>
+                <td class="dg-c2"><div class="dg-wrap">15 – 27&nbsp;<span class="dg-nb">ml/m<sup>2</sup></span></div></td>
+              </tr>
+              <tr>
+                <th scope="row" class="dg-col1"><div class="dg-wrap">Visual Size</div></th>
+                <td class="dg-c2"><div class="dg-wrap">Should be smaller than LA</div></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <!-- ======================== END DG TABLE ======================== -->
+
       <br><br>
     </div>
   </div>
@@ -172,6 +195,66 @@
         font-size: clamp(.86rem, 1.0vw, 1.06rem) !important;
       }
     }
+
+    /* ======================= TABLE THEME (no blue header row) ======================= */
+    #dg-embed{
+      --dg-accent:#00ff66;          /* green borders/lines */
+      --dg-head:rgb(40,133,199);    /* used for first col tint */
+      --dg-bg:#000; --dg-text:#fff;
+      --dg-outer:4px; --dg-line:2px;
+      color:var(--dg-text); background:var(--dg-bg);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    }
+    #dg-embed *{ box-sizing:border-box; }
+
+    .dg-tablewrap{
+      border:var(--dg-outer) solid var(--dg-accent);
+      border-radius:18px;
+      overflow:hidden;
+      background:var(--dg-bg);
+    }
+    .dg-table{
+      width:100%;
+      border-collapse:collapse;
+      table-layout:fixed;
+      text-align:center;
+    }
+    .dg-table th, .dg-table td{
+      border:var(--dg-line) solid var(--dg-accent);
+      padding:22px 10px;
+      line-height:1.2;
+      background:transparent;
+      text-align:center;
+      white-space:normal; word-break:normal; overflow-wrap:normal; hyphens:manual;
+      overflow:hidden; text-overflow:clip;
+      font-size: clamp(.86rem, 2.2vw, 1.0rem);
+    }
+
+    /* First column: bold + subtle blue tint */
+    .dg-table th.dg-col1{
+      font-weight:800;
+      background: rgba(40, 133, 199, 0.22);
+      font-size: clamp(.95rem, 2.5vw, 1.06rem);
+    }
+
+    /* Slight width bias for values */
+    .dg-table col.dg-col1-col{ width:42%; }
+    .dg-table col.dg-col2-col{ width:58%; }
+    @media (max-width:420px){
+      .dg-table col.dg-col1-col{ width:46%; }
+      .dg-table col.dg-col2-col{ width:54%; }
+    }
+
+    /* Keep unit clusters like “ml/m²” on one line */
+    #dg-embed .dg-nb{ white-space:nowrap; display:inline; vertical-align:baseline; }
+
+    /* Gentle clamping just in case lines wrap */
+    .dg-wrap{
+      display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:3;
+      overflow:hidden; white-space:normal;
+      scrollbar-width:none; -ms-overflow-style:none;
+    }
+    .dg-wrap::-webkit-scrollbar{ width:0; height:0; }
   </style>
 
 </body>
