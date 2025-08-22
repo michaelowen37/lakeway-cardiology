@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Diastology:</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="./style3.css">
+  <link rel="icon" type="image/png" href="BSW_Thumbnail.png"/>
+</head>
+
+<body>
+  <nav class="zone nav-bar">
+    <ul class="main-nav">
+      <li><a class="top-nav" href="index.html">Home</a></li>
+      <li class="push"><a class="top-nav" href="lwh_echo.html">Back</a></li>
+    </ul>
+
+    <!-- Title stack (consistent with your other pages) -->
+    <div class="title-stack">
+      <div class="container zone body dg-title">Diastology:</div>
+      <div class="container normal-note dg-subtitle" style="padding:0">
+        <em>Enter what you have; all fields are optional.</em>
+      </div>
+    </div>
+
+    <br>
+
+    <!-- Navbar chips (preferred sharp, touching, responsive) -->
+    <div class="navbar">
+      <a class="nospace" href="#"></a>
+      <a class="active border" href="#">Normal</a>
+      <a class="border" href="special_population_diastology.html">Special Populations</a>
+      <a class="nospace" href="#"></a>
+    </div>
+  </nav>
+
+  <div class="zone navigation">
+    <div class="final" style="padding:0 10%">
+
+      <br>
+
+      <!-- ======================= Diastology Calculator (MR template styling) ======================= -->
+      <div id="mr-embed">
+        <div class="mr-wrap">
+          <!-- LEFT: Inputs + Buttons -->
+          <div class="mr-panel" id="mr-inputs">
+            <form id="mr-form" novalidate>
+              <div class="mr-grid">
+
+                <!-- Row 1 -->
+                <label class="mr-field">
+                  <span class="mr-label">Septal e′</span>
+                  <input id="sepEprime" type="number" step="0.1" min="0" inputmode="decimal" placeholder="cm/s" data-decimals="1" />
+                </label>
+
+                <label class="mr-field">
+                  <span class="mr-label">Lateral e′</span>
+                  <input id="latEprime" type="number" step="0.1" min="0" inputmode="decimal" placeholder="cm/s" data-decimals="1" />
+                </label>
+
+                <!-- Row 2 -->
+                <label class="mr-field">
+                  <span class="mr-label">TR Vmax</span>
+                  <input id="trV" type="number" step="0.01" min="0" inputmode="decimal" placeholder="m/s" data-decimals="2" />
+                </label>
+
+                <label class="mr-field">
+                  <span class="mr-label">PASP / RVSP</span>
+                  <input id="pasp" type="number" step="1" min="0" inputmode="decimal" placeholder="mm Hg" data-decimals="0" />
+                </label>
+
+                <!-- Fifth input centered per your template -->
+                <label class="mr-field mr-center-span">
+                  <span class="mr-label">E/A Ratio</span>
+                  <input id="ea" type="number" step="0.01" min="0" inputmode="decimal" placeholder="ratio" data-decimals="2" />
+                </label>
+
+                <!-- Row 4 -->
+                <label class="mr-field">
+                  <span class="mr-label">LAVI</span>
+                  <input id="lavi" type="number" step="1" min="0" inputmode="decimal" placeholder="mL/m²" data-decimals="0" />
+                </label>
+
+                <label class="mr-field">
+                  <span class="mr-label">LA Strain (reservoir)</span>
+                  <input id="laStrain" type="number" step="1" min="0" inputmode="decimal" placeholder="%" data-decimals="0" />
+                </label>
+
+                <!-- Row 5 -->
+                <label class="mr-field">
+                  <span class="mr-label">Pulmonary Vein S/D</span>
+                  <input id="pvsd" type="number" step="0.01" min="0" inputmode="decimal" placeholder="ratio" data-decimals="2" />
+                </label>
+
+                <label class="mr-field">
+                  <span class="mr-label">IVRT</span>
+                  <input id="ivrt" type="number" step="1" min="0" inputmode="decimal" placeholder="ms" data-decimals="0" />
+                </label>
+
+                <!-- Buttons row -->
+                <div class="mr-actions-row mr-center-span">
+                  <button type="button" id="mr-reset" class="mr-btn mr-btn-reset">Reset</button>
+                  <button type="button" id="mr-calc" class="mr-btn mr-btn-calc">Calculate</button>
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <!-- RIGHT: Outputs -->
+          <div class="mr-panel" id="mr-outputs">
+            <div class="mr-out-row">
+              <div class="mr-out-label">Diastolic Grade</div>
+              <div class="mr-out-box">
+                <span id="grade">--</span>
+              </div>
+            </div>
+
+            <div class="mr-out-row">
+              <div class="mr-out-label">Reason</div>
+              <div class="mr-out-box" style="width:auto; max-width:320px; text-align:center;">
+                <span id="reason">--</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Exceptions banner (under calculator) -->
+      <div class="mr-ref" aria-label="Applicability reminder">
+        <div class="mr-ref-title">
+          Except in: moderate/severe MAC, significant MR or MS, atrial fibrillation, LVAD, non-cardiac PH, heart transplant, or pericardial constriction. Grading follows ASE 2025 general algorithm.
+        </div>
+      </div>
+
+      <style>
+        /* -------- page-scoped styles only (style3.css untouched) -------- */
+
+        /* NAV container & title stack safety */
+        .zone.nav-bar{ overflow: visible !important; height: auto !important; }
+
+        .title-stack{
+          display:flex; flex-direction:column; align-items:center; justify-content:flex-start;
+          gap:0; margin:0; padding:0; max-width:100%; overflow:visible !important;
+        }
+        .dg-title, .dg-subtitle, .title-stack .container, .title-stack .zone{
+          display:block !important; position:static !important; float:none !important; clear:both !important;
+          margin:0 !important; padding:0 !important; height:auto !important; max-height:none !important; min-height:0 !important;
+          overflow:visible !important; white-space:normal; word-break:normal; overflow-wrap:normal; text-align:center;
+        }
+        .dg-title{ line-height:1.10; }
+        .dg-subtitle{ line-height:1.12; }
+        @media (min-width:700px){
+          .title-stack{ gap:0 !important; }
+          .dg-title{ line-height:1.06 !important; }
+          .dg-subtitle{
+            line-height:1.06 !important;
+            margin-top: clamp(-4px, -0.45vw, -8px) !important;
+          }
+        }
+        @media (max-width:700px){
+          .dg-subtitle{ font-size:clamp(.72rem, 2.6vw, .95rem); }
+        }
+        @media (max-width:400px){
+          .dg-subtitle{ font-size:clamp(.62rem, 3.4vw, .88rem); }
+        }
+
+        /* ======================= CHIPS: centered, touching, responsive (matches sample) ======================= */
+        .navbar{
+          display:flex; justify-content:center; align-items:stretch; gap:0 !important;
+          height:auto !important; min-height:40px; padding:0; margin:0 auto; width:100%;
+          overflow:visible !important;
+        }
+        .navbar a.nospace{ display:none !important; }  /* spacers hidden so chips touch */
+
+        .navbar a.border,
+        .navbar a.active.border{
+          position: static !important;
+          float: none !important;
+          display: inline-flex !important;
+          box-sizing: border-box !important;
+
+          /* default sizing (tablet/desktop): one-line, size to content */
+          width: auto !important;
+          min-width: 0 !important;
+          max-width: none !important;
+          white-space: nowrap !important;
+
+          height: auto !important;
+          margin: 0 !important;
+          overflow: visible !important;
+          word-break: normal !important;
+          text-overflow: clip !important;
+          align-items: center !important;
+          justify-content: center !important;
+
+          /* Visuals */
+          border: 2px solid green !important;
+          border-radius: 0 !important;                /* sharp corners */
+          background: transparent !important;
+          color: #fff !important;
+
+          /* Readability */
+          font-size: clamp(.66rem, 2.4vw, 1rem) !important;
+          line-height: 1.05 !important;
+          padding: clamp(6px, 1.1vw, 12px) clamp(12px, 2.2vw, 20px) !important;
+
+          /* prevent odd stretching; seam handled below */
+          flex: 0 0 auto !important;
+          text-align:center !important;
+        }
+        .navbar a.active.border{ background-color:#4CAF50 !important; border-color:green !important; }
+
+        /* Touching seam (shared border) */
+        .navbar a.border + .navbar a.border{ margin-left:-2px !important; }
+
+        /* ▼ Narrower below 700px (meet-in-the-middle), allow wrapping for long label */
+        @media (max-width:700px){
+          .navbar a.border,
+          .navbar a.active.border{
+            white-space: normal !important;           /* allow wrapping */
+            overflow-wrap: anywhere !important;
+            line-height: 1.12 !important;
+
+            /* narrower base width for two-chip layout */
+            flex-basis: clamp(150px, 30vw, 230px) !important;
+
+            /* Slightly tighter padding so two chips stay tidy */
+            padding: 6px 10px !important;
+          }
+        }
+
+        /* ▼ Further shorten under 500px so borders don't look too long */
+        @media (max-width:500px){
+          .navbar a.border,
+          .navbar a.active.border{
+            flex-basis: clamp(120px, 26vw, 180px) !important;  /* shorter width */
+            padding-left: 8px !important;
+            padding-right: 8px !important;
+          }
+        }
+
+        /* Extra-small phones: slightly smaller text/padding */
+        @media (max-width:420px){
+          .navbar a.border,
+          .navbar a.active.border{
+            font-size: clamp(.58rem, 2vw, .88rem) !important;
+            padding: 5px 8px !important;
+          }
+        }
+        @media (max-width:340px){
+          .navbar a.border,
+          .navbar a.active.border{
+            font-size: clamp(.54rem, 2vw, .84rem) !important;
+            padding: 4px 8px !important;
+          }
+        }
+
+        /* Mid-band widening: 700–999 px (roomier chips) */
+        @media (min-width:700px) and (max-width:999px){
+          .navbar a.border,
+          .navbar a.active.border{
+            flex-basis: clamp(220px, 30vw, 320px) !important;
+            padding-left: clamp(16px, 1.8vw, 28px) !important;
+            padding-right: clamp(16px, 1.8vw, 28px) !important;
+            font-size: clamp(.85rem, 1.2vw, 1.02rem) !important;
+          }
+        }
+
+        /* Desktop widening: ≥1000px */
+        @media (min-width:1000px){
+          .navbar a.border,
+          .navbar a.active.border{
+            flex-basis: clamp(320px, 22vw, 420px) !important;
+            padding-left: clamp(22px, 1.4vw, 34px) !important;
+            padding-right: clamp(22px, 1.4vw, 34px) !important;
+            font-size: clamp(.9rem, 1.05vw, 1.08rem) !important;
+          }
+        }
+
+        /* ===================== Calculator shell (from MR template) ===================== */
+        #mr-embed{
+          --mr-green:#00ff66; --mr-bg:#000; --mr-text:#fff;
+          --mr-in-empty:rgb(178,212,163); --mr-in-filled:rgb(105,148,98);
+          --mr-red:#ff3333; --mr-box-border:4px; --mr-item-border:2px;
+          --mr-radius:18px; --mr-radius-sm:14px; --field-w:220px;
+          --grid-gap-x:16px; --grid-gap-y:12px;
+          background:var(--mr-bg); color:var(--mr-text);
+          font-family:ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+          padding:5px 15px 0 15px;
+        }
+        #mr-embed :where(*){box-sizing:border-box}
+
+        .mr-wrap{display:flex;gap:24px;align-items:flex-start;justify-content:center;flex-wrap:wrap}
+        .mr-panel{border:var(--mr-box-border) solid var(--mr-green);border-radius:var(--mr-radius);background:var(--mr-bg);padding:20px 22px}
+
+        .mr-grid{display:grid;grid-template-columns:repeat(2,var(--field-w));gap:var(--grid-gap-y) var(--grid-gap-x);justify-content:center}
+        .mr-field{display:flex;flex-direction:column;gap:6px;width:var(--field-w)}
+        .mr-center-span{grid-column:1 / -1;justify-self:center}
+        .mr-label{font-size:.85rem;opacity:.95;text-align:center}
+
+        input[type="number"]{
+          width:100%;padding:8px 10px;background:var(--mr-in-empty);
+          border:var(--mr-item-border) solid var(--mr-green);border-radius:var(--mr-radius-sm);
+          text-align:center;color:#111;outline:none;appearance:textfield;-moz-appearance:textfield;overflow:hidden;
+          transition:background-color .25s,color .25s,box-shadow .25s,border-color .2s,font-size .1s ease;
+        }
+        input[type="number"].filled{background:var(--mr-in-filled);color:var(--mr-text)}
+        input[type="number"]:focus{box-shadow:0 0 0 3px rgba(0,255,102,.18)}
+        input[type=number]::-webkit-outer-spin-button,input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+
+        /* Buttons row + buttons (no nudge, no inner scrollbars) */
+        .mr-actions-row{
+          display:grid;grid-template-columns:repeat(2,var(--field-w));gap:8px;justify-content:center;justify-items:stretch;margin-top:18px;
+          align-items:center;
+        }
+        #mr-reset{justify-self=end}
+        #mr-calc{justify-self:start}
+        .mr-btn{
+          display:inline-flex; align-items:center; justify-content:center;
+          width:75%; min-height:44px; padding:12px 40px; white-space:nowrap; border-radius:999px; border:none;
+          color:var(--mr-text); font-weight:600; letter-spacing:.2px; font-size:.95rem;
+          cursor:pointer; transition:background-color .2s ease, filter .12s ease;
+          overflow:hidden; -webkit-tap-highlight-color:transparent; scrollbar-width:none; box-sizing:border-box;
+        }
+        .mr-btn::-webkit-scrollbar{width:0;height:0}
+        .mr-btn:focus-visible{outline:none; box-shadow:0 0 0 3px rgba(0,255,102,.22)}
+        .mr-btn:active{ filter:brightness(.92) } /* removed translateY that caused the nudge */
+
+        .mr-btn-reset{ background:rgb(163,192,212); color:#06131b; }
+        .mr-btn-reset:hover{ background:rgb(100,125,140); filter:none; }
+        .mr-btn-calc{ background:rgb(40,133,199); box-shadow:none; }
+        .mr-btn-calc:hover{ background:rgb(25,95,145); filter:none; }
+
+        /* Outputs */
+        #mr-outputs{min-width:320px;max-width:420px}
+        .mr-out-row{display:grid;grid-template-columns:1fr auto;align-items:center;gap:10px;margin-bottom:12px}
+        .mr-out-label{font-weight:600;font-size:.9rem;opacity:.95;text-align:right}
+        .mr-out-box{
+          display:inline-flex;align-items:center;gap:6px;padding:8px 12px;
+          border:var(--mr-item-border) solid var(--mr-green); border-radius:var(--mr-radius-sm);
+          background:transparent;font-weight:800;font-size:.95rem;color:var(--mr-text);justify-self:start
+        }
+        /* Equal output box widths on desktop only */
+        @media (min-width: 721px) {
+          #mr-outputs .mr-out-box { width: 200px; justify-content: center; }
+        }
+
+        /* Mobile */
+        @media (max-width:720px){
+          .mr-panel{width:94%;max-width:560px;margin:0 auto}
+          .mr-wrap{flex-direction:column;align-items:center;gap:16px}
+          .mr-grid{grid-template-columns:1fr;justify-items:center;gap:var(--grid-gap-y) 10px}
+          .mr-field{width:70%;max-width:240px}
+          .mr-center-span{grid-column:1;justify-self:center}
+          .mr-actions-row{grid-template-columns:1fr !important;justify-items:center;gap:10px;margin-top:16px}
+          #mr-reset,#mr-calc{justify-self:center}
+          .mr-btn{width:33%;min-width:120px;padding:12px 28px;font-size:clamp(.85rem,3.6vw,.95rem);line-height:1.15}
+          #mr-outputs{width:100%;max-width:600px;margin:0 auto;display:flex;flex-direction:column;align-items:center}
+          .mr-out-row{grid-template-columns:1fr;justify-items:center;gap:8px;margin-bottom:14px}
+          .mr-out-label{text-align:center;font-size:.85rem}
+          .mr-out-box{width:40%;min-width:160px;justify-content:center;margin:0 auto;white-space:nowrap}
+        }
+        @media (max-width:380px){
+          .mr-panel{width:98%;max-width:none}
+          .mr-field{width:85%;max-width:200px}
+          .mr-btn{width:40%;min-width:110px;padding:12px 24px;font-size:clamp(.82rem,4.2vw,.92rem)}
+          .mr-out-box{width:48%;min-width:150px}
+        }
+        @media (max-width: 444px){
+          #mr-embed{ padding: 4px 8px 0 8px; }
+          #mr-embed .mr-wrap{ gap: 12px; }
+          #mr-embed .mr-panel{ width: 100%; max-width: none; margin: 0 auto; padding: 16px 14px; }
+          #mr-embed #mr-outputs{ min-width: 0; }
+        }
+        @media (max-width: 417px){
+          #mr-embed .mr-panel{ padding: 14px 12px; }
+          #mr-embed .mr-field{ max-width: 200px; }
+          #mr-embed .mr-btn{ min-width: 110px; }
+          #mr-embed .mr-out-box{ min-width: 140px; }
+        }
+
+        /* Reference / banner area */
+        .mr-ref{
+          margin-top: clamp(24px, 5vw, 64px);
+          display: flex; flex-direction: column; align-items: center; gap: 8px;
+        }
+        .mr-ref-title{
+          font-size: clamp(.9rem, 2.2vw, 1.05rem);
+          color: #c9c9c9; font-style: italic; text-align: center;
+          text-shadow: 0 1px 2px rgba(0,0,0,.6);
+          max-width: 880px;
+        }
+
+        /* Output refresh animation (longer, clearer) */
+        .flash{ animation: flashFade 1.2s ease-out; }
+        @keyframes flashFade { from { opacity: 0; transform: translateY(-1px);} to { opacity: 1; transform: translateY(0);} }
+      </style>
+
+      <script>
+        document.addEventListener('DOMContentLoaded', function () {
+          const $ = (id) => document.getElementById(id);
+
+          // Inputs
+          const fields = {
+            sepEprime: $('sepEprime'),
+            latEprime: $('latEprime'),
+            trV: $('trV'),
+            pasp: $('pasp'),
+            ea: $('ea'),
+            lavi: $('lavi'),
+            laStrain: $('laStrain'),
+            pvsd: $('pvsd'),
+            ivrt: $('ivrt'),
+          };
+
+          const btnCalc = $('mr-calc');
+          const btnReset = $('mr-reset');
+          const gradeEl = $('grade');
+          const reasonEl = $('reason');
+
+          // Helpers
+          function fmtTrim(n, decimals) {
+            const r = (typeof n === 'number' && Number.isFinite(n)) ? n : NaN;
+            if (Number.isNaN(r)) return '';
+            const s = r.toFixed(decimals);
+            return s.replace(/\.0+$/, '').replace(/(\.\d*?)0+$/, '$1');
+          }
+          const has = (v) => typeof v === 'number' && !Number.isNaN(v);
+
+          // Field behaviors: filled state + per-field rounding on blur + Enter triggers Calculate
+          Object.values(fields).forEach((inp) => {
+            if (!inp) return;
+            inp.addEventListener('input', () => {
+              if ((inp.value || '').trim() !== '') inp.classList.add('filled'); else inp.classList.remove('filled');
+            });
+            inp.addEventListener('blur', () => {
+              const raw = (inp.value || '').trim();
+              if (raw === '') return;
+              const v = Number(raw);
+              if (Number.isNaN(v)) return;
+              const d = Number(inp.dataset.decimals || '1');
+              inp.value = fmtTrim(v, d);
+            });
+            inp.addEventListener('keydown', (e) => {
+              if (e.key === 'Enter') { e.preventDefault(); btnCalc && btnCalc.click(); }
+            });
+          });
+
+          // ==== Diastolic grading logic (ASE-2025 style, E/A as direct input) ====
+          function gradeDiastolic({
+            sepEprime, latEprime, EoverA, TRv, PASP, LAVI, LAStrain, PVSD, IVRT
+          } = {}) {
+            const avgEprime = (has(sepEprime) && has(latEprime)) ? (sepEprime + latEprime) / 2 : null;
+
+            // Step 1: Reduced e′ (age-independent)
+            const reducedEprime =
+              (has(sepEprime) && sepEprime <= 6) ||
+              (has(latEprime) && latEprime <= 7) ||
+              (has(avgEprime) && avgEprime <= 6.5);
+
+            // Primary elevated-LAP signals (E/e′ not computed by design)
+            const incEe = false;
+            const incTRorPASP =
+              (has(TRv) && TRv >= 2.8) ||
+              (has(PASP) && PASP >= 35);
+
+            const primaryCount = [reducedEprime, incEe, incTRorPASP].filter(Boolean).length;
+
+            // Supportive markers
+            const supportive =
+              (has(PVSD) && PVSD <= 0.67) ||
+              (has(LAStrain) && LAStrain <= 18) ||
+              (has(LAVI) && LAVI > 34) ||
+              (has(IVRT) && IVRT <= 70);
+
+            // Quick "all normal" -> Normal DF
+            const allPrimaryKnownNormal =
+              reducedEprime === false &&
+              (incTRorPASP === false || (!has(TRv) && !has(PASP))) &&
+              !incEe;
+
+            if (allPrimaryKnownNormal && !supportive) {
+              return { grade: "Normal", reason: "No impaired relaxation or elevated-LAP signals detected." };
+            }
+
+            // Grade I: impaired relaxation + normal LAP + E/A ≤ 0.8
+            const normalTR = (has(TRv) || has(PASP)) ? !incTRorPASP : true;
+            if (reducedEprime && normalTR && has(EoverA) && EoverA <= 0.8) {
+              return { grade: "Grade I", reason: "Impaired relaxation with normal LAP (E/A ≤ 0.8)." };
+            }
+
+            // Decide elevated LAP
+            let elevatedLAP = false;
+            if (reducedEprime && incEe && incTRorPASP) {
+              elevatedLAP = true; // (unlikely here)
+            } else if ((incTRorPASP || primaryCount >= 2) && supportive) {
+              elevatedLAP = true; // primaries partly abnormal + supportive clinches it
+            } else if ((!has(TRv) && !has(PASP)) && supportive) {
+              elevatedLAP = true; // no TR/PASP available; supportive allowed
+            }
+
+            if (elevatedLAP) {
+              if (has(EoverA)) {
+                if (EoverA >= 2) return { grade: "Grade III", reason: "Elevated LAP with restrictive filling (E/A ≥ 2)." };
+                else            return { grade: "Grade II",  reason: "Elevated LAP without restrictive filling (E/A < 2)." };
+              } else {
+                return { grade: "Grade II", reason: "Elevated LAP inferred; add E/A to distinguish Grade II vs III." };
+              }
+            }
+
+            // Reduced e′ alone with E/A > 0.8 -> Normal DF (consider exercise if symptoms)
+            if (reducedEprime && has(EoverA) && EoverA > 0.8 && normalTR) {
+              return { grade: "Normal", reason: "Reduced e′ alone at rest with E/A > 0.8; consider exercise echo if symptomatic." };
+            }
+
+            // Borderline/incomplete data
+            return { grade: "Normal", reason: "Borderline/partial data without confirmed elevated LAP." };
+          }
+
+          function valOrNaN(inp) {
+            const raw = (inp?.value || '').trim();
+            if (raw === '') return NaN;
+            const n = Number(raw);
+            return Number.isNaN(n) ? NaN : n;
+          }
+
+          function animateFlash(el){
+            if (!el) return;
+            el.classList.remove('flash');
+            // force reflow so the animation can retrigger even if text is identical
+            void el.offsetWidth;
+            el.classList.add('flash');
+          }
+
+          function calculate() {
+            const data = {
+              sepEprime: valOrNaN(fields.sepEprime),
+              latEprime: valOrNaN(fields.latEprime),
+              TRv:       valOrNaN(fields.trV),
+              PASP:      valOrNaN(fields.pasp),
+              EoverA:    valOrNaN(fields.ea),
+              LAVI:      valOrNaN(fields.lavi),
+              LAStrain:  valOrNaN(fields.laStrain),
+              PVSD:      valOrNaN(fields.pvsd),
+              IVRT:      valOrNaN(fields.ivrt),
+            };
+
+            const out = gradeDiastolic(data);
+            if (gradeEl)  gradeEl.textContent  = out.grade;
+            if (reasonEl) reasonEl.textContent = out.reason;
+
+            // Visual cue that a new result was generated (longer fade)
+            animateFlash(gradeEl);
+            animateFlash(reasonEl);
+          }
+
+          function resetAll() {
+            Object.values(fields).forEach((inp) => {
+              if (!inp) return;
+              inp.value = '';
+              inp.classList.remove('filled');
+            });
+            if (gradeEl)  gradeEl.textContent  = '--';
+            if (reasonEl) reasonEl.textContent = '--';
+            animateFlash(gradeEl);
+            animateFlash(reasonEl);
+          }
+
+          // Button handlers
+          btnCalc?.addEventListener('click', (e) => { e.preventDefault(); calculate(); });
+          btnReset?.addEventListener('click', (e) => { e.preventDefault(); resetAll(); });
+        });
+      </script>
+
+      <br><br>
+    </div>
+  </div>
+
+  <footer class="zone foot bottom-section">
+    <ul class="foot-nav">
+      <!-- <li><a href="privacy-policy.html" target="_blank">Privacy Policy</a></li> -->
+      <!-- <li><a href="terms-of-use.html" target="_blank">Terms of Use</a></li> -->
+    </ul>
+  </footer>
+
+</body>
+</html>
