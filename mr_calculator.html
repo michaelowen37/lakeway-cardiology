@@ -139,7 +139,7 @@
 
         /* Buttons */
         .mr-actions-row{display:grid;grid-template-columns:repeat(2,var(--field-w));gap:8px;justify-content:center;justify-items:stretch;margin-top:18px}
-        #mr-reset{justify-self:end}
+        #mr-reset{justify-self=end}
         #mr-calc{justify-self:start}
         .mr-btn{
           width:75%;padding:12px 40px;white-space:nowrap;border-radius:999px;border:none;
@@ -232,10 +232,6 @@
           font-style: italic;
           text-align: center;
           text-shadow: 0 1px 2px rgba(0,0,0,.6);
-        }
-        .mr-ref-img{
-          width: 100%;    /* ~90% width of content area */
-          height: auto;  /* preserve aspect ratio */
         }
       </style>
 
@@ -351,13 +347,69 @@
         });
       </script>
 
-      <!-- ===== Small reference chart (copied from Native Mitral Valve page) ===== -->
-      <div class="mr-ref" aria-label="Native Mitral Valve — Regurgitation reference chart">
+      <!-- ===== Reference table (replaces the SVG) ===== -->
+      <div class="mr-ref" aria-label="Native Mitral Valve — Regurgitation reference table">
         <div class="mr-ref-title">Native Mitral Valve — Regurgitation (Reference)</div>
-        <img src="native_mr.svg"
-             alt="Native mitral valve regurgitation chart"
-             class="mr-ref-img"
-             loading="lazy">
+
+        <!-- ========================== DG TABLE (copied from the NMV page) ========================== -->
+        <div id="dg-embed" aria-label="Native Mitral Valve — Mitral Regurgitation severity table">
+
+          <!-- Blue header band (4 columns) -->
+          <div class="dg-headerwrap">
+            <div class="dg-header" role="row">
+              <div class="dg-hcell" role="columnheader"><div class="dg-wrap"></div></div>
+              <div class="dg-hcell" role="columnheader"><div class="dg-wrap">MILD</div></div>
+              <div class="dg-hcell" role="columnheader"><div class="dg-wrap">MODERATE</div></div>
+              <div class="dg-hcell" role="columnheader"><div class="dg-wrap">SEVERE</div></div>
+            </div>
+          </div>
+
+          <!-- Green table (4 columns) -->
+          <div class="dg-tablewrap">
+            <table class="dg-table" role="table" aria-label="Mitral regurgitation severity criteria">
+              <colgroup>
+                <col class="dg-col1-col">
+                <col class="dg-col2-col">
+                <col class="dg-col3-col">
+                <col class="dg-col4-col">
+              </colgroup>
+              <tbody>
+                <tr>
+                  <th scope="row" class="dg-col1"><div class="dg-wrap">Regurgitant Volume</div></th>
+                  <td class="dg-c2"><div class="dg-wrap">&lt; 30&nbsp;<span class="dg-nb">ml/beat</span></div></td>
+                  <td class="dg-c3"><div class="dg-wrap">30 – 59&nbsp;<span class="dg-nb">ml/beat</span></div></td>
+                  <td class="dg-c4"><div class="dg-wrap">&ge; 60&nbsp;<span class="dg-nb">ml/beat</span></div></td>
+                </tr>
+                <tr>
+                  <th scope="row" class="dg-col1"><div class="dg-wrap">Regurgitant Fraction</div></th>
+                  <td class="dg-c2"><div class="dg-wrap">&lt; 30%</div></td>
+                  <td class="dg-c3"><div class="dg-wrap">30 – 49%</div></td>
+                  <td class="dg-c4"><div class="dg-wrap">&ge; 50%</div></td>
+                </tr>
+                <tr>
+                  <th scope="row" class="dg-col1"><div class="dg-wrap">EROA</div></th>
+                  <!-- free sup-bearing cells to avoid tiny scrollbars in some browsers -->
+                  <td class="dg-c2"><div class="dg-wrap dg-free">&lt; 0.20&nbsp;cm<sup>2</sup></div></td>
+                  <td class="dg-c3"><div class="dg-wrap dg-free">0.20 – 0.39&nbsp;cm<sup>2</sup></div></td>
+                  <td class="dg-c4"><div class="dg-wrap dg-free">&ge; 0.40&nbsp;cm<sup>2</sup></div></td>
+                </tr>
+                <tr>
+                  <th scope="row" class="dg-col1"><div class="dg-wrap">Vena Contracta</div></th>
+                  <td class="dg-c2"><div class="dg-wrap">&lt; 0.3&nbsp;cm</div></td>
+                  <td class="dg-c3"><div class="dg-wrap">Inter&shy;mediate</div></td>
+                  <td class="dg-c4"><div class="dg-wrap">&ge; 0.7&nbsp;cm</div></td>
+                </tr>
+                <tr>
+                  <th scope="row" class="dg-col1"><div class="dg-wrap">Mitral Inflow</div></th>
+                  <td class="dg-c2"><div class="dg-wrap">A-wave Dominance</div></td>
+                  <td class="dg-c3"><div class="dg-wrap">Variable</div></td>
+                  <td class="dg-c4"><div class="dg-wrap">E-wave Dominance</div></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <!-- ======================== END DG TABLE ======================== -->
       </div>
 
       <br><br>
@@ -370,6 +422,31 @@
       <!-- <li><a href="terms-of-use.html" target="_blank">Terms of Use</a></li> -->
     </ul>
   </footer>
+
+  <!-- Page-scoped safety for DG units + soft hyphens (same as your NMV page) -->
+  <style>
+    #dg-embed .dg-nb{ white-space:nowrap; display:inline; vertical-align:baseline; }
+
+    /* Free only the sup-bearing cells from clamp to avoid WebKit scrollbars */
+    #dg-embed .dg-free{
+      display:block !important;
+      -webkit-line-clamp: unset !important;
+      -webkit-box-orient: initial !important;
+      overflow:visible !important;
+    }
+
+    /* Let &shy; work when needed, and hide any residual scrollbars in clamped wrappers */
+    #dg-embed .dg-table th .dg-wrap,
+    #dg-embed .dg-table td .dg-wrap{
+      -webkit-hyphens: manual !important;
+      hyphens: manual !important;
+      word-break: normal !important;
+      overflow-wrap: normal !important;
+      scrollbar-width:none; -ms-overflow-style:none;
+    }
+    #dg-embed .dg-table th .dg-wrap::-webkit-scrollbar,
+    #dg-embed .dg-table td .dg-wrap::-webkit-scrollbar{ width:0; height:0; }
+  </style>
 
 </body>
 </html>
