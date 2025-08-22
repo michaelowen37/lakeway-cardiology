@@ -314,7 +314,7 @@
           display:grid;grid-template-columns:repeat(2,var(--field-w));gap:8px;justify-content:center;justify-items:stretch;margin-top:18px;
           align-items:center;
         }
-        #mr-reset{justify-self=end}
+        #mr-reset{justify-self:end}
         #mr-calc{justify-self:start}
         .mr-btn{
           display:inline-flex; align-items:center; justify-content:center;
@@ -341,7 +341,19 @@
           border:var(--mr-item-border) solid var(--mr-green); border-radius:var(--mr-radius-sm);
           background:transparent;font-weight:800;font-size:.95rem;color:var(--mr-text);justify-self:start
         }
-        /* Equal output box widths on desktop only */
+        /* Make "Reason" wrap nicely at ~30 characters */
+        #reason{
+          display:inline-block;
+          max-width:30ch;              /* ≈ 30 characters per line */
+          white-space:normal !important;/* override any inherited nowrap on small screens */
+          overflow-wrap:anywhere;
+          word-break:normal;
+        }
+        @media (max-width:400px){
+          #reason{ max-width:26ch; }   /* a touch narrower on very small phones */
+        }
+
+        /* Equal output box widths on desktop only (Reason row keeps its inline auto width) */
         @media (min-width: 721px) {
           #mr-outputs .mr-out-box { width: 200px; justify-content: center; }
         }
@@ -359,7 +371,7 @@
           #mr-outputs{width:100%;max-width:600px;margin:0 auto;display:flex;flex-direction:column;align-items:center}
           .mr-out-row{grid-template-columns:1fr;justify-items:center;gap:8px;margin-bottom:14px}
           .mr-out-label{text-align:center;font-size:.85rem}
-          .mr-out-box{width:40%;min-width:160px;justify-content:center;margin:0 auto;white-space:nowrap}
+          .mr-out-box{width:40%;min-width:160px;justify-content:center;margin:0 auto;}
         }
         @media (max-width:380px){
           .mr-panel{width:98%;max-width:none}
