@@ -1701,7 +1701,23 @@ li {
   .box.zone.grow .words,
   .box.zone.grow a.words{
     /* ~0.95rem at 600px → ~1.35rem at 320px (soft ramp) */
-    font-size: clamp(0.95rem, calc(0.95rem + 0.45rem * (600px - 100vw) / 280), 1.35rem) !important;
+    font-size: clamp(0.95rem, calc(0.95rem + 0.35rem * (600px - 100vw) / 280), 1.35rem) !important;
     line-height: 1.12;
+  }
+}
+
+
+/* Phones ≤600px: shrink the labels a bit */
+@media (max-width: 600px){
+  .box.zone.grow > a.words{
+    font-size: 1.05rem !important;
+    line-height: 1.12;
+  }
+}
+
+/* Very small phones ≤400px: nudge them a little larger for readability */
+@media (max-width: 400px){
+  .box.zone.grow > a.words{
+    font-size: 1.18rem !important;
   }
 }
