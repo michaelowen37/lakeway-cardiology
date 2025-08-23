@@ -1634,3 +1634,35 @@ li {
   }
 }
 
+
+/* --- PHONE-ONLY: smaller tiles + larger labels (desktop unchanged) --- */
+@media (max-width: 600px){
+  /* Make the button tiles shorter on small screens */
+  .grid-wrapper,
+  .grid-wrapper1,
+  .grid-wrapper2{
+    /* ~60–96px tall depending on viewport; no desktop changes */
+    grid-auto-rows: clamp(60px, 8vh, 96px) !important;
+  }
+
+  /* Grow the label text on the tiles */
+  .box.zone.grow .words,
+  .box.zone.grow a{
+    /* Bigger than before between 600→320px, but won’t overflow */
+    font-size: clamp(1.15rem, 4.8vw, 1.8rem) !important;
+    line-height: 1.12;
+    padding: 0 4% !important;   /* tiny left/right breathing room */
+    white-space: normal;        /* allow wrapping if needed */
+  }
+
+  /* Optional: stop hover zoom on touch to avoid any overlap feel */
+  .grow:hover{ transform: none; }
+}
+
+/* Tiny phones: allow just a touch more text size without growing the tile */
+@media (max-width: 360px){
+  .box.zone.grow .words,
+  .box.zone.grow a{
+    font-size: clamp(1.2rem, 5.2vw, 1.9rem) !important;
+  }
+}
