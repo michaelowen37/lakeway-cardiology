@@ -922,7 +922,7 @@ body {
 
 /* More space between logo and button (all sizes) */
 .container2 {
-  margin-top: clamp(2.5rem, 6vh, 3.75rem) !important; /* up from ~2rem */
+  margin-top: clamp(3rem, 8vh, 5rem) !important; /* up from ~2rem */
 }
 
 /* Button: slightly narrower at all sizes */
@@ -949,4 +949,109 @@ body {
   text-decoration: none;
   margin: 0 !important;
   padding: 0 !important;
+}
+
+/* Make the entire green button clickable, no absolute positioning */
+.container2.button > button.grow {
+  position: static !important;        /* reset */
+  display: inline-block;
+  padding: 0 !important;              /* move padding to the link */
+  border-radius: 12px;
+}
+
+.container2.button > button.grow > .button-text {
+  position: static !important;        /* reset */
+  display: block !important;          /* fills the button’s box */
+  width: 100% !important;
+  height: 100% !important;
+  padding: 12px 38px !important;      /* full hit area (edges included) */
+  line-height: 1.15;
+  text-decoration: none;
+  color: #bcbec5;
+  border-radius: inherit;
+}
+
+/* Center the button under the logo */
+.container2 {
+  width: 100% !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+/* Button box defines the size; keep it centered */
+.container2.button > button.grow {
+  display: inline-block !important;
+  margin: 0 auto !important;        /* exact centering */
+  position: relative !important;     /* for the link overlay */
+  box-sizing: border-box !important;
+  padding: 12px 38px !important;     /* adjust width here */
+  border-radius: 12px;
+}
+
+/* Make the entire green button clickable + center the label */
+.container2.button > button.grow > .button-text {
+  position: absolute !important;
+  inset: 0 !important;               /* fill the button */
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;/* centers text horizontally & vertically */
+  padding: 0 !important;             /* padding lives on the button */
+  width: 100% !important;
+  height: 100% !important;
+  text-align: center !important;
+  border-radius: inherit;
+}
+
+
+/* Taller button everywhere (more vertical padding) */
+.container2.button > button.grow {
+  width: auto !important;              /* ignore earlier % widths */
+  padding: 16px 40px !important;       /* ↑ height via padding-block */
+  min-height: 52px !important;         /* consistent touch target */
+  box-sizing: border-box;
+}
+
+/* Keep the link filling the button and centered (from your working patch) */
+.container2.button > button.grow > .button-text {
+  position: absolute !important;
+  inset: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  padding: 0 !important;               /* padding lives on the button */
+  width: 100% !important;
+  height: 100% !important;
+  border-radius: inherit;
+}
+
+/* Under 700px: make the button noticeably wider */
+@media (max-width: 699px) {
+  .container2.button > button.grow {
+    min-width: clamp(240px, 72vw, 420px) !important;  /* wider on phones */
+  }
+}
+
+/* Ultra-small phones: use most of the width but keep comfortable padding */
+@media (max-width: 360px) {
+  .container2.button > button.grow {
+    min-width: 88vw !important;
+    padding: 16px 24px !important;
+  }
+}
+
+@media (max-width: 700px) {
+  .container2.button > button.grow {
+    min-width: clamp(180px, 40vw, 360px) !important;
+  }
+}
+@media (max-width: 360px) {
+  .container2.button > button.grow {
+    min-width: 40vw !important;
+  }
+}
+/* slightly less horizontal padding = slightly slimmer */
+.container2.button > button.grow {
+  padding: 16px 32px !important;
 }
