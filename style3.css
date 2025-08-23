@@ -1675,3 +1675,23 @@ li {
     grid-auto-rows: clamp(64px, 9vh, 102px) !important;
   }
 }
+
+/* <400px: slightly smaller text inside calculator buttons */
+@media (max-width: 400px){
+  #mr-embed .mr-btn,
+  #tr-embed .mr-btn,
+  #pi-embed .mr-btn,
+  #lavi-embed .mr-btn{
+    font-size: clamp(.78rem, 3.6vw, .9rem) !important; /* ~5–10% smaller */
+    line-height: 1.1; /* keeps text crisp */
+  }
+}
+
+/* 600–1100px: grow the tile/box labels ("box zone grow") */
+@media (min-width: 600px) and (max-width: 1100px){
+  .box.zone.grow .words,
+  .box.zone.grow a.words{
+    font-size: clamp(1.35rem, 3.2vw, 2.2rem) !important;
+    line-height: 1.12;
+  }
+}
