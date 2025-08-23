@@ -1545,3 +1545,68 @@ li {
   text-align: center;
   width: 100%;
 }
+
+/* --- Keep scrollbar space stable so nothing nudges left/right on click --- */
+@supports (scrollbar-gutter: stable) {
+  html, body { scrollbar-gutter: stable both-edges; }
+}
+@supports not (scrollbar-gutter: stable) {
+  html { overflow-y: scroll; } /* fallback */
+}
+
+/* --- Global calculator button row (MR/TR/PI/LAVI) --- */
+/* Wide screens: two buttons sized to content, centered as a group, tiny gap */
+#mr-embed .mr-actions-row,
+#tr-embed .mr-actions-row,
+#pi-embed .mr-actions-row,
+#lavi-embed .mr-actions-row {
+  display: grid;
+  grid-template-columns: repeat(2, max-content); /* columns shrink to button width */
+  column-gap: 4px;            /* really close together */
+  row-gap: 0;
+  justify-content: center;    /* center the pair as a block */
+  justify-items: center;      /* center each button in its column */
+  align-items: center;
+  margin-top: 18px;
+}
+
+/* Buttons: narrower than inputs, no “nudge” on click */
+#mr-embed .mr-btn,
+#tr-embed .mr-btn,
+#pi-embed .mr-btn,
+#lavi-embed .mr-btn {
+  width: 150px;       /* tidy, uniform width (narrower than inputs) */
+  min-width: 120px;
+  padding: 12px 20px; /* tighter than inputs */
+  transform: none;    /* prevent any positional shift on :active */
+}
+#mr-embed .mr-btn:active,
+#tr-embed .mr-btn:active,
+#pi-embed .mr-btn:active,
+#lavi-embed .mr-btn:active {
+  transform: none;
+  filter: brightness(.96);
+}
+
+/* Mobile: keep your current single-column stacking */
+@media (max-width:720px){
+  #mr-embed .mr-actions-row,
+  #tr-embed .mr-actions-row,
+  #pi-embed .mr-actions-row,
+  #lavi-embed .mr-actions-row {
+    grid-template-columns: 1fr;
+    column-gap: 0;
+    row-gap: 10px;
+  }
+  #mr-embed .mr-btn,
+  #tr-embed .mr-btn,
+  #pi-embed .mr-btn,
+  #lavi-embed .mr-btn {
+    width: 65%;     /* comfortable on phones */
+  }
+}
+
+/* A little extra space between calculator and notes blocks */
+.calc-notes { margin-top: 22px; }
+
+

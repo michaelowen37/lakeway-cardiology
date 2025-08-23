@@ -42,23 +42,23 @@
             <form id="pi-form" novalidate>
               <div class="mr-grid">
                 <label class="mr-field">
-                  <span class="mr-label">RVOT Diameter</span>
+                  <span class="mr-label">RVOT Diameter <span style="opacity:.85">(prox to valve)</span></span>
                   <input id="rvotDiameter" type="number" step="0.1" min="0" inputmode="decimal" placeholder="cm" />
                 </label>
 
                 <label class="mr-field">
-                  <span class="mr-label">RVOT VTI</span>
+                  <span class="mr-label">RVOT VTI <span style="opacity:.85">(prox to valve)</span></span>
                   <input id="rvotVti" type="number" step="0.1" min="0" inputmode="decimal" placeholder="cm" />
                 </label>
 
                 <label class="mr-field">
-                  <span class="mr-label">Tricuspid Annular Diameter</span>
-                  <input id="tvAnnDiameter" type="number" step="0.1" min="0" inputmode="decimal" placeholder="cm" />
+                  <span class="mr-label">PV Annular Diam</span>
+                  <input id="pvAnnDiameter" type="number" step="0.1" min="0" inputmode="decimal" placeholder="cm" />
                 </label>
 
                 <label class="mr-field">
-                  <span class="mr-label">TV VTI (PW annular)</span>
-                  <input id="tvVti" type="number" step="0.1" min="0" inputmode="decimal" placeholder="cm" />
+                  <span class="mr-label">PV VTI <span style="opacity:.85">(PW at valve, not prox)</span></span>
+                  <input id="pvVti" type="number" step="0.1" min="0" inputmode="decimal" placeholder="cm" />
                 </label>
 
                 <!-- Fifth-row spacer (keeps same rhythm as other calcs) -->
@@ -120,16 +120,32 @@
         .mr-missing{animation:mrPulseRed 1.4s ease-in-out infinite;border-color:var(--mr-red)!important;box-shadow:0 0 0 5px rgba(255,51,51,.35)}
         @keyframes mrPulseRed{0%,100%{box-shadow:0 0 0 5px rgba(255,51,51,.35)}50%{box-shadow:0 0 0 8px rgba(255,51,51,.15)}}
 
-        /* Buttons */
-        .mr-actions-row{display:grid;grid-template-columns:repeat(2,var(--field-w));gap:8px;justify-content:center;justify-items:stretch;margin-top:18px}
-        #pi-reset{justify-self=end}
-        #pi-calc{justify-self=start}
-        .mr-btn{
-          width:75%;padding:12px 40px;white-space:nowrap;border-radius:999px;border:none;
-          color:var(--mr-text);font-weight:600;letter-spacing:.2px;font-size:.95rem;
-          cursor:pointer;transition:transform .12s ease,background-color .2s ease;
+        /* Buttons row — align under inputs, keep narrower width, no shifting */
+        .mr-actions-row{
+          display:grid;
+          grid-template-columns:repeat(2,var(--field-w)); /* same columns as inputs */
+          gap:12px;
+          justify-content:center;   /* center the two columns as a group */
+          justify-items:center;     /* center buttons inside their columns */
+          align-items:center;
+          margin-top:18px;
         }
-        .mr-btn:active{transform:translateY(1px)}
+        /* Center both buttons (remove edge hugging) */
+        #pi-reset, #pi-calc{ justify-self:center; }
+
+        .mr-btn{
+          width:66%;                /* narrower than inputs */
+          min-width:140px;          /* sensible floor */
+          padding:12px 24px;        /* narrower padding helps the look */
+          white-space:nowrap;border-radius:999px;border:none;
+          color:var(--mr-text);font-weight:600;letter-spacing:.2px;font-size:.95rem;
+          cursor:pointer;transition:filter .12s ease,background-color .2s ease;
+        }
+        /* Keep focus visual without layout nudge */
+        .mr-btn:focus{ outline: none; }
+        .mr-btn:focus-visible{ outline:2px solid rgba(255,255,255,.28); outline-offset:2px; }
+        /* Remove vertical translate that could appear like a sideways jump on some setups */
+        .mr-btn:active{ filter:brightness(.96); }
 
         /* Reset hover = darker */
         .mr-btn-reset{ background:rgb(163,192,212); color:#06131b; }
@@ -186,21 +202,36 @@
           #pi-outputs .mr-out-box { width: 140px; justify-content: center; }
         }
 
+        /* Notes block — keep your <br> spacing, just shrink-wrap the border */
+        .calc-notes{
+          display: block;
+          width: fit-content;          /* shrink to content so border hugs text */
+          max-width: 100%;
+          margin: 14px auto 8px auto;  /* centered */
+          font-size: .9rem;
+          color: #c9c9c9;              /* matches border via currentColor */
+          line-height: 1.35;
+          text-align: center;
+          border: 2px solid currentColor;
+          border-radius: 12px;
+          padding: 8px 10px;           /* tighter left/right padding */
+        }
+
         /* ===== Reference chart block title ===== */
-        .mr-ref{ margin-top: clamp(28px, 5.5vw, 72px); display:flex; flex-direction:column; align-items:center; gap:8px; }
-        .mr-ref-title{ font-size: clamp(.9rem, 2.2vw, 1.05rem); color:#c9c9c9; font-style: italic; text-align:center; text-shadow:0 1px 2px rgba(0,0,0,.6); }
+        .mr-ref{ margin-top: clamp(22px, 4.8vw, 56px); display:flex; flex-direction:column; align-items:center; gap:8px; }
+        .mr-ref-title{ font-size: clamp(.9rem, 2.2vw, 1.05rem); color: #c9c9c9; font-style: italic; text-align:center; text-shadow:0 1px 2px rgba(0,0,0,.6); }
       </style>
 
       <script>
         document.addEventListener('DOMContentLoaded', function () {
           const $ = (id) => document.getElementById(id);
 
-          // Elements
+          // Elements (updated to PV forward flow)
           const fields = {
             rvotDiameter: $('rvotDiameter'),
             rvotVti: $('rvotVti'),
-            tvAnnDiameter: $('tvAnnDiameter'),
-            tvVti: $('tvVti'),
+            pvAnnDiameter: $('pvAnnDiameter'),
+            pvVti: $('pvVti'),
           };
           const btnCalc = $('pi-calc');
           const btnReset = $('pi-reset');
@@ -236,29 +267,33 @@
 
           function validate() {
             let ok = true;
-            for (const [k, inp] of Object.entries(fields)) {
+            for (const [, inp] of Object.entries(fields)) {
               if (!inp) continue;
               const val = (inp.value || '').trim();
               if (!val) { inp.classList.add('mr-missing'); ok = false; }
               else { inp.classList.remove('mr-missing'); }
             }
-            // Prevent divide-by-zero for RVOT flow
+            // Prevent divide-by-zero for RVOT flow (denominator)
             const rvotD = Number(fields.rvotDiameter?.value || 0);
             const rvotV = Number(fields.rvotVti?.value || 0);
             const rvotFlow = 0.785 * rvotD * rvotD * rvotV;
-            if (!(rvotFlow > 0)) { ok = false; fields.rvotVti?.classList.add('mr-missing'); }
+            if (!(rvotFlow > 0)) {
+              ok = false;
+              fields.rvotVti?.classList.add('mr-missing');
+              fields.rvotDiameter?.classList.add('mr-missing');
+            }
             return ok;
           }
 
           function calculate() {
             const rvotD = Number(fields.rvotDiameter?.value);
             const rvotV = Number(fields.rvotVti?.value);
-            const tvAnnD = Number(fields.tvAnnDiameter?.value);
-            const tvV = Number(fields.tvVti?.value);
+            const pvAnnD = Number(fields.pvAnnDiameter?.value);
+            const pvV = Number(fields.pvVti?.value);
 
-            const rvotFlow = 0.785 * rvotD * rvotD * rvotV; // forward stroke volume (pulmonic)
-            const tvFlow   = 0.785 * tvAnnD * tvAnnD * tvV;  // inflow across tricuspid
-            const regF = ((rvotFlow - tvFlow) / rvotFlow) * 100; // Regurgitant Fraction (%)
+            const rvotFlow = 0.785 * rvotD * rvotD * rvotV; // forward stroke volume (proximal to valve; includes RVOT regurg)
+            const pvFlow   = 0.785 * pvAnnD * pvAnnD * pvV;  // forward stroke volume at PV annulus (true forward flow)
+            const regF = ((rvotFlow - pvFlow) / rvotFlow) * 100; // Regurgitant Fraction (%)
 
             if (rfEl) rfEl.textContent = Math.round(regF).toString();
           }
@@ -285,6 +320,16 @@
           }
         });
       </script>
+
+<br>
+      <!-- ===== Notes (appear above reference chart) ===== -->
+      <div class="calc-notes">
+        <br>
+        <div><strong><em>Important Notes:</em></strong></div><br>
+        <div>RVOT Diameter can be larger than PV Diameter</div><br>
+        <div>RVOT VTI &gt; PV VTI due to regurgitative volume inclusion (prox to valve).</div>
+        <br><br>
+      </div>
 
       <!-- ===== Reference chart (Native Pulmonic Regurgitation only) ===== -->
       <div class="mr-ref" aria-label="Pulmonic Regurgitation reference table">
@@ -350,6 +395,14 @@
 
   <!-- Page-scoped tweaks / safety for DG units + soft hyphens (match your valve pages) -->
   <style>
+    /* Keep vertical scrollbar space stable to prevent left-shift on click */
+    @supports (scrollbar-gutter: stable) {
+      html, body { scrollbar-gutter: stable both-edges; }
+    }
+    @supports not (scrollbar-gutter: stable) {
+      html { overflow-y: scroll; } /* fallback to always reserve space */
+    }
+
     /* Chips: single-line, size-to-content */
     .navbar a.border, .navbar a.active.border{
       white-space: nowrap !important;
@@ -414,6 +467,8 @@
     /* Soft hyphen & sup safety (if used later) */
     #dg-embed .dg-nb{ white-space:nowrap; display:inline; vertical-align:baseline; }
     #dg-embed .dg-free{ display:block !important; -webkit-line-clamp: unset !important; -webkit-box-orient: initial !important; overflow:visible !important; }
+
+
   </style>
 
 </body>
