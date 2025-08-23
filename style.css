@@ -1055,3 +1055,159 @@ body {
 .container2.button > button.grow {
   padding: 16px 32px !important;
 }
+
+/* ——— Position context for absolute hamburger ——— */
+.nav-bar { position: relative; }
+
+/* ——— Hamburger button (override your global button styles) ——— */
+.hamburger {
+  position: absolute; left: 12px; top: 10px;
+  background: transparent !important;
+  border: 0 !important;
+  padding: 8px !important;
+  margin: 0 !important;
+  width: auto !important; height: auto !important;
+  border-radius: 8px !important;
+  cursor: pointer;
+  display: inline-flex; align-items: center; justify-content: center;
+  z-index: 1002; /* above nav list */
+}
+.hamburger .bar {
+  display: block;
+  width: 22px; height: 2px;
+  background: #bcbec5;                 /* gray lines */
+  margin: 3.5px 0;
+  transition: transform .25s ease, opacity .25s ease;
+}
+
+/* Optional: little hover feedback */
+.hamburger:hover .bar { opacity: 0.85; }
+
+/* ——— Slide-in menu ——— */
+.side-menu {
+  position: fixed; inset: 0 auto 0 0;   /* left side */
+  width: 220px; height: 100dvh;
+  background: #000; color: #bcbec5;
+  border-right: 1px solid #333;
+  transform: translateX(-110%);
+  transition: transform .28s ease;
+  padding: 72px 16px 16px;              /* space for nav/top area */
+  z-index: 1001;
+}
+.side-menu .menu-link {
+  display: block;
+  color: #bcbec5;
+  text-decoration: none;
+  padding: 10px 8px;
+  border-radius: 8px;
+}
+.side-menu .menu-link:hover { background: #111; }
+
+/* ——— Backdrop ——— */
+.menu-backdrop {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.45);
+  z-index: 1000;
+}
+
+/* ——— Open state ——— */
+body.menu-open .side-menu { transform: translateX(0); }
+body.menu-open #menu-backdrop { display: block; }
+
+/* Ensure the navbar reserves space and the hamburger is visible */
+.nav-bar{
+  position: relative !important;
+  min-height: 56px !important;     /* gives the bar a visible height */
+  display: flex !important;
+  align-items: center !important;
+}
+
+/* Force hamburger to sit top-left and be above the hero */
+.hamburger{
+  position: absolute !important;
+  left: 12px; 
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent !important;
+  border: 0 !important;
+  padding: 8px !important;
+  margin: 0 !important;
+  width: auto !important; 
+  height: auto !important;
+  border-radius: 8px !important;
+  z-index: 1005 !important;         /* above everything in the header */
+}
+
+/* Gray lines */
+.hamburger .bar{
+  display: block !important;
+  width: 24px; 
+  height: 2px;
+  background: #bcbec5 !important;
+  margin: 4px 0;
+}
+
+/* ——— Make the hamburger show 3 bold gray lines ——— */
+.nav-bar { 
+  position: relative !important; 
+  min-height: 56px !important;        /* ensure room for the icon */
+}
+
+/* Layout the 3 bars in a column with spacing */
+.hamburger{
+  position: absolute !important;
+  left: 12px; 
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;                 /* space between lines */
+  width: 44px !important;
+  height: 44px !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 8px !important;
+  cursor: pointer;
+  z-index: 1005 !important;
+}
+
+/* Thicker, bolder gray bars */
+.hamburger .bar{
+  display: block !important;
+  width: 28px !important;
+  height: 4px !important;              /* thicker than before */
+  background: #bcbec5 !important;      /* gray */
+  border-radius: 3px !important;
+}
+
+/* Optional: tiny hover feedback */
+.hamburger:hover .bar { opacity: 0.9; }
+
+/* Make the hamburger bars twice as long */
+.hamburger{
+  width: 68px !important;       /* wider hit area to fit longer bars */
+}
+
+.hamburger .bar{
+  width: 56px !important;       /* ~2× the old 28px */
+  /* keep the same thickness and style */
+  height: 4px !important;
+  border-radius: 3px !important;
+}
+
+/* (Optional) tiny cap for very small phones */
+@media (max-width: 360px){
+  .hamburger{ width: 58px !important; }
+  .hamburger .bar{ width: 48px !important; }
+}
+
+/* Move the slide-in menu content farther down from the top edge */
+nav.nav-bar + .side-menu {
+  /* top | right/left | bottom */
+  padding: 104px 20px 20px !important;
+}
+
+/* If you need even more room, bump the first number (e.g., 128px) */
