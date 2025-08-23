@@ -1211,3 +1211,24 @@ nav.nav-bar + .side-menu {
 }
 
 /* If you need even more room, bump the first number (e.g., 128px) */
+
+
+/* Put the slide-in menu below the navbar */
+:root { --nav-h: 56px; }                /* tweak if your nav height changes */
+
+#side-menu {
+  top: var(--nav-h) !important;         /* was 0 via inset */
+  height: calc(100dvh - var(--nav-h)) !important;
+  padding-top: 16px !important;         /* small internal breathing room */
+  /* optional polish so you can “see” the top edge clearly */
+  border-top-right-radius: 10px;
+  box-shadow: 0 6px 18px rgba(0,0,0,.35);
+}
+
+/* If you want it notch-safe on phones, swap top/height with: */
+/*
+#side-menu {
+  top: calc(env(safe-area-inset-top) + var(--nav-h)) !important;
+  height: calc(100dvh - (env(safe-area-inset-top) + var(--nav-h))) !important;
+}
+*/

@@ -16,8 +16,87 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <!-- Your existing stylesheet -->
   <link rel="stylesheet" type="text/css" href="./style.css">
   <link rel="icon" type="image/png" href="BSW_Thumbnail.png"/>
+
+  <!-- Inline, last-in-wins overrides -->
+  <style>
+    /* ====== Tweakable variables ====== */
+    :root{
+      --nav-h: 56px;              /* navbar height */
+      --drawer-w-desktop: 220px;  /* drawer width >700px */
+      --drawer-w-mobile: 80px;   /* drawer width ≤700px (adjust this) */
+
+      /* Workflow button (≤700px) */
+      --btn-minw-mobile: 130px;
+      --btn-vw-mobile: 30vw;
+      --btn-maxw-mobile: 180px;
+      --btn-padx-mobile: 18px;
+      --btn-pady-mobile: 10px;
+      --btn-minh-mobile: 44px;
+    }
+
+    /* Ensure navbar has height and hamburger is visible */
+    .nav-bar{
+      position: relative; min-height: var(--nav-h);
+      display: flex; align-items: center;
+    }
+
+    /* Hamburger icon (3 bold gray bars) */
+    .hamburger{
+      position: absolute; left: 12px; top: 50%; transform: translateY(-50%);
+      display: flex; flex-direction: column; gap: 6px;
+      width: 68px; height: 44px; padding: 0; background: transparent; border: 0; border-radius: 8px;
+      z-index: 1005; cursor: pointer;
+    }
+    .hamburger .bar{ width: 56px; height: 4px; background: #bcbec5; border-radius: 3px; }
+
+    /* Drawer sits below navbar */
+    #side-menu{
+      position: fixed; left: 0; right: auto; top: var(--nav-h); bottom: 0;
+      width: var(--drawer-w-desktop); height: calc(100dvh - var(--nav-h));
+      background: #000; color: #bcbec5; border-right: 1px solid #333;
+      transform: translateX(-110%); transition: transform .28s ease;
+      padding: 16px; box-sizing: border-box; z-index: 1001;
+      border-top-right-radius: 10px; box-shadow: 0 6px 18px rgba(0,0,0,.35);
+    }
+
+    /* Backdrop */
+    #menu-backdrop{ position: fixed; inset: 0; background: rgba(0,0,0,.45); z-index: 1000; display: none; }
+    body.menu-open #side-menu{ transform: translateX(0); }
+    body.menu-open #menu-backdrop{ display: block; }
+
+    /* Keep the button row centered under the logo */
+    .container2{ width: 100%; display: flex; justify-content: center; align-items: center; }
+
+    /* Full-area clickable button (desktop defaults) */
+    .container2.button > button.grow{
+      position: relative; display: inline-block; border-radius: 12px; box-sizing: border-box;
+      background-color: #007a35; transition: box-shadow .3s ease, background-color .2s linear;
+      padding: 16px 32px; min-height: 52px; width: auto !important;
+    }
+    .container2.button > button.grow:hover{ background-color: #099b48; }
+    .container2.button > button.grow > .button-text{
+      position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+      text-decoration: none; color: #bcbec5;
+    }
+
+    /* ====== ≤700px: make drawer narrower and button smaller ====== */
+    @media (max-width: 700px){
+      /* High-specificity + !important to beat external rules */
+      html body #side-menu.side-menu{
+        width: var(--drawer-w-mobile) !important;
+      }
+
+      .container2.button > button.grow{
+        width: auto !important;
+        min-width: clamp(var(--btn-minw-mobile), var(--btn-vw-mobile), var(--btn-maxw-mobile)) !important;
+        padding: var(--btn-pady-mobile) var(--btn-padx-mobile) !important;
+        min-height: var(--btn-minh-mobile) !important;
+      }
+    }
+  </style>
 </head>
 
 <body>
@@ -54,17 +133,21 @@
 
   <!-- FOOTER -->
   <footer class="zone foot bottom-section">
-    <ul class="foot-nav">
-      <!-- optional footer links -->
-    </ul>
+    <ul class="foot-nav"></ul>
   </footer>
 
-  <!-- Hamburger / Menu JS -->
+  <!-- JS -->
   <script>
     (function () {
       const btn = document.getElementById('hamburger');
       const menu = document.getElementById('side-menu');
       const backdrop = document.getElementById('menu-backdrop');
+
+      const MOBILE_BP = 700;
+      const DRAWER_W_MOBILE = getComputedStyle(document.documentElement)
+        .getPropertyValue('--drawer-w-mobile').trim() || '180px';
+      const DRAWER_W_DESKTOP = getComputedStyle(document.documentElement)
+        .getPropertyValue('--drawer-w-desktop').trim() || '220px';
 
       function setOpen(open) {
         document.body.classList.toggle('menu-open', open);
@@ -72,6 +155,19 @@
         menu.setAttribute('aria-hidden', String(!open));
         backdrop.hidden = !open;
       }
+
+      function applyDrawerWidth() {
+        if (window.innerWidth <= MOBILE_BP) {
+          // Force with !important to beat any external !important rules
+          menu.style.setProperty('width', DRAWER_W_MOBILE, 'important');
+        } else {
+          menu.style.setProperty('width', DRAWER_W_DESKTOP, 'important');
+        }
+      }
+
+      // Initialize and keep in sync
+      applyDrawerWidth();
+      window.addEventListener('resize', applyDrawerWidth);
 
       btn.addEventListener('click', () => setOpen(!document.body.classList.contains('menu-open')));
       backdrop.addEventListener('click', () => setOpen(false));
