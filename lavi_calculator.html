@@ -55,7 +55,7 @@
                 <!-- Third input centered for symmetry -->
                 <label class="mr-field mr-center-span">
                   <span class="mr-label">BSA</span>
-                  <input id="bsa" type="number" step="0.1" min="0" inputmode="decimal" placeholder="m²" />
+                  <input id="bsa" type="number" step="0.01" min="0" inputmode="decimal" placeholder="m²" />
                 </label>
 
                 <!-- Buttons row -->
@@ -199,10 +199,16 @@
           const btnReset = $('mr-reset');
           const laviEl = $('lavi');
 
-          // Helper: round to 1dp, but show integer if .0
-          function fmt1DecTrimZero(n) {
-            const r = Math.round(n * 10) / 10; // number rounded to 0.1
-            return Number.isInteger(r) ? String(r) : r.toFixed(1);
+          // Helper: general formatter with trimming of trailing zeros.
+          // decimals=1 for most fields; decimals=2 for BSA.
+          function fmtNum(n, decimals = 1) {
+            if (!Number.isFinite(n)) return '';
+            // Round at the requested precision
+            const rounded = Number(n.toFixed(decimals));
+            // If it's an integer after rounding, show as integer
+            if (Number.isInteger(rounded)) return String(rounded);
+            // Else show fixed, but trim any trailing zeros (and a trailing dot if it appears)
+            return rounded.toFixed(decimals).replace(/\\.0+$/,'').replace(/\\.$/,'');
           }
 
           // Inputs: filled state, safe blur, Enter => Calculate
@@ -220,7 +226,8 @@
               if (raw === '') return;
               const v = Number(raw);
               if (Number.isNaN(v)) return;
-              inp.value = fmt1DecTrimZero(v);
+              const decimals = (inp.id === 'bsa') ? 2 : 1;
+              inp.value = fmtNum(v, decimals);
             });
             inp.addEventListener('keydown', (e) => {
               if (e.key === 'Enter') {
@@ -254,7 +261,7 @@
             const avgVol = (ap4 + ap2) / 2;        // ml
             const lavi = avgVol / bsa;             // ml/m^2
 
-            if (laviEl) laviEl.textContent = fmt1DecTrimZero(lavi);
+            if (laviEl) laviEl.textContent = fmtNum(lavi, 1);
           }
 
           function resetAll() {
