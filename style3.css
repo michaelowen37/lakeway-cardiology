@@ -1612,7 +1612,7 @@ li {
 
 /* Global page title size */
 .container.zone.body{
-  font-size: clamp(1.05rem, 3.2vw, 5rem);
+  font-size: clamp(1.6rem, 4.5vw, 6.5rem);
   line-height: 1.12;
 }
 
@@ -1664,5 +1664,14 @@ li {
   .box.zone.grow .words,
   .box.zone.grow a{
     font-size: clamp(1.2rem, 5.2vw, 1.9rem) !important;
+  }
+}
+
+/* Optional: a touch more tile height under 400px */
+@media (max-width: 400px){
+  .grid-wrapper,
+  .grid-wrapper1,
+  .grid-wrapper2{
+    grid-auto-rows: clamp(64px, 9vh, 102px) !important;
   }
 }
