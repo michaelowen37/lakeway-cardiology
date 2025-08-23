@@ -1695,3 +1695,13 @@ li {
     line-height: 1.12;
   }
 }
+
+/* Under 600px: make "box zone grow" words a bit smaller (subtle) */
+@media (max-width: 600px){
+  .box.zone.grow .words,
+  .box.zone.grow a.words{
+    /* ~0.95rem at 600px → ~1.35rem at 320px (soft ramp) */
+    font-size: clamp(0.95rem, calc(0.95rem + 0.45rem * (600px - 100vw) / 280), 1.35rem) !important;
+    line-height: 1.12;
+  }
+}
