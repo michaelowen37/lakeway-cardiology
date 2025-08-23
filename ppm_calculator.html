@@ -261,16 +261,25 @@
   .ppm-subtitle{ font-size: clamp(0.56rem, 4.4vw, 0.96rem) !important; }
 }
 
-/* Bordered notes wrapper: centered, not too narrow or wide */
+/* Bordered notes wrapper: centered, responsive width */
 .calc-notes{
-  width: clamp(320px, 52%, 720px);  /* min 320px, ~half page on wide screens, max 720px */
+  box-sizing: border-box;
+  width: clamp(240px, 90%, 680px);  /* shrinks with page, never <240px, never >680px */
+  max-width: 100%;
   margin: 12px auto 10px;           /* center horizontally */
   padding: 12px 16px;
-  border: 2px solid currentColor;   /* matches the text color */
+  border: 2px solid currentColor;   /* border matches text color */
   border-radius: 12px;
-  color: #c9c9c9;                   /* ensures border color */
+  color: #c9c9c9;                   /* sets currentColor */
   text-align: center;
 }
+
+/* Optional: gently scale text & padding on small screens */
+@media (max-width: 560px){
+  .calc-notes{ padding: 10px 12px; }
+  .calc-notes .calc-note{ font-size: 1.15rem; }
+}
+
 
 
       </style>
