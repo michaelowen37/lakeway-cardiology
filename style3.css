@@ -1716,8 +1716,8 @@ li {
 }
 
 /* Very small phones ≤400px: nudge them a little larger for readability */
-@media (max-width: 400px){
+/*@media (max-width: 400px){
   .box.zone.grow > a.words{
     font-size: 1.18rem !important;
   }
-}
+}*/
