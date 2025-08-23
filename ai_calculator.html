@@ -5,7 +5,7 @@
   <!--   ****************************************************************************
     The Title You Pick Here Shows When You Hover Over Browser Thumbnail
   **************************************************************************** -->
-  <title>MR Calculator</title>
+  <title>AI Calculator</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" type="text/css" href="./style3.css">
@@ -26,15 +26,15 @@
   <!-- ****************************************************************************
     This is the main title on the top of page
   **************************************************************************** -->
-  <div class="container zone body">MR Calculator:</div>
+  <div class="container zone body">AI Calculator:</div>
   <!-- <div class="container" style="padding: 0px"><em>EROA</em></div>  -->
 
   <div class="zone navigation">
-    <div class="final" style="padding: 0px 10% 0px 10%;">
+    <div class="final" style="padding: 0px 10% 0px 10%">
 
       <br>
 
-      <!-- MR Calculator (desktop preserved; minimal, responsive mobile fixes) -->
+      <!-- AI EROA Calculator (MR template preserved; minimal, responsive mobile fixes) -->
       <div id="mr-embed">
         <div class="mr-wrap">
           <!-- LEFT: Inputs + Buttons -->
@@ -63,8 +63,8 @@
 
                 <!-- Fifth input centered -->
                 <label class="mr-field mr-center-span">
-                  <span class="mr-label">Largest MR Jet VTI</span>
-                  <input id="mrJetVti" type="number" step="0.1" min="0" inputmode="decimal" placeholder="cm" />
+                  <span class="mr-label">Largest AI Jet VTI</span>
+                  <input id="aiJetVti" type="number" step="0.1" min="0" inputmode="decimal" placeholder="cm" />
                 </label>
 
                 <!-- Buttons row -->
@@ -139,7 +139,7 @@
 
         /* Buttons */
         .mr-actions-row{display:grid;grid-template-columns:repeat(2,var(--field-w));gap:8px;justify-content:center;justify-items:stretch;margin-top:18px}
-        #mr-reset{justify-self=end}
+        #mr-reset{justify-self:end}
         #mr-calc{justify-self:start}
         .mr-btn{
           width:75%;padding:12px 40px;white-space:nowrap;border-radius:999px;border:none;
@@ -149,24 +149,12 @@
         .mr-btn:active{transform:translateY(1px)}
 
         /* Reset hover = darker */
-        .mr-btn-reset{
-          background:rgb(163,192,212);
-          color:#06131b;
-        }
-        .mr-btn-reset:hover{
-          background:rgb(100,125,140);
-          filter:none;
-        }
+        .mr-btn-reset{ background:rgb(163,192,212); color:#06131b; }
+        .mr-btn-reset:hover{ background:rgb(100,125,140); filter:none; }
 
         /* Calc hover = moderately darker */
-        .mr-btn-calc{
-          background:rgb(40,133,199);
-          box-shadow:none;
-        }
-        .mr-btn-calc:hover{
-          background:rgb(25,95,145);
-          filter:none;
-        }
+        .mr-btn-calc{ background:rgb(40,133,199); box-shadow:none; }
+        .mr-btn-calc:hover{ background:rgb(25,95,145); filter:none; }
 
         /* Outputs */
         #mr-outputs{min-width:320px;max-width:420px}
@@ -212,40 +200,25 @@
 
         /* Equal output box widths on desktop only */
         @media (min-width: 721px) {
-          #mr-outputs .mr-out-box {
-            width: 140px; /* adjust as needed */
-            justify-content: center;
-          }
+          #mr-outputs .mr-out-box { width: 140px; justify-content: center; }
         }
 
-        /* ===== Reference chart block at bottom (scaled to ~90% with bigger buffer) ===== */
-        .mr-ref{
-          margin-top: clamp(28px, 5.5vw, 72px); /* larger, responsive buffer above chart */
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          gap: 8px;
-        }
-        .mr-ref-title{
-          font-size: clamp(.9rem, 2.2vw, 1.05rem);
-          color: #c9c9c9;
-          font-style: italic;
-          text-align: center;
-          text-shadow: 0 1px 2px rgba(0,0,0,.6);
-        }
+        /* ===== Reference chart block at bottom (kept for potential future AR chart) ===== */
+        .mr-ref{ margin-top: clamp(28px, 5.5vw, 72px); display: flex; flex-direction: column; align-items: center; gap: 8px; }
+        .mr-ref-title{ font-size: clamp(.9rem, 2.2vw, 1.05rem); color: #c9c9c9; font-style: italic; text-align: center; text-shadow: 0 1px 2px rgba(0,0,0,.6); }
       </style>
 
       <script>
         document.addEventListener('DOMContentLoaded', function () {
           const $ = (id) => document.getElementById(id);
 
-          // Grab elements (guard in case IDs change)
+          // Grab elements (guarded)
           const fields = {
             lvotDiameter: $('lvotDiameter'),
             lvotVti: $('lvotVti'),
             mitralDiameter: $('mitralDiameter'),
             mvVti: $('mvVti'),
-            mrJetVti: $('mrJetVti'),
+            aiJetVti: $('aiJetVti'),
           };
           const btnCalc = $('mr-calc');
           const btnReset = $('mr-reset');
@@ -291,7 +264,7 @@
             for (const [k, inp] of Object.entries(fields)) {
               if (!inp) continue; // skip missing
               const val = (inp.value || '').trim();
-              const zeroDiv = (k === 'mrJetVti' && Number(val) === 0);
+              const zeroDiv = (k === 'aiJetVti' && Number(val) === 0); // avoid divide by 0 in EROA
               if (!val || zeroDiv) {
                 inp.classList.add('mr-missing');
                 ok = false;
@@ -308,13 +281,19 @@
             const lvotV = Number(fields.lvotVti?.value);
             const mitralD = Number(fields.mitralDiameter?.value);
             const mvV = Number(fields.mvVti?.value);
-            const mrJet = Number(fields.mrJetVti?.value);
+            const aiJet = Number(fields.aiJetVti?.value);
 
+            // Flows (cm-based, 0.785 ~ pi/4)
+            const lvotFlow = 0.785 * lvotD * lvotD * lvotV;
             const mvFlow   = 0.785 * mitralD * mitralD * mvV;
-            const lvotFlow = 0.785 * lvotD   * lvotD   * lvotV;
-            const regV = mvFlow - lvotFlow;
-            const regF = (regV / mvFlow) * 100;
-            const eroa = regV / mrJet;
+
+            // === AI formulas (as provided) ===
+            // Regurgitant Volume = (LVOT flow) - (MV flow)
+            const regV = lvotFlow - mvFlow;
+            // Regurgitant Fraction = (RegV / LVOT flow) * 100
+            const regF = (regV / lvotFlow) * 100;
+            // EROA = RegV / AI jet VTI   (correcting typo: division, not subtraction)
+            const eroa = regV / aiJet;
 
             if (rvEl)   rvEl.textContent   = Math.round(regV).toString();
             if (rfEl)   rfEl.textContent   = Math.round(regF).toString();
@@ -347,157 +326,159 @@
         });
       </script>
 
-      <!-- ===== Reference charts (Native + Prosthetic Mitral Regurgitation) ===== -->
-      <div class="mr-ref" aria-label="Mitral Regurgitation reference tables">
-        <div class="mr-ref-title">Native Mitral Valve — Regurgitation (Reference)</div>
+      <!-- ===== Reference charts (Native + Prosthetic Aortic Regurgitation) ===== -->
+<div class="mr-ref" aria-label="Aortic Regurgitation reference tables">
+  <div class="mr-ref-title">Native Aortic Valve — Regurgitation (Reference)</div>
+</div>
+
+<br>
+
+<!-- Single container to keep ID unique; includes both native and prosthetic tables -->
+<div id="dg-embed" aria-label="Aortic Regurgitation reference block">
+  
+  <!-- ========================== DG TABLE — Native Aortic Valve ========================== -->
+  <div aria-label="Native Aortic Valve — Aortic Regurgitation severity table">
+    <!-- Blue header band (4 columns) -->
+    <div class="dg-headerwrap">
+      <div class="dg-header" role="row">
+        <div class="dg-hcell" role="columnheader"><div class="dg-wrap"></div></div>
+        <div class="dg-hcell" role="columnheader"><div class="dg-wrap">MILD</div></div>
+        <div class="dg-hcell" role="columnheader"><div class="dg-wrap">MODERATE</div></div>
+        <div class="dg-hcell" role="columnheader"><div class="dg-wrap">SEVERE</div></div>
       </div>
+    </div>
 
-      <br>
+    <!-- Green table (4 columns) -->
+    <div class="dg-tablewrap">
+      <table class="dg-table" role="table" aria-label="Aortic regurgitation severity criteria (native)">
+        <colgroup>
+          <col class="dg-col1-col">
+          <col class="dg-col2-col">
+          <col class="dg-col3-col">
+          <col class="dg-col4-col">
+        </colgroup>
+        <tbody>
+          <tr>
+            <th scope="row" class="dg-col1"><div class="dg-wrap">Regurgitant Volume</div></th>
+            <td class="dg-c2"><div class="dg-wrap">&lt; 30&nbsp;<span class="dg-nb">ml/beat</span></div></td>
+            <td class="dg-c3"><div class="dg-wrap">30 – 59&nbsp;<span class="dg-nb">ml/beat</span></div></td>
+            <td class="dg-c4"><div class="dg-wrap">&ge; 60&nbsp;<span class="dg-nb">ml/beat</span></div></td>
+          </tr>
+          <tr>
+            <th scope="row" class="dg-col1"><div class="dg-wrap">Regurgitant Fraction</div></th>
+            <td class="dg-c2"><div class="dg-wrap">&lt; 30%</div></td>
+            <td class="dg-c3"><div class="dg-wrap">30 – 49%</div></td>
+            <td class="dg-c4"><div class="dg-wrap">&ge; 50%</div></td>
+          </tr>
+          <tr>
+            <th scope="row" class="dg-col1"><div class="dg-wrap">EROA</div></th>
+            <td class="dg-c2"><div class="dg-wrap dg-free">&lt; 0.10&nbsp;cm<sup>2</sup></div></td>
+            <td class="dg-c3"><div class="dg-wrap dg-free">0.10 – 0.29&nbsp;cm<sup>2</sup></div></td>
+            <td class="dg-c4"><div class="dg-wrap dg-free">&ge; 0.30&nbsp;cm<sup>2</sup></div></td>
+          </tr>
+          <tr>
+            <th scope="row" class="dg-col1"><div class="dg-wrap">Jet Deceleration Rate (PHT)</div></th>
+            <td class="dg-c2"><div class="dg-wrap">&gt; 500&nbsp;msec</div></td>
+            <td class="dg-c3"><div class="dg-wrap">200 – 500&nbsp;msec</div></td>
+            <td class="dg-c4"><div class="dg-wrap">&lt; 200&nbsp;msec</div></td>
+          </tr>
+          <tr>
+            <th scope="row" class="dg-col1"><div class="dg-wrap">Diastolic Flow Reversal (DAO)</div></th>
+            <td class="dg-c2"><div class="dg-wrap">Brief early-diastolic reversal</div></td>
+            <td class="dg-c3"><div class="dg-wrap">Inter&shy;mediate</div></td>
+            <td class="dg-c4"><div class="dg-wrap">Holo&shy;diastolic reversal</div></td>
+          </tr>
+          <tr>
+            <th scope="row" class="dg-col1"><div class="dg-wrap">Vena Contracta Width</div></th>
+            <td class="dg-c2"><div class="dg-wrap">&lt; 0.3&nbsp;cm</div></td>
+            <td class="dg-c3"><div class="dg-wrap">0.3 – 0.6&nbsp;cm</div></td>
+            <td class="dg-c4"><div class="dg-wrap">&gt; 0.60&nbsp;cm</div></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <!-- ======================== END Native AR table ======================== -->
 
-      <!-- Single container to keep ID unique; includes both native and prosthetic tables -->
-      <div id="dg-embed" aria-label="Mitral Regurgitation reference block">
+  <div style="height: 20px"></div>
 
-        <!-- ========================== DG TABLE — Native Mitral Valve ========================== -->
-        <div aria-label="Native Mitral Valve — Mitral Regurgitation severity table">
+  <!-- Section title for prosthetic table -->
+  <div class="mr-ref" aria-label="Aortic Prosthesis — Regurgitation reference">
+    <div class="mr-ref-title">Prosthetic Aortic Valve — Regurgitation (Reference)</div>
+  </div>
 
-          <!-- Blue header band (4 columns) -->
-          <div class="dg-headerwrap">
-            <div class="dg-header" role="row">
-              <div class="dg-hcell" role="columnheader"><div class="dg-wrap"></div></div>
-              <div class="dg-hcell" role="columnheader"><div class="dg-wrap">MILD</div></div>
-              <div class="dg-hcell" role="columnheader"><div class="dg-wrap">MODERATE</div></div>
-              <div class="dg-hcell" role="columnheader"><div class="dg-wrap">SEVERE</div></div>
-            </div>
-          </div>
+  <br>
 
-          <!-- Green table (4 columns) -->
-          <div class="dg-tablewrap">
-            <table class="dg-table" role="table" aria-label="Mitral regurgitation severity criteria (native)">
-              <colgroup>
-                <col class="dg-col1-col">
-                <col class="dg-col2-col">
-                <col class="dg-col3-col">
-                <col class="dg-col4-col">
-              </colgroup>
-              <tbody>
-                <tr>
-                  <th scope="row" class="dg-col1"><div class="dg-wrap">Regurgitant Volume</div></th>
-                  <td class="dg-c2"><div class="dg-wrap">&lt; 30&nbsp;<span class="dg-nb">ml/beat</span></div></td>
-                  <td class="dg-c3"><div class="dg-wrap">30 – 59&nbsp;<span class="dg-nb">ml/beat</span></div></td>
-                  <td class="dg-c4"><div class="dg-wrap">&ge; 60&nbsp;<span class="dg-nb">ml/beat</span></div></td>
-                </tr>
-                <tr>
-                  <th scope="row" class="dg-col1"><div class="dg-wrap">Regurgitant Fraction</div></th>
-                  <td class="dg-c2"><div class="dg-wrap">&lt; 30%</div></td>
-                  <td class="dg-c3"><div class="dg-wrap">30 – 49%</div></td>
-                  <td class="dg-c4"><div class="dg-wrap">&ge; 50%</div></td>
-                </tr>
-                <tr>
-                  <th scope="row" class="dg-col1"><div class="dg-wrap">EROA</div></th>
-                  <!-- free sup-bearing cells to avoid tiny scrollbars in some browsers -->
-                  <td class="dg-c2"><div class="dg-wrap dg-free">&lt; 0.20&nbsp;cm<sup>2</sup></div></td>
-                  <td class="dg-c3"><div class="dg-wrap dg-free">0.20 – 0.39&nbsp;cm<sup>2</sup></div></td>
-                  <td class="dg-c4"><div class="dg-wrap dg-free">&ge; 0.40&nbsp;cm<sup>2</sup></div></td>
-                </tr>
-                <tr>
-                  <th scope="row" class="dg-col1"><div class="dg-wrap">Vena Contracta</div></th>
-                  <td class="dg-c2"><div class="dg-wrap">&lt; 0.3&nbsp;cm</div></td>
-                  <td class="dg-c3"><div class="dg-wrap">Inter&shy;mediate</div></td>
-                  <td class="dg-c4"><div class="dg-wrap">&ge; 0.7&nbsp;cm</div></td>
-                </tr>
-                <tr>
-                  <th scope="row" class="dg-col1"><div class="dg-wrap">Mitral Inflow</div></th>
-                  <td class="dg-c2"><div class="dg-wrap">A-wave Dominance</div></td>
-                  <td class="dg-c3"><div class="dg-wrap">Variable</div></td>
-                  <td class="dg-c4"><div class="dg-wrap">E-wave Dominance</div></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-        <!-- ======================== END Native MR table ======================== -->
-
-        <div style="height: 20px"></div>
-
-        <!-- Section title for prosthetic table -->
-        <div class="mr-ref" aria-label="Mitral Prosthesis — Regurgitation reference">
-          <div class="mr-ref-title">Prosthetic Mitral Valve — Regurgitation (Reference)</div>
-        </div>
-
-        <br>
-
-        <!-- ========================== DG TABLE — Mitral Prosthesis ========================== -->
-        <div aria-label="Mitral Prosthesis — Regurgitation severity table">
-
-          <!-- Blue header band (4 columns) -->
-          <div class="dg-headerwrap">
-            <div class="dg-header" role="row">
-              <div class="dg-hcell" role="columnheader"><div class="dg-wrap"></div></div>
-              <div class="dg-hcell" role="columnheader"><div class="dg-wrap">MILD</div></div>
-              <div class="dg-hcell" role="columnheader"><div class="dg-wrap">MODERATE</div></div>
-              <div class="dg-hcell" role="columnheader"><div class="dg-wrap">SEVERE</div></div>
-            </div>
-          </div>
-
-          <!-- Green table (4 columns) -->
-          <div class="dg-tablewrap">
-            <table class="dg-table" role="table" aria-label="Prosthetic mitral regurgitation severity criteria">
-              <colgroup>
-                <col class="dg-col1-col">
-                <col class="dg-col2-col">
-                <col class="dg-col3-col">
-                <col class="dg-col4-col">
-              </colgroup>
-              <tbody>
-                <tr>
-                  <th scope="row" class="dg-col1"><div class="dg-wrap">Regurgitant Volume</div></th>
-                  <td class="dg-c2"><div class="dg-wrap">&lt; 30&nbsp;<span class="dg-nb">ml/beat</span></div></td>
-                  <td class="dg-c3"><div class="dg-wrap">30 – 59&nbsp;<span class="dg-nb">ml/beat</span></div></td>
-                  <td class="dg-c4"><div class="dg-wrap">&ge; 60&nbsp;<span class="dg-nb">ml/beat</span></div></td>
-                </tr>
-
-                <tr>
-                  <th scope="row" class="dg-col1"><div class="dg-wrap">Regurgitant Fraction</div></th>
-                  <td class="dg-c2"><div class="dg-wrap">&lt; 30%</div></td>
-                  <td class="dg-c3"><div class="dg-wrap">30 – 49%</div></td>
-                  <td class="dg-c4"><div class="dg-wrap">&ge; 50%</div></td>
-                </tr>
-
-                <tr>
-                  <th scope="row" class="dg-col1"><div class="dg-wrap">EROA</div></th>
-                  <!-- sup-bearing cells marked dg-free to avoid WebKit inner scrollbars -->
-                  <td class="dg-c2"><div class="dg-wrap dg-free">&lt; 0.20&nbsp;cm<sup>2</sup></div></td>
-                  <td class="dg-c3"><div class="dg-wrap dg-free">0.20 – 0.39&nbsp;cm<sup>2</sup></div></td>
-                  <td class="dg-c4"><div class="dg-wrap dg-free">&ge; 0.40&nbsp;cm<sup>2</sup></div></td>
-                </tr>
-
-                <tr>
-                  <th scope="row" class="dg-col1"><div class="dg-wrap">Vena Contracta Width</div></th>
-                  <td class="dg-c2"><div class="dg-wrap">&lt; 0.3&nbsp;cm</div></td>
-                  <td class="dg-c3"><div class="dg-wrap">0.3 – 0.69&nbsp;cm</div></td>
-                  <td class="dg-c4"><div class="dg-wrap">&ge; 0.7&nbsp;cm</div></td>
-                </tr>
-
-                <tr>
-                  <th scope="row" class="dg-col1"><div class="dg-wrap">Peak Mitral Velocity</div></th>
-                  <td class="dg-c2"><div class="dg-wrap">-</div></td>
-                  <td class="dg-c3"><div class="dg-wrap">-</div></td>
-                  <td class="dg-c4"><div class="dg-wrap">&gt; 1.9&nbsp;<span class="dg-nb">m/s</span></div></td>
-                </tr>
-
-                <tr>
-                  <th scope="row" class="dg-col1"><div class="dg-wrap">Pulmonary Venous Flow</div></th>
-                  <td class="dg-c2"><div class="dg-wrap">Systolic Dominance</div></td>
-                  <td class="dg-c3"><div class="dg-wrap">Systolic Blunting</div></td>
-                  <td class="dg-c4"><div class="dg-wrap">Systolic Reversal</div></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-        <!-- ======================== END Prosthetic MR table ======================== -->
+  <!-- ========================== DG TABLE — Aortic Prosthesis ========================== -->
+  <div aria-label="Aortic Prosthesis — Regurgitation severity table">
+    <!-- Blue header band (4 columns) -->
+    <div class="dg-headerwrap">
+      <div class="dg-header" role="row">
+        <div class="dg-hcell" role="columnheader"><div class="dg-wrap"></div></div>
+        <div class="dg-hcell" role="columnheader"><div class="dg-wrap">MILD</div></div>
+        <div class="dg-hcell" role="columnheader"><div class="dg-wrap">MODERATE</div></div>
+        <div class="dg-hcell" role="columnheader"><div class="dg-wrap">SEVERE</div></div>
       </div>
-      <!-- ===== End reference charts ===== -->
+    </div>
+
+    <!-- Green table (4 columns) -->
+    <div class="dg-tablewrap">
+      <table class="dg-table" role="table" aria-label="Prosthetic aortic regurgitation severity criteria">
+        <colgroup>
+          <col class="dg-col1-col">
+          <col class="dg-col2-col">
+          <col class="dg-col3-col">
+          <col class="dg-col4-col">
+        </colgroup>
+        <tbody>
+          <tr>
+                <th scope="row" class="dg-col1"><div class="dg-wrap">Regurgitant Volume</div></th>
+                <td class="dg-c2"><div class="dg-wrap">&lt; 30&nbsp;<span class="dg-nb">ml/beat</span></div></td>
+                <td class="dg-c3"><div class="dg-wrap">30 – 59&nbsp;<span class="dg-nb">ml/beat</span></div></td>
+                <td class="dg-c4"><div class="dg-wrap">&ge; 60&nbsp;<span class="dg-nb">ml/beat</span></div></td>
+              </tr>
+
+              <tr>
+                <th scope="row" class="dg-col1"><div class="dg-wrap">Regurgitant Fraction</div></th>
+                <td class="dg-c2"><div class="dg-wrap">&lt; 30%</div></td>
+                <td class="dg-c3"><div class="dg-wrap">30 – 49%</div></td>
+                <td class="dg-c4"><div class="dg-wrap">&ge; 50%</div></td>
+              </tr>
+
+              <tr>
+                <th scope="row" class="dg-col1"><div class="dg-wrap">EROA</div></th>
+                <td class="dg-c2"><div class="dg-wrap">&lt; 0.10 cm&#178;</div></td>
+                <td class="dg-c3"><div class="dg-wrap">0.10 – 0.29 cm&#178;</div></td>
+                <td class="dg-c4"><div class="dg-wrap">&ge; 0.30 cm&#178;</div></td>
+              </tr>
+              
+              <tr>
+                <th scope="row" class="dg-col1"><div class="dg-wrap">Jet Width / LVOT Width</div></th>
+                <td class="dg-c2"><div class="dg-wrap">&le; 25%</div></td>
+                <td class="dg-c3"><div class="dg-wrap">26 – 64%</div></td>
+                <td class="dg-c4"><div class="dg-wrap">&ge; 65%</div></td>
+              </tr>
+
+              <tr>
+                <th scope="row" class="dg-col1"><div class="dg-wrap">PHT</div></th>
+                <td class="dg-c2"><div class="dg-wrap">&gt; 500&nbsp;<span class="dg-nb">msec</span></div></td>
+                <td class="dg-c3"><div class="dg-wrap">200 – 500&nbsp;<span class="dg-nb">msec</span></div></td>
+                <td class="dg-c4"><div class="dg-wrap">&lt; 200&nbsp;<span class="dg-nb">msec</span></div></td>
+              </tr>
+
+              <tr>
+                <th scope="row" class="dg-col1"><div class="dg-wrap">Flow Reversal (DAO)</div></th>
+                <td class="dg-c2"><div class="dg-wrap">Absent or Brief</div></td>
+                <td class="dg-c3"><div class="dg-wrap">Inter&shy;mediate</div></td>
+                <td class="dg-c4"><div class="dg-wrap">Holo&shy;diastolic</div></td>
+              </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <!-- ======================== END Prosthetic AR table ======================== -->
+</div>
+<!-- ===== End reference charts ===== -->
 
       <br><br>
     </div>
@@ -510,27 +491,12 @@
     </ul>
   </footer>
 
-  <!-- Page-scoped safety for DG units + soft hyphens (same as your NMV page) -->
+  <!-- Page-scoped safety for DG units + soft hyphens (kept for parity) -->
   <style>
     #dg-embed .dg-nb{ white-space:nowrap; display:inline; vertical-align:baseline; }
-
-    /* Free only the sup-bearing cells from clamp to avoid WebKit scrollbars */
-    #dg-embed .dg-free{
-      display:block !important;
-      -webkit-line-clamp: unset !important;
-      -webkit-box-orient: initial !important;
-      overflow:visible !important;
-    }
-
-    /* Let &shy; work when needed, and hide any residual scrollbars in clamped wrappers */
+    #dg-embed .dg-free{ display:block !important; -webkit-line-clamp: unset !important; -webkit-box-orient: initial !important; overflow:visible !important; }
     #dg-embed .dg-table th .dg-wrap,
-    #dg-embed .dg-table td .dg-wrap{
-      -webkit-hyphens: manual !important;
-      hyphens: manual !important;
-      word-break: normal !important;
-      overflow-wrap: normal !important;
-      scrollbar-width:none; -ms-overflow-style:none;
-    }
+    #dg-embed .dg-table td .dg-wrap{ -webkit-hyphens: manual !important; hyphens: manual !important; word-break: normal !important; overflow-wrap: normal !important; scrollbar-width:none; -ms-overflow-style:none; }
     #dg-embed .dg-table th .dg-wrap::-webkit-scrollbar,
     #dg-embed .dg-table td .dg-wrap::-webkit-scrollbar{ width:0; height:0; }
   </style>
