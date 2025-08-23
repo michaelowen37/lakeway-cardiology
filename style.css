@@ -474,3 +474,479 @@ a.fa.fa-facebook {
 
 
 
+/* ——— Center the logo block ——— */
+.container.zone.body {
+  display: flex;
+  justify-content: center;
+}
+
+/* ——— Logo sizing (more specific so it beats older rules) ——— */
+.container.zone.body > img.responsiveimg {
+  display: block;
+  height: auto;
+  max-width: 100%;
+  width: 1100px; /* desktop default */
+}
+
+/* Scale the logo down from 1440px and below */
+@media (max-width: 1440px) {
+  .container.zone.body > img.responsiveimg {
+    width: clamp(520px, 64vw, 1100px);
+  }
+}
+
+/* Optional: small phones */
+@media (max-width: 480px) {
+  .container.zone.body > img.responsiveimg {
+    width: clamp(240px, 88vw, 420px);
+  }
+}
+
+/* ——— “Workflows” button ——— */
+/* Keep old width, just add a bit of height while staying horizontal-dominant. 
+   Use vertical padding only so width doesn’t grow. */
+.container2.button > button.grow {
+  padding-top: 0.95rem !important;
+  padding-bottom: 0.95rem !important;
+  line-height: 1.1;
+  white-space: nowrap; /* prevents wrapping that could make it tall */
+}
+
+/* Make the anchor behave nicely inside the button */
+.container2.button > button.grow > .button-text {
+  display: inline-block;
+  text-decoration: none;
+}
+
+
+/* ——— LOGO: sizing + no clipping ——— */
+.container.zone.body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: auto !important;          /* ensure no fixed height traps the image */
+  overflow: visible !important;      /* prevent bottom from being cut off */
+}
+
+/* Base: allow big desktop but never overflow container */
+.container.zone.body > img.responsiveimg {
+  display: block;
+  height: auto !important;
+  max-width: 100%;
+  max-height: none !important;       /* just in case an older rule capped it */
+  width: min(1100px, 92vw);          /* wide desktop default */
+  margin: 0 auto;
+}
+
+/* Explicit wide-desktop guard: keep the full image visible at 1441px+ */
+@media (min-width: 1441px) {
+  .container.zone.body > img.responsiveimg {
+    width: 1100px;                   /* your preferred desktop width */
+  }
+}
+
+/* Tighten MUCH more on small devices (320–700px) */
+@media (max-width: 700px) {
+  .container.zone.body > img.responsiveimg {
+    /* Smaller than before: ~60–62vw on phones, with sensible floor/ceiling */
+    width: clamp(200px, 61vw, 520px);
+  }
+}
+
+/* Ultra-small safety (≤360px wide phones) */
+@media (max-width: 360px) {
+  .container.zone.body > img.responsiveimg {
+    width: clamp(180px, 58vw, 380px);
+  }
+}
+
+/* ——— “Workflows” button: same width, a bit taller ——— */
+/* Only increase vertical padding so it stays horizontally dominant */
+.container2.button > button.grow {
+  padding-top: 1.05rem !important;
+  padding-bottom: 1.05rem !important;
+  line-height: 1.1;
+  white-space: nowrap;               /* text never wraps taller */
+}
+
+/* Keep the anchor tidy inside the button */
+.container2.button > button.grow > .button-text {
+  display: inline-block;
+  text-decoration: none;
+}
+
+/* ===== Fix bottom whitespace on small screens ===== */
+html, body { 
+  margin: 0 !important; 
+  padding: 0 !important; 
+}
+footer.zone.foot.bottom-section { 
+  margin: 0 !important; 
+}
+.foot-nav { 
+  margin: 0 !important; 
+  padding: 0 !important; 
+  list-style: none; 
+}
+body > *:last-child { 
+  margin-bottom: 0 !important;   /* kill collapsed bottom margins */
+}
+
+/* ===== Logo container: centered, no clipping ===== */
+.container.zone.body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: visible !important;
+}
+
+/* ===== Logo sizing ===== */
+/* Base (mobile-first): keep it modest on phones */
+.container.zone.body > img.responsiveimg {
+  display: block;
+  height: auto !important;
+  max-width: 100%;
+  width: clamp(220px, 62vw, 520px);
+  margin: 0 auto;
+}
+
+/* 700px and up: dramatically smaller than before */
+@media (min-width: 700px) {
+  .container.zone.body > img.responsiveimg {
+    /* ~30% of viewport, capped so it never gets huge */
+    width: clamp(420px, 32vw, 680px);
+  }
+}
+
+/* 1200px and up: tighten further */
+@media (min-width: 1200px) {
+  .container.zone.body > img.responsiveimg {
+    width: clamp(420px, 28vw, 640px);
+  }
+}
+
+/* 1600px and up: even tighter for very wide displays */
+@media (min-width: 1600px) {
+  .container.zone.body > img.responsiveimg {
+    width: clamp(420px, 24vw, 600px);
+  }
+}
+
+
+/* ===== Page background & no bottom gap ===== */
+html, body {
+  margin: 0 !important;
+  padding: 0 !important;
+  min-height: 100svh;          /* safe viewport unit for mobile */
+  background: #000;            /* kill the white strip below footer */
+}
+footer { margin: 0 !important; }
+
+/* ===== Logo: switch from height-based to width-based sizing ===== */
+/* This beats the earlier .responsiveimg { height:35–48vh } rules */
+.container.zone.body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.container.zone.body > img.responsiveimg {
+  height: auto !important;     /* override all vh heights */
+  max-width: 100%;
+  display: block;
+  /* Phones default */
+  width: clamp(220px, 62vw, 480px) !important;
+}
+
+/* 700px+: make it dramatically smaller than before */
+@media (min-width: 700px) {
+  .container.zone.body > img.responsiveimg {
+    width: clamp(300px, 16vw, 420px) !important;
+  }
+}
+@media (min-width: 1200px) {
+  .container.zone.body > img.responsiveimg {
+    width: clamp(320px, 14vw, 400px) !important;
+  }
+}
+@media (min-width: 1600px) {
+  .container.zone.body > img.responsiveimg {
+    width: clamp(340px, 12vw, 380px) !important;
+  }
+}
+
+/* ===== “Workflows” button: narrower, not % based ===== */
+/* Override the earlier button { width:30% } and media-query widths */
+.container2.button > button.grow {
+  width: auto !important;            /* hug the text instead of 30–50% */
+  max-width: max-content;
+  padding: 10px 28px !important;     /* keep it horizontal-dominant */
+  line-height: 1.15;
+  white-space: nowrap;
+  font-size: clamp(1rem, 1.6vw, 1.25rem);
+}
+.container2.button > button.grow > .button-text {
+  display: inline-block;
+  text-decoration: none;
+}
+/* ===== Place logo + button lower and keep them close ===== */
+.container.zone.body {
+  height: auto !important;              /* stop 50vh pushing things apart */
+  padding: 0 !important;
+  margin-top: clamp(6vh, 14vh, 18vh);   /* lower the whole block */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.container2 {
+  height: auto !important;              /* stop 55vh pushing things apart */
+  padding: 0 !important;
+  margin-top: 0.75rem;                  /* stay close to the logo */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ===== Logo sizing ===== */
+/* Default (phones) – keep your smaller phone size */
+.container.zone.body > img.responsiveimg {
+  display: block;
+  height: auto !important;              /* defeat earlier vh rules */
+  max-width: 100%;
+  width: clamp(240px, 62vw, 520px) !important;
+}
+
+/* 700px and up – about 40% of the screen width */
+@media (min-width: 700px) {
+  .container.zone.body > img.responsiveimg {
+    width: clamp(360px, 40vw, 800px) !important;
+  }
+}
+
+/* ===== “Workflows” button – slightly wider, smaller text ===== */
+.container2.button > button.grow {
+  width: auto !important;               /* ignore 30–50% rules above */
+  padding: 10px 36px !important;        /* a tad wider than before */
+  font-size: clamp(0.95rem, 1.2vw, 1.08rem) !important; /* smaller text */
+  line-height: 1.15;
+  white-space: nowrap;
+  margin-top: 0.5rem;                   /* tiny gap under the logo only */
+}
+.container2.button > button.grow > .button-text {
+  display: inline-block;
+  text-decoration: none;
+}
+
+/* ===== Lower the hero + keep spacing consistent ===== */
+.container.zone.body {
+  /* neutralize earlier 50vh, flex-end, and padding */
+  height: auto !important;
+  padding: 0 !important;
+  align-items: center !important;
+
+  /* push the logo block lower on the page */
+  margin-top: clamp(10vh, 16vh, 20vh) !important;
+
+  display: flex;
+  justify-content: center;
+}
+
+/* Put the button a bit farther from the logo, but always close */
+.container2 {
+  height: auto !important;       /* neutralize 55vh */
+  padding: 0 !important;
+  margin-top: 1.25rem !important; /* slightly more gap than before */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ===== Logo sizing (≈40% width on wide screens) ===== */
+.container.zone.body > img.responsiveimg {
+  display: block;
+  height: auto !important;         /* beat old 35–48vh rules */
+  max-width: 100%;
+  width: clamp(240px, 62vw, 520px) !important;  /* phones */
+}
+
+@media (min-width: 700px) {
+  .container.zone.body > img.responsiveimg {
+    width: clamp(360px, 40vw, 860px) !important; /* ~40% of viewport */
+  }
+}
+
+/* ===== Button: a tad wider, smaller text, no hover-jump ===== */
+.container2.button > button.grow {
+  width: auto !important;                /* ignore the earlier 30–50% widths */
+  padding: 12px 44px !important;         /* slightly wider than before */
+  font-size: clamp(0.88rem, 1.05vw, 1rem) !important; /* slightly smaller text */
+  line-height: 1.15;
+  white-space: nowrap;
+  transform-origin: center;
+}
+
+/* Keep the anchor from adding width */
+.container2.button > button.grow > .button-text {
+  display: inline-block;
+  text-decoration: none;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Smooth hover without layout shift (no scrollbars popping in/out) */
+.grow { 
+  transition: transform .35s ease, box-shadow .35s ease; 
+}
+.grow:hover { 
+  transform: scale(1.06);                /* gentler than 1.1 to avoid overflow */
+  box-shadow: 0 10px 24px rgba(0,0,0,.28);
+}
+
+/* Prevent recentering when a vertical scrollbar would appear */
+html { overflow-y: scroll; }              /* keeps layout width stable across hover */
+
+/* Keep a stable vertical scrollbar so hover never recenters the page */
+html, body {
+  overflow-y: scroll !important;
+  scrollbar-gutter: stable both-edges; /* modern browsers */
+}
+
+/* Slightly more space between logo and button */
+.container2 {
+  margin-top: 1.75rem !important;  /* was 1.25rem */
+}
+
+/* Button: slightly wider and smaller text; never stretch to % widths */
+.container2.button > button.grow {
+  width: auto !important;                 /* ignore older 30–50% rules */
+  max-width: max-content;
+  padding: 12px 48px !important;          /* wider than before */
+  font-size: clamp(0.88rem, 1.05vw, 1rem) !important;
+  line-height: 1.15;
+  white-space: nowrap;
+  transform-origin: center;
+  /* Avoid animating “everything”, which can cause subtle jiggles */
+  transition: transform .3s ease, box-shadow .3s ease, background-color .2s linear !important;
+}
+
+/* On ≥700px, make it quite a bit wider */
+@media (min-width: 700px) {
+  .container2.button > button.grow {
+    /* ensures a wider footprint without using percentages */
+    min-width: clamp(260px, 26vw, 360px);
+    padding: 14px 56px !important;
+  }
+}
+
+/* Keep the anchor from changing size on hover */
+.container2.button > button.grow > .button-text {
+  display: inline-block;
+  text-decoration: none;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Smooth hover without layout shift (no scrollbars popping in/out) */
+.grow {
+  transition: transform .3s ease, box-shadow .3s ease, background-color .2s linear !important;
+}
+.grow:hover {
+  transform: scale(1.03);                 /* gentler to avoid overflow */
+  box-shadow: 0 10px 24px rgba(0,0,0,.28);
+}
+
+/* ——— 1) Kill hover shift & double scrollbars ——— */
+/* Reserve a stable vertical scrollbar on the page root only */
+html { 
+  overflow-y: scroll !important; 
+  scrollbar-gutter: stable;       /* one gutter, no layout nudge */
+}
+/* Let body be the normal scroll container */
+body { 
+  overflow-y: visible !important; 
+}
+
+/* Stop hover from changing element size */
+.grow {
+  transition: box-shadow .3s ease, background-color .2s linear !important;
+}
+.grow:hover {
+  transform: none !important;                    /* remove scale that triggered scroll */
+  box-shadow: 0 10px 24px rgba(0,0,0,.28);
+}
+
+/* ——— 2) Lower the hero, add more space between logo & button ——— */
+.container.zone.body {
+  height: auto !important;
+  padding: 0 !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* push the hero lower overall */
+  margin-top: clamp(12vh, 22vh, 26vh) !important;
+}
+.container2 {
+  height: auto !important;
+  padding: 0 !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* noticeably more gap under the logo */
+  margin-top: clamp(2rem, 4vh, 3rem) !important;
+}
+
+/* ——— 3) Button width = medium on ≥700px, a touch wider overall ——— */
+.container2.button > button.grow {
+  width: auto !important;                  /* ignore earlier 30–50% rules */
+  max-width: max-content;
+  padding: 12px 42px !important;           /* a little wider than before */
+  font-size: clamp(0.9rem, 1.05vw, 1.05rem) !important; /* slightly smaller text */
+  line-height: 1.15;
+  white-space: nowrap;
+}
+
+@media (min-width: 700px) {
+  .container2.button > button.grow {
+    /* medium width: between the old and the very wide version */
+    min-width: clamp(230px, 22vw, 300px);
+    padding: 14px 48px !important;         /* bump width a touch on larger screens */
+  }
+}
+
+/* Keep the anchor from altering width */
+.container2.button > button.grow > .button-text {
+  display: inline-block;
+  text-decoration: none;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* More space between logo and button (all sizes) */
+.container2 {
+  margin-top: clamp(2.5rem, 6vh, 3.75rem) !important; /* up from ~2rem */
+}
+
+/* Button: slightly narrower at all sizes */
+.container2.button > button.grow {
+  width: auto !important;
+  max-width: max-content;
+  padding: 10px 34px !important;       /* was wider */
+  font-size: clamp(0.9rem, 1vw, 1.02rem) !important;
+  line-height: 1.15;
+  white-space: nowrap;
+}
+
+/* ≥700px: keep it medium-wide but a bit slimmer than before */
+@media (min-width: 700px) {
+  .container2.button > button.grow {
+    min-width: clamp(210px, 18vw, 270px) !important;  /* narrower than previous 230–300 */
+    padding: 12px 38px !important;
+  }
+}
+
+/* keep anchor tidy (no extra width) */
+.container2.button > button.grow > .button-text {
+  display: inline-block;
+  text-decoration: none;
+  margin: 0 !important;
+  padding: 0 !important;
+}
