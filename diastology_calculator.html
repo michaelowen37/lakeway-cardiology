@@ -154,6 +154,9 @@
       <style>
         /* -------- page-scoped styles only -------- */
 
+        /* Guard against horizontal scroll on small screens */
+        html, body { overflow-x: hidden; }
+
         /* NAV container & title stack */
         .zone.nav-bar{ overflow: visible !important; height: auto !important; }
         .title-stack{ display:flex; flex-direction:column; align-items:center; justify-content:flex-start; gap:0; margin:0; padding:0; max-width:100%; overflow:visible !important; }
@@ -171,6 +174,17 @@
         }
         @media (max-width:700px){ .dg-subtitle{ font-size:clamp(.72rem, 2.6vw, .95rem); } }
         @media (max-width:400px){ .dg-subtitle{ font-size:clamp(.62rem, 3.4vw, .88rem); } }
+
+        /* Tighten page padding on narrow screens so panels stay centered */
+        @media (max-width:640px){
+          .final{ padding-left:6% !important; padding-right:6% !important; }
+        }
+        @media (max-width:480px){
+          .final{ padding-left:4% !important; padding-right:4% !important; }
+        }
+        @media (max-width:380px){
+          .final{ padding-left:3% !important; padding-right:3% !important; }
+        }
 
         /* ======================= CHIPS ======================= */
         .navbar{
@@ -252,8 +266,8 @@
           display:grid;grid-template-columns:repeat(2,var(--field-w));gap:8px;justify-content:center;justify-items:stretch;margin-top:18px;
           align-items:center;
         }
-        #mr-reset{justify-self=end}
-        #mr-calc{justify-self=start}
+        #mr-reset{justify-self:end}
+        #mr-calc{justify-self:start}
         .mr-btn{
           display:inline-flex; align-items:center; justify-content:center;
           width:75%; min-height:44px; padding:12px 40px; white-space:nowrap; border-radius:999px; border:none;
@@ -300,6 +314,12 @@
           word-break:normal;
         }
 
+        /* Make panels & outputs fully fluid on small screens to avoid overflow */
+        @media (max-width:760px){
+          #mr-outputs{ min-width:0 !important; width:100% !important; max-width:100% !important; }
+          #mr-embed, .mr-wrap, .mr-panel{ max-width:100% !important; }
+        }
+
         /* Mobile */
         @media (max-width:720px){
           .mr-panel{width:94%;max-width:560px;margin:0 auto}
@@ -319,20 +339,21 @@
           .mr-out-label{text-align:center;font-size:.85rem}
           .mr-out-box{width:100%;min-width:0;justify-content:center;margin:0 auto;}
         }
-        @media (max-width:380px){
-          .mr-panel{width:98%;max-width:none}
-          .mr-field{width:85%;max-width:200px}
-          .mr-btn{width:40%;min-width:110px;padding:12px 24px;font-size:clamp(.82rem,4.2vw,.92rem)}
-        }
         @media (max-width:444px){
           #mr-embed{ padding:4px 8px 0 8px; }
           #mr-embed .mr-wrap{ gap:12px; }
           #mr-embed .mr-panel{ width:100%; max-width:none; margin:0 auto; padding:16px 14px; }
+          #mr-embed #mr-outputs{ min-width:0; } /* extra safety */
         }
         @media (max-width:417px){
           #mr-embed .mr-panel{ padding:14px 12px; }
           #mr-embed .mr-field{ max-width:200px; }
           #mr-embed .mr-btn{ min-width:110px; }
+        }
+        @media (max-width:380px){
+          .mr-panel{width:98%;max-width:none}
+          .mr-field{width:85%;max-width:200px}
+          .mr-btn{width:40%;min-width:110px;padding:12px 24px;font-size:clamp(.82rem,4.2vw,.92rem)}
         }
 
         /* Banner */
@@ -459,7 +480,7 @@
             const haveAnyEe = has(avgEe) || has(sepEe) || has(latEe);
             const haveAnyTRPASP = has(TRv) || has(PASP);
 
-            // Dysfunction presence by Figure 2 (covers with/without e′)
+            // Dysfunction presence by Figure 2
             const dysfunctionPresent =
               (redE_abn && step2Count >= 1) ||
               (haveAnyEprime && !redE_abn && step2Count >= 2) ||
@@ -477,18 +498,7 @@
               if (!has(IVRT))     list.push("IVRT");
               return list;
             }
-            function prioritizedSupportiveFor(path){
-              const base = missingSupportiveList();
-              const order = {
-                only_elevEe:      ["LAVI","LA strain","pulmonary vein S/D","IVRT"],
-                only_TRPASP:      ["LAVI","LA strain","pulmonary vein S/D","IVRT"],
-                only_redE:        ["LAVI","LA strain","pulmonary vein S/D","IVRT"], // E/A handled separately
-                two_prim_no_sup:  ["LAVI","LA strain","pulmonary vein S/D","IVRT"],
-                no_primary_dysfx: ["LAVI","LA strain","pulmonary vein S/D","IVRT"]
-              };
-              const seq = order[path] || ["LAVI","LA strain","pulmonary vein S/D","IVRT"];
-              return seq.filter(name => base.includes(name));
-            }
+            function prioritizedSupportiveFor(){ return missingSupportiveList(); }
             function needEA(){ return !has(EoverA); }
             function needAnyEe(){ return !haveAnyEe; }
             function needTRPASP(){ return !haveAnyTRPASP; }
@@ -499,12 +509,12 @@
                 if (needEA()) msgs.push("E/A (to check for impaired relaxation ≤ 0.8)");
                 if (needTRPASP()) msgs.push("TR Vmax or PASP");
                 if (needAnyEe()) msgs.push("E/e′ (average or site-specific)");
-                const sup = prioritizedSupportiveFor("only_redE");
+                const sup = prioritizedSupportiveFor();
                 if (sup.length) msgs.push("supportive markers (" + joinNice(sup) + ")");
                 return msgs.length ? " Consider adding " + joinNice(msgs) + "." : "";
               }
               if (path === "only_elevEe" || path === "only_TRPASP"){
-                const sup = prioritizedSupportiveFor(path);
+                const sup = prioritizedSupportiveFor();
                 if (sup.length) msgs.push("supportive markers (" + joinNice(sup) + ")");
                 if (path === "only_elevEe"){
                   if (needTRPASP()) msgs.push("TR Vmax or PASP");
@@ -515,8 +525,7 @@
                 }
                 return msgs.length ? " Consider adding " + joinNice(msgs) + "." : "";
               }
-              // default (mixed/minor abnormalities)
-              const sup = prioritizedSupportiveFor("two_prim_no_sup");
+              const sup = prioritizedSupportiveFor();
               if (sup.length) msgs.push("supportive markers (" + joinNice(sup) + ")");
               if (needAnyEe()) msgs.push("E/e′ (average or site-specific)");
               if (needTRPASP()) msgs.push("TR Vmax or PASP");
@@ -528,7 +537,7 @@
               const msgs = [];
               if (context === "two_prim_no_sup" || context === "one_prim_dysfx"){
                 if (needEA()) msgs.push("E/A (to separate Grade II vs III)");
-                const sup = prioritizedSupportiveFor("two_prim_no_sup");
+                const sup = prioritizedSupportiveFor();
                 if (sup.length) msgs.push("supportive markers (" + joinNice(sup) + ")");
                 return msgs.length ? " Add " + joinNice(msgs) + " to classify." : "";
               }
@@ -539,7 +548,7 @@
                 return msgs.length ? " Add " + joinNice(msgs) + " to assess LAP and grade." : "";
               }
               if (needEA()) msgs.push("E/A");
-              const sup = prioritizedSupportiveFor("two_prim_no_sup");
+              const sup = prioritizedSupportiveFor();
               if (sup.length) msgs.push("supportive markers (" + joinNice(sup) + ")");
               return msgs.length ? " Add " + joinNice(msgs) + " to classify." : "";
             }
