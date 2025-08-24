@@ -1345,3 +1345,314 @@ body.menu-open .menu-backdrop{ display: block; }
 /* ---------- Footer ---------- */
 .bottom-section{ background: #000; text-align: center; padding: 12px 0; }
 .foot-nav{ margin: 0; padding: 0; list-style: none; display: flex; justify-content: center; gap: 20px; }
+
+
+/* =========================
+   1) HEART HAMBURGER SIZE
+   ========================= */
+/* Bigger heart on wider screens (keeps your stripe pattern) */
+@media (min-width: 701px) {
+  .hamburger {
+    width: 72px !important;
+    height: 72px !important;
+  }
+  .hamburger .heart-burger {
+    width: 72px !important;
+    height: 72px !important;
+  }
+}
+
+/* Keep the smaller heart on ≤700px (matches your current look) */
+@media (max-width: 700px) {
+  .hamburger {
+    width: 48px !important;
+    height: 48px !important;
+  }
+  .hamburger .heart-burger {
+    width: 48px !important;
+    height: 48px !important;
+  }
+}
+
+/* =========================
+   2) LOGO: NO CLIPPING + SANE SIZING
+   ========================= */
+/* Kill the old 50vh/align-end combo, center things, allow full image */
+.container,
+.container.zone.body,
+.container.hero {
+  height: auto !important;
+  padding: 0 !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  overflow: visible !important;
+}
+
+/* Place the hero comfortably lower (adjust if you like) */
+.container.hero { margin-top: clamp(10vh, 16vh, 22vh) !important; }
+
+/* Image sizing: width-based clamps only, never cropped */
+.container.hero > img.responsiveimg,
+.container.zone.body > img.responsiveimg {
+  display: block !important;
+  height: auto !important;
+  max-width: 100% !important;
+  max-height: none !important;
+  /* phones default */
+  width: clamp(240px, 62vw, 560px) !important;
+}
+
+/* ~40% viewport on wider screens, with a generous cap to avoid clipping */
+@media (min-width: 700px) {
+  .container.hero > img.responsiveimg,
+  .container.zone.body > img.responsiveimg {
+    width: clamp(420px, 40vw, 900px) !important;
+  }
+}
+
+/* =========================
+   3) WORKFLOW BUTTON: KEEP IT CLOSE + CENTERED
+   ========================= */
+.container2 {
+  width: 100% !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  height: auto !important;
+  padding: 0 !important;
+}
+
+/* Keep the button close to the logo on small screens */
+@media (max-width: 700px) {
+  .container2 { margin-top: 0.75rem !important; }
+}
+
+/* Give it a touch more breathing room above 700px */
+@media (min-width: 701px) {
+  .container2 { margin-top: 1.25rem !important; }
+}
+
+/* If you’re using the new .cta button (from your current index.html) */
+.cta {
+  position: relative !important;
+  display: inline-block !important;
+  border-radius: 12px !important;
+  background: #007a35 !important;
+  transition: background-color .2s linear, box-shadow .3s ease !important;
+  /* desktop defaults you liked */
+  padding: 16px 32px !important;
+  min-height: 52px !important;
+  width: auto !important;
+}
+.cta:hover { background: #099b48 !important; }
+.cta .button-text {
+  position: absolute !important;
+  inset: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-decoration: none !important;
+  color: #bcbec5 !important;
+}
+
+/* Button stays nicely sized on phones and doesn't “drift” away */
+@media (max-width: 700px) {
+  .cta {
+    min-width: clamp(180px, 50vw, 280px) !important;
+    padding: 10px 20px !important;
+    min-height: 44px !important;
+  }
+}
+
+/* Optional: medium footprint on larger screens */
+@media (min-width: 701px) {
+  .cta {
+    min-width: clamp(220px, 22vw, 300px) !important;
+  }
+}
+
+/* =========================
+   HEART (make bigger >700)
+   ========================= */
+@media (min-width: 701px){
+  .hamburger{ width:72px !important; height:72px !important; }
+  .hamburger .heart-burger{ width:72px !important; height:72px !important; }
+}
+
+/* Add a little top gap so the heart isn’t touching the top */
+:root { --nav-h: 64px; }                               /* was 56px */
+.nav-bar{ min-height: var(--nav-h) !important; }       /* reserve the space */
+.hamburger{ top: 50% !important; transform: translateY(-50%) !important; }
+
+/* =========================
+   LOGO (no clipping + sane size)
+   ========================= */
+.container,
+.container.zone.body,
+.container.hero{
+  height:auto !important; padding:0 !important;
+  display:flex !important; justify-content:center !important; align-items:center !important;
+  overflow:visible !important;
+}
+.container.hero{ margin-top: clamp(10vh,16vh,22vh) !important; }
+
+.container.hero > img.responsiveimg,
+.container.zone.body > img.responsiveimg{
+  display:block !important; height:auto !important; max-width:100% !important; max-height:none !important;
+  /* phones */
+  width: clamp(240px, 62vw, 560px) !important;
+}
+@media (min-width: 700px){
+  .container.hero > img.responsiveimg,
+  .container.zone.body > img.responsiveimg{
+    /* ~40% of viewport, generous cap */
+    width: clamp(420px, 40vw, 900px) !important;
+  }
+}
+
+/* =========================
+   BUTTON: gap + sizing
+   ========================= */
+.container2{
+  width:100% !important; display:flex !important; justify-content:center !important; align-items:center !important;
+  height:auto !important; padding:0 !important;
+}
+/* Wider gap than before */
+@media (max-width:700px){ .container2{ margin-top: clamp(1.25rem, 5vh, 2rem) !important; } }
+@media (min-width:701px){ .container2{ margin-top: clamp(1.5rem, 4vh, 2.5rem) !important; } }
+
+/* Use your .cta button (override any old generic `button` widths) */
+.cta{
+  width:auto !important; min-height:52px !important;
+  padding:16px 32px !important;                /* desktop padding */
+  border-radius:12px !important; background:#007a35 !important; transition:background-color .2s linear, box-shadow .3s ease !important;
+}
+.cta:hover{ background:#099b48 !important; }
+.cta .button-text{
+  position:absolute !important; inset:0 !important; display:flex !important; align-items:center !important; justify-content:center !important;
+  text-decoration:none !important; color:#bcbec5 !important;
+}
+
+/* ≤700px: much narrower but still padded */
+@media (max-width:700px){
+  .cta{
+    min-width: clamp(170px, 36vw, 240px) !important;  /* narrower than before */
+    padding: 10px 18px !important;                    /* keep comfy side padding */
+    min-height: 42px !important;
+  }
+}
+
+/* >700px: medium footprint */
+@media (min-width:701px){
+  .cta{ min-width: clamp(220px, 22vw, 300px) !important; }
+}
+
+
+/* =========================
+   A) Kill the always-on right gutter/scrollbar
+   ========================= */
+html{
+  overflow-y: auto !important;          /* only show scrollbar if needed */
+  scrollbar-gutter: auto !important;     /* don't reserve gutter space */
+}
+body{ overflow-y: visible !important; }
+
+/* =========================
+   B) Heart “hamburger”: more gap above (bigger nav bar)
+   ========================= */
+/* Make the navbar taller so the heart sits lower with a clear top gap */
+:root{ --nav-h: 104px !important; }        /* noticeable gap globally */
+@media (max-width: 700px){
+  :root{ --nav-h: 92px !important; }       /* still roomy on phones */
+}
+/* Ensure the bar reserves the space and keeps the heart centered */
+.nav-bar{
+  min-height: var(--nav-h) !important;
+  position: relative !important;
+  display: flex !important;
+  align-items: center !important;
+}
+/* If you want even MORE space, just bump the numbers above. */
+
+/* =========================
+   C) Logo: no clipping, sane sizing (keeps your existing look)
+   ========================= */
+.container,
+.container.zone.body,
+.container.hero{
+  height: auto !important;
+  padding: 0 !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  overflow: visible !important;
+}
+.container.hero{ margin-top: clamp(10vh, 16vh, 22vh) !important; }
+
+.container.hero > img.responsiveimg,
+.container.zone.body > img.responsiveimg{
+  display: block !important;
+  height: auto !important;
+  max-width: 100% !important;
+  max-height: none !important;
+  width: clamp(240px, 62vw, 560px) !important;   /* phones */
+}
+@media (min-width: 700px){
+  .container.hero > img.responsiveimg,
+  .container.zone.body > img.responsiveimg{
+    width: clamp(420px, 40vw, 900px) !important; /* wide, but never clipped */
+  }
+}
+
+/* =========================
+   D) Workflow button: bigger gap below logo + narrower on ≤700px
+   ========================= */
+.container2{
+  width: 100% !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  height: auto !important;
+  padding: 0 !important;
+}
+
+/* Much more space between the logo and the button */
+@media (max-width: 700px){
+  .container2{ margin-top: clamp(2rem, 7vh, 3rem) !important; } /* ↑ phones */
+}
+@media (min-width: 701px){
+  .container2{ margin-top: clamp(2.25rem, 8vh, 4rem) !important; } /* ↑ desktop */
+}
+
+/* Your .cta button: keep padding, but make it much narrower on small screens */
+.cta{
+  position: relative !important;
+  display: inline-block !important;
+  border-radius: 12px !important;
+  background: #007a35 !important;
+  transition: background-color .2s linear, box-shadow .3s ease !important;
+  padding: 16px 32px !important;    /* desktop default */
+  min-height: 52px !important;
+  width: auto !important;
+}
+.cta:hover{ background: #099b48 !important; }
+.cta .button-text{
+  position: absolute !important; inset: 0 !important;
+  display: flex !important; align-items: center !important; justify-content: center !important;
+  text-decoration: none !important; color: #bcbec5 !important;
+}
+
+/* ≤700px: narrow the button a LOT, but keep comfy side padding */
+@media (max-width: 700px){
+  .cta{
+    min-width: clamp(150px, 32vw, 220px) !important;  /* much narrower */
+    padding: 10px 18px !important;                    /* keep some edge padding */
+    min-height: 42px !important;
+  }
+}
+
+/* >700px: medium footprint (unchanged feel) */
+@media (min-width: 701px){
+  .cta{ min-width: clamp(220px, 22vw, 300px) !important; }
+}
