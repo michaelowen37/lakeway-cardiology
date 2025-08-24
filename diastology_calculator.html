@@ -252,8 +252,8 @@
           display:grid;grid-template-columns:repeat(2,var(--field-w));gap:8px;justify-content:center;justify-items:stretch;margin-top:18px;
           align-items:center;
         }
-        #mr-reset{justify-self:end}
-        #mr-calc{justify-self:start}
+        #mr-reset{justify-self=end}
+        #mr-calc{justify-self=start}
         .mr-btn{
           display:inline-flex; align-items:center; justify-content:center;
           width:75%; min-height:44px; padding:12px 40px; white-space:nowrap; border-radius:999px; border:none;
@@ -273,7 +273,7 @@
         #mr-outputs{min-width:360px;max-width:620px}
         .mr-out-row{
           display:grid;
-          grid-template-columns: 180px minmax(280px, 1fr); /* fixed label + flexible content */
+          grid-template-columns: 180px minmax(280px, 1fr);
           align-items:center;
           gap:12px;
           margin-bottom:12px;
@@ -283,7 +283,7 @@
           font-weight:600;font-size:.9rem;opacity:.95;text-align:right;white-space:normal;overflow-wrap:anywhere;
         }
         .mr-out-box{
-          display:block; /* allow vertical growth */
+          display:block;
           width:100%;
           padding:10px 12px;
           border:var(--mr-item-border) solid var(--mr-green);
@@ -292,7 +292,6 @@
           font-weight:800;font-size:.95rem;color:var(--mr-text);
           text-align:center;
         }
-        /* both content spans wrap */
         #grade, #reason{
           display:inline-block;
           max-width:100%;
@@ -314,7 +313,7 @@
 
           #mr-outputs{width:100%;max-width:600px;margin:0 auto;display:flex;flex-direction:column;align-items:center}
           .mr-out-row{
-            grid-template-columns:1fr; /* stack label + box */
+            grid-template-columns:1fr;
             justify-items:center;gap:8px;margin-bottom:14px;width:100%;
           }
           .mr-out-label{text-align:center;font-size:.85rem}
@@ -384,7 +383,6 @@
           }
           const has = (v) => typeof v === 'number' && !Number.isNaN(v);
           const any = (...xs) => xs.some(has);
-          const none = (...xs) => !xs.some(has);
 
           function joinNice(items){
             if (!items.length) return "";
@@ -412,17 +410,15 @@
             });
           });
 
-          // ===== Grading logic with targeted suggestions =====
+          // ===== Grading logic with path-specific suggestions =====
           function gradeDiastolic({
             sepEprime, latEprime, EoverA, avgEe, sepEe, latEe, TRv, PASP, LAVI, LAStrain, PVSD, IVRT
           } = {}) {
-
-            // Count how many things we actually got
+            // Count provided inputs
             const providedCount = [
               sepEprime, latEprime, EoverA, avgEe, sepEe, latEe, TRv, PASP, LAVI, LAStrain, PVSD, IVRT
             ].filter(has).length;
 
-            // Early sparsity gate
             if (providedCount < 2) {
               return {
                 grade: "Indeterminate",
@@ -460,8 +456,10 @@
             const step2Count = [step2_EA_extreme, step2_incEe, step2_LARS, step2_LAVI].filter(Boolean).length;
 
             const haveAnyEprime = any(sepEprime, latEprime);
+            const haveAnyEe = has(avgEe) || has(sepEe) || has(latEe);
+            const haveAnyTRPASP = has(TRv) || has(PASP);
 
-            // Dysfunction present by Figure 2 (covers with/without e′ measured)
+            // Dysfunction presence by Figure 2 (covers with/without e′)
             const dysfunctionPresent =
               (redE_abn && step2Count >= 1) ||
               (haveAnyEprime && !redE_abn && step2Count >= 2) ||
@@ -470,19 +468,81 @@
             // Primaries for LAP (Figure 3)
             const primaryCount = [redE_abn, incEe_abn, incTRorPASP_abn].filter(Boolean).length;
 
-            // Track what's missing to suggest next steps
-            const missingSupportive = [];
-            if (!has(LAVI))     missingSupportive.push("LAVI");
-            if (!has(LAStrain)) missingSupportive.push("LA strain");
-            if (!has(PVSD))     missingSupportive.push("pulmonary vein S/D");
-            if (!has(IVRT))     missingSupportive.push("IVRT");
+            // Suggestion helpers
+            function missingSupportiveList() {
+              const list = [];
+              if (!has(LAVI))     list.push("LAVI");
+              if (!has(LAStrain)) list.push("LA strain");
+              if (!has(PVSD))     list.push("pulmonary vein S/D");
+              if (!has(IVRT))     list.push("IVRT");
+              return list;
+            }
+            function prioritizedSupportiveFor(path){
+              const base = missingSupportiveList();
+              const order = {
+                only_elevEe:      ["LAVI","LA strain","pulmonary vein S/D","IVRT"],
+                only_TRPASP:      ["LAVI","LA strain","pulmonary vein S/D","IVRT"],
+                only_redE:        ["LAVI","LA strain","pulmonary vein S/D","IVRT"], // E/A handled separately
+                two_prim_no_sup:  ["LAVI","LA strain","pulmonary vein S/D","IVRT"],
+                no_primary_dysfx: ["LAVI","LA strain","pulmonary vein S/D","IVRT"]
+              };
+              const seq = order[path] || ["LAVI","LA strain","pulmonary vein S/D","IVRT"];
+              return seq.filter(name => base.includes(name));
+            }
+            function needEA(){ return !has(EoverA); }
+            function needAnyEe(){ return !haveAnyEe; }
+            function needTRPASP(){ return !haveAnyTRPASP; }
 
-            const haveAnyEe = has(avgEe) || has(sepEe) || has(latEe);
-            const haveAnyTRPASP = has(TRv) || has(PASP);
-            const missingPrimaries = [];
-            if (!haveAnyEe)     missingPrimaries.push("E/e′ (average or site-specific)");
-            if (!haveAnyTRPASP) missingPrimaries.push("TR Vmax or PASP");
-            const needEA = !has(EoverA);
+            function suggestionStringForNormal(path){
+              const msgs = [];
+              if (path === "only_redE"){
+                if (needEA()) msgs.push("E/A (to check for impaired relaxation ≤ 0.8)");
+                if (needTRPASP()) msgs.push("TR Vmax or PASP");
+                if (needAnyEe()) msgs.push("E/e′ (average or site-specific)");
+                const sup = prioritizedSupportiveFor("only_redE");
+                if (sup.length) msgs.push("supportive markers (" + joinNice(sup) + ")");
+                return msgs.length ? " Consider adding " + joinNice(msgs) + "." : "";
+              }
+              if (path === "only_elevEe" || path === "only_TRPASP"){
+                const sup = prioritizedSupportiveFor(path);
+                if (sup.length) msgs.push("supportive markers (" + joinNice(sup) + ")");
+                if (path === "only_elevEe"){
+                  if (needTRPASP()) msgs.push("TR Vmax or PASP");
+                  if (needEA()) msgs.push("E/A");
+                } else {
+                  if (needAnyEe()) msgs.push("E/e′ (average or site-specific)");
+                  if (needEA()) msgs.push("E/A");
+                }
+                return msgs.length ? " Consider adding " + joinNice(msgs) + "." : "";
+              }
+              // default (mixed/minor abnormalities)
+              const sup = prioritizedSupportiveFor("two_prim_no_sup");
+              if (sup.length) msgs.push("supportive markers (" + joinNice(sup) + ")");
+              if (needAnyEe()) msgs.push("E/e′ (average or site-specific)");
+              if (needTRPASP()) msgs.push("TR Vmax or PASP");
+              if (needEA()) msgs.push("E/A");
+              return msgs.length ? " Consider adding " + joinNice(msgs) + "." : "";
+            }
+
+            function suggestionStringForAbnormalUngraded(context){
+              const msgs = [];
+              if (context === "two_prim_no_sup" || context === "one_prim_dysfx"){
+                if (needEA()) msgs.push("E/A (to separate Grade II vs III)");
+                const sup = prioritizedSupportiveFor("two_prim_no_sup");
+                if (sup.length) msgs.push("supportive markers (" + joinNice(sup) + ")");
+                return msgs.length ? " Add " + joinNice(msgs) + " to classify." : "";
+              }
+              if (context === "no_primary_dysfx"){
+                if (needAnyEe()) msgs.push("E/e′");
+                if (needTRPASP()) msgs.push("TR Vmax or PASP");
+                if (needEA()) msgs.push("E/A");
+                return msgs.length ? " Add " + joinNice(msgs) + " to assess LAP and grade." : "";
+              }
+              if (needEA()) msgs.push("E/A");
+              const sup = prioritizedSupportiveFor("two_prim_no_sup");
+              if (sup.length) msgs.push("supportive markers (" + joinNice(sup) + ")");
+              return msgs.length ? " Add " + joinNice(msgs) + " to classify." : "";
+            }
 
             // Helper: final grading once LAP is increased
             function gradeFromEA() {
@@ -496,10 +556,10 @@
               };
             }
 
-            // ===== Figure 3: direct LAP path (all primaries abnormal) =====
+            // ===== Direct LAP path: all primaries abnormal =====
             if (primaryCount === 3) return gradeFromEA();
 
-            // ===== Grade I: reduced e′ + E/A ≤ 0.8 + no evidence of LAP↑ (E/e′↑ or TR/PASP↑ absent) =====
+            // ===== Grade I path: reduced e′ + E/A ≤ 0.8 + no evidence of LAP↑ =====
             const noEvidenceElevatedLAP = !incEe_abn && !incTRorPASP_abn;
             if (redE_abn && has(EoverA) && EoverA <= 0.8 && noEvidenceElevatedLAP) {
               return { grade: "Grade I", reason: "Reduced e′ with E/A ≤ 0.8 and no evidence of elevated LAP." };
@@ -507,56 +567,39 @@
 
             // ===== One or two primaries abnormal =====
             if (primaryCount === 1 || primaryCount === 2) {
-              // Supportive clinches LAP↑ → Grade II/III
               if (supportivePositive) return gradeFromEA();
 
-              // Without supportive positives: if Dysfunction present (Figure 2) → Abnormal (Ungraded)
               if (dysfunctionPresent) {
-                const suggestions = [];
-                if (needEA) suggestions.push("E/A");
-                if (missingSupportive.length) suggestions.push("supportive markers (" + joinNice(missingSupportive) + ")");
+                const ctx = (primaryCount === 2) ? "two_prim_no_sup" : "one_prim_dysfx";
                 return {
                   grade: "Abnormal (Ungraded)",
-                  reason: "Diastolic dysfunction present by Figure 2, but LAP not increased without supportive markers" +
-                          (suggestions.length ? ` — add ${joinNice(suggestions)} to classify.` : ".")
+                  reason: "Diastolic dysfunction present by Figure 2, but LAP not increased without supportive markers." +
+                          suggestionStringForAbnormalUngraded(ctx)
                 };
               }
 
-              // If Figure 2 does not show dysfunction: Normal LAP likely; suggest what helps if concern persists
-              const recs = [];
-              // If reduced e′ was the only abnormal, E/A helps confirm Grade I path
-              if (redE_abn && needEA) recs.push("E/A (to check for impaired relaxation ≤ 0.8)");
-              // Suggest supportive markers when none provided/positive
-              if (missingSupportive.length) recs.push("supportive markers (" + joinNice(missingSupportive) + ")");
-              // Suggest missing primaries (E/e′, TR/PASP) if they were not entered
-              if (missingPrimaries.length) recs.push(joinNice(missingPrimaries));
+              let path = "mixed";
+              if (redE_abn && !incEe_abn && !incTRorPASP_abn) path = "only_redE";
+              else if (incEe_abn && !redE_abn && !incTRorPASP_abn) path = "only_elevEe";
+              else if (incTRorPASP_abn && !redE_abn && !incEe_abn) path = "only_TRPASP";
 
               return {
                 grade: "Normal",
                 reason: "Insufficient evidence for elevated LAP with current inputs." +
-                        (recs.length ? ` Consider adding ${joinNice(recs)}.` : "")
+                        suggestionStringForNormal(path)
               };
             }
 
             // ===== No primaries abnormal =====
             if (primaryCount === 0) {
               if (dysfunctionPresent) {
-                // Rare path: dysfunction by E/A extreme + LARS/LAVI while primaries not abnormal
-                const need = [];
-                if (!haveAnyEe)     need.push("E/e′");
-                if (!haveAnyTRPASP) need.push("TR Vmax or PASP");
                 return {
                   grade: "Abnormal (Ungraded)",
                   reason: "Diastolic dysfunction present by Figure 2; primary LAP markers not increased." +
-                          (need.length ? ` Add ${joinNice(need)} to assess LAP.` : "")
+                          suggestionStringForAbnormalUngraded("no_primary_dysfx")
                 };
               }
-
-              // With ≥2 inputs but nothing abnormal → Normal
-              return {
-                grade: "Normal",
-                reason: "Primary markers not abnormal and Figure 2 criteria not met."
-              };
+              return { grade: "Normal", reason: "Primary markers not abnormal and Figure 2 criteria not met." };
             }
 
             // Fallback
