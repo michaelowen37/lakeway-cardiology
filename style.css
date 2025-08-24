@@ -1232,3 +1232,116 @@ nav.nav-bar + .side-menu {
   height: calc(100dvh - (env(safe-area-inset-top) + var(--nav-h))) !important;
 }
 */
+
+/* ---------- Theme vars ---------- */
+:root{
+  --bg: #000;
+  --text: #bcbec5;
+  --brand: #007a35;
+  --brand-hover: #099b48;
+
+  --nav-h: 56px;                 /* navbar height */
+  --drawer-w-desktop: 220px;     /* drawer width >700px */
+  --drawer-w-mobile: 190px;      /* drawer width ≤700px */
+
+  /* Button sizing */
+  --btn-pad-y: 16px;
+  --btn-pad-x: 32px;
+  --btn-min-h: 52px;
+
+  /* Mobile button sizing (≤700px) */
+  --btn-pad-y-sm: 10px;
+  --btn-pad-x-sm: 20px;
+  --btn-min-h-sm: 44px;
+  --btn-minw-sm: 180px;
+  --btn-vw-sm: 50vw;
+  --btn-maxw-sm: 280px;
+}
+
+/* ---------- Base ---------- */
+* { box-sizing: border-box; }
+html, body { margin: 0; background: var(--bg); color: var(--text); font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; min-height: 100svh; }
+
+/* ---------- Navbar + Heart Icon ---------- */
+.nav-bar{
+  position: relative;
+  min-height: var(--nav-h);
+  display: flex; align-items: center;
+}
+.hamburger{
+  position: absolute; left: 12px; top: 50%; transform: translateY(-50%);
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 56px; height: 56px; padding: 0; border: 0; background: transparent;
+  border-radius: 10px; cursor: pointer; z-index: 1005;
+  color: var(--text); /* sets heart stripe color */
+}
+.hamburger .heart-burger{ width: 56px; height: 56px; display: block; }
+@media (max-width: 700px){
+  .hamburger{ width: 48px; height: 48px; }
+  .hamburger .heart-burger{ width: 48px; height: 48px; }
+}
+
+/* ---------- Drawer ---------- */
+.side-menu{
+  position: fixed; left: 0; top: var(--nav-h); bottom: 0;
+  width: var(--drawer-w-desktop); height: calc(100dvh - var(--nav-h));
+  background: #000; color: var(--text);
+  border-right: 1px solid #333;
+  transform: translateX(-110%); transition: transform .28s ease;
+  padding: 16px; box-sizing: border-box; z-index: 1001;
+  border-top-right-radius: 10px; box-shadow: 0 6px 18px rgba(0,0,0,.35);
+  overflow-x: visible !important;
+}
+.side-menu *{ overflow-x: visible !important; }
+.menu-link{
+  display: block; color: var(--text); text-decoration: none;
+  padding: 10px 8px; border-radius: 8px;
+  font-size: clamp(14px, 3.8vw, 16px); line-height: 1.2;
+}
+.menu-link:hover{ background: #111; }
+.menu-backdrop{
+  position: fixed; inset: 0; background: rgba(0,0,0,.45); z-index: 1000; display: none;
+}
+body.menu-open .side-menu{ transform: translateX(0); }
+body.menu-open .menu-backdrop{ display: block; }
+
+@media (max-width: 700px){
+  .side-menu{ width: var(--drawer-w-mobile); }
+}
+
+/* ---------- Hero: logo + spacing ---------- */
+.container{ width: 100%; display: flex; justify-content: center; align-items: center; }
+.hero{ margin-top: clamp(10vh, 16vh, 22vh); }
+.responsiveimg{
+  display: block; height: auto; max-width: 100%;
+  width: clamp(240px, 62vw, 520px);
+}
+@media (min-width: 700px){
+  .responsiveimg{ width: clamp(360px, 40vw, 800px); }
+}
+
+/* ---------- CTA Button (full-button clickable) ---------- */
+.container2{ width: 100%; display: flex; justify-content: center; align-items: center; margin-top: clamp(2.5rem, 6vh, 4rem); }
+.cta{
+  position: relative; display: inline-block; border: 0; border-radius: 12px;
+  background: var(--brand); color: #fff; cursor: pointer;
+  padding: var(--btn-pad-y) var(--btn-pad-x); min-height: var(--btn-min-h);
+  transition: background-color .2s linear, box-shadow .3s ease;
+}
+.cta:hover{ background: var(--brand-hover); }
+.cta .button-text{
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  text-decoration: none; color: var(--text); /* your original link color */
+}
+/* Mobile: shorter & narrower */
+@media (max-width: 700px){
+  .cta{
+    min-width: clamp(var(--btn-minw-sm), var(--btn-vw-sm), var(--btn-maxw-sm));
+    padding: var(--btn-pad-y-sm) var(--btn-pad-x-sm);
+    min-height: var(--btn-min-h-sm);
+  }
+}
+
+/* ---------- Footer ---------- */
+.bottom-section{ background: #000; text-align: center; padding: 12px 0; }
+.foot-nav{ margin: 0; padding: 0; list-style: none; display: flex; justify-content: center; gap: 20px; }

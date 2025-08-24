@@ -16,116 +16,43 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Your existing stylesheet -->
-  <link rel="stylesheet" type="text/css" href="./style.css">
+  <!-- New, simplified stylesheet -->
+  <link rel="stylesheet" href="./style.css">
   <link rel="icon" type="image/png" href="BSW_Thumbnail.png"/>
-
-  <!-- Inline, last-in-wins overrides -->
-  <style>
-    /* ===== Tweakable vars ===== */
-    :root{
-      --nav-h: 56px;               /* navbar height */
-      --drawer-w-desktop: 220px;   /* drawer width >700px */
-      --drawer-w-mobile: 200px;    /* drawer width ≤700px (raise if “Contact” clips) */
-
-      /* Workflow button (≤700px) – adjust as you like */
-      --btn-minw-mobile: 180px;
-      --btn-vw-mobile: 50vw;
-      --btn-maxw-mobile: 280px;
-      --btn-padx-mobile: 18px;
-      --btn-pady-mobile: 10px;
-      --btn-minh-mobile: 44px;
-    }
-
-    /* Ensure navbar has height and hamburger is visible */
-    .nav-bar{ position:relative; min-height:var(--nav-h); display:flex; align-items:center; }
-
-    /* Hamburger icon (3 bold gray bars) */
-    .hamburger{
-      position:absolute; left:12px; top:50%; transform:translateY(-50%);
-      display:flex; flex-direction:column; gap:6px;
-      width:68px; height:44px; padding:0; background:transparent; border:0; border-radius:8px;
-      z-index:1005; cursor:pointer;
-    }
-    .hamburger .bar{ width:56px; height:4px; background:#bcbec5; border-radius:3px; }
-
-    /* Drawer sits below navbar */
-    #side-menu{
-      position:fixed; left:0; right:auto; top:var(--nav-h); bottom:0;
-      width:var(--drawer-w-desktop); height:calc(100dvh - var(--nav-h));
-      background:#000; color:#bcbec5; border-right:1px solid #333;
-      transform:translateX(-110%); transition:transform .28s ease;
-      padding:16px; box-sizing:border-box; z-index:1001;
-      border-top-right-radius:10px; box-shadow:0 6px 18px rgba(0,0,0,.35);
-      /* 🔧 Neutralize the global `* { overflow-x:hidden; }` inside the panel */
-      overflow-x: visible !important;
-    }
-    /* Also neutralize on children so text never gets chopped */
-    #side-menu *{ overflow-x: visible !important; }
-
-    /* Menu link sizing */
-    #side-menu .menu-link{
-      display:block; color:#bcbec5; text-decoration:none;
-      padding:10px 8px; border-radius:8px;
-      font-size: clamp(14px, 3.8vw, 16px);
-      line-height: 1.2;
-      /* Wrap if needed instead of clipping; “Contact” shouldn’t need it,
-         but this defeats any inherited nowraps */
-      white-space: normal;
-      overflow-wrap: anywhere;
-      word-break: break-word;
-    }
-    #side-menu .menu-link:hover{ background:#111; }
-
-    /* Backdrop */
-    #menu-backdrop{ position:fixed; inset:0; background:rgba(0,0,0,.45); z-index:1000; display:none; }
-    body.menu-open #side-menu{ transform:translateX(0); }
-    body.menu-open #menu-backdrop{ display:block; }
-
-    /* Keep the button row centered under the logo */
-    .container2{ width:100%; display:flex; justify-content:center; align-items:center; }
-
-    /* Full-area clickable button (desktop defaults) */
-    .container2.button > button.grow{
-      position:relative; display:inline-block; border-radius:12px; box-sizing:border-box;
-      background-color:#007a35; transition:box-shadow .3s ease, background-color .2s linear;
-      padding:16px 32px; min-height:52px; width:auto !important;
-    }
-    .container2.button > button.grow:hover{ background-color:#099b48; }
-    .container2.button > button.grow > .button-text{
-      position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
-      text-decoration:none; color:#bcbec5;
-    }
-
-    /* ===== ≤700px: drawer narrower & button smaller ===== */
-    @media (max-width: 700px){
-      /* High specificity + !important to beat external rules */
-      html body #side-menu.side-menu{
-        width: var(--drawer-w-mobile) !important;
-      }
-      .container2.button > button.grow{
-        width:auto !important;
-        min-width: clamp(var(--btn-minw-mobile), var(--btn-vw-mobile), var(--btn-maxw-mobile)) !important;
-        padding: var(--btn-pady-mobile) var(--btn-padx-mobile) !important;
-        min-height: var(--btn-minh-mobile) !important;
-      }
-    }
-  </style>
 </head>
 
 <body>
   <!-- NAV -->
-  <nav class="zone nav-bar">
-    <!-- Hamburger (gray bars) -->
+  <nav class="nav-bar">
+    <!-- Heart “hamburger” made of horizontal lines -->
     <button id="hamburger" class="hamburger" aria-label="Open menu" aria-controls="side-menu" aria-expanded="false">
-      <span class="bar" aria-hidden="true"></span>
-      <span class="bar" aria-hidden="true"></span>
-      <span class="bar" aria-hidden="true"></span>
+      <svg class="heart-burger" viewBox="0 0 64 64" width="56" height="56" aria-hidden="true">
+        <defs>
+          <!-- Heart shape -->
+          <clipPath id="heartClip">
+            <path d="M32 54
+                     C32 54 8 39 8 26
+                     C8 18 14 12 21 12
+                     C26 12 29 15 32 18
+                     C35 15 38 12 43 12
+                     C50 12 56 18 56 26
+                     C56 39 32 54 32 54Z"/>
+          </clipPath>
+
+          <!-- Horizontal stripe pattern (bar = 3px, gap = 3px)
+               To change thickness/gap: adjust rect height and pattern height -->
+          <pattern id="hStripe" patternUnits="userSpaceOnUse" width="64" height="10">
+            <rect x="0" y="0" width="64" height="4" fill="currentColor"/>
+          </pattern>
+        </defs>
+
+        <!-- Fill the heart area with horizontal stripes -->
+        <rect x="0" y="0" width="64" height="64"
+              fill="url(#hStripe)" clip-path="url(#heartClip)"/>
+      </svg>
     </button>
 
-    <ul class="main-nav">
-      <!-- Add future top links here if needed -->
-    </ul>
+    <ul class="main-nav"><!-- reserved for future --></ul>
   </nav>
 
   <!-- Slide-in menu + backdrop -->
@@ -135,28 +62,27 @@
   <div id="menu-backdrop" class="menu-backdrop" hidden></div>
 
   <!-- HERO -->
-  <div class="container zone body">
+  <div class="container hero">
     <img src="BSW_Logo.svg" class="responsiveimg" alt="Baylor Scott & White Logo">
   </div>
 
-  <div class="container2 button">
-    <button class="grow">
+  <div class="container2">
+    <button class="cta">
       <a href="lakeway_hospital.html" class="button-text">Workflows</a>
     </button>
   </div>
 
   <!-- FOOTER -->
-  <footer class="zone foot bottom-section">
+  <footer class="bottom-section">
     <ul class="foot-nav"></ul>
   </footer>
 
-  <!-- JS -->
+  <!-- JS: menu open/close + mobile drawer width guard -->
   <script>
     (function () {
       const btn = document.getElementById('hamburger');
       const menu = document.getElementById('side-menu');
       const backdrop = document.getElementById('menu-backdrop');
-
       const MOBILE_BP = 700;
 
       function setOpen(open) {
@@ -165,28 +91,20 @@
         menu.setAttribute('aria-hidden', String(!open));
         backdrop.hidden = !open;
       }
-
-      // Guarantee drawer width applies even if external CSS has !important
-      function applyDrawerWidth() {
-        const rootStyles = getComputedStyle(document.documentElement);
-        const wMobile  = rootStyles.getPropertyValue('--drawer-w-mobile').trim()  || '200px';
-        const wDesktop = rootStyles.getPropertyValue('--drawer-w-desktop').trim() || '220px';
-        const target = (window.innerWidth <= MOBILE_BP) ? wMobile : wDesktop;
-        menu.style.setProperty('width', target, 'important');
-      }
-
-      applyDrawerWidth();
-      window.addEventListener('resize', applyDrawerWidth);
-
       btn.addEventListener('click', () => setOpen(!document.body.classList.contains('menu-open')));
       backdrop.addEventListener('click', () => setOpen(false));
       document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setOpen(false); });
 
-      // Close the menu when a link inside it is clicked
-      menu.addEventListener('click', (e) => {
-        const link = e.target.closest('a');
-        if (link) setOpen(false);
-      });
+      // Ensure drawer width snaps at breakpoint even if external CSS fights
+      function applyDrawerWidth() {
+        const root = getComputedStyle(document.documentElement);
+        const wMobile  = root.getPropertyValue('--drawer-w-mobile').trim()  || '190px';
+        const wDesktop = root.getPropertyValue('--drawer-w-desktop').trim() || '220px';
+        const target = (window.innerWidth <= MOBILE_BP) ? wMobile : wDesktop;
+        menu.style.setProperty('width', target, 'important');
+      }
+      applyDrawerWidth();
+      window.addEventListener('resize', applyDrawerWidth);
     })();
   </script>
 </body>
