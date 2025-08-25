@@ -1658,7 +1658,7 @@ body{ overflow-y: visible !important; }
 }
 
 
-/* More black space below the Workflow button */
+/* More black space below the Workflow button on Index page */
 @media (max-width: 700px){
   .container2{
     margin-bottom: clamp(2rem, 12vh, 5rem) !important; /* phones/tablets */
