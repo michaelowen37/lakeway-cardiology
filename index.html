@@ -19,6 +19,39 @@
   <!-- New, simplified stylesheet -->
   <link rel="stylesheet" href="./style.css">
   <link rel="icon" type="image/png" href="BSW_Thumbnail.png"/>
+
+  <!-- Page-scoped glow (blue) -->
+  <style>
+    :root{
+      /* Blue as RGB so we can reuse with rgba() — matches your UI blue (#3a7bf0) */
+      --glow-blue: 58, 123, 240;
+    }
+
+    /* Intense neon-style blue glow behind the hero logo */
+    .container.hero .responsiveimg{
+      filter:
+        drop-shadow(0 0 10px  rgba(var(--glow-blue), .15))
+        drop-shadow(0 0 24px  rgba(var(--glow-blue), .70))
+        drop-shadow(0 0 48px  rgba(var(--glow-blue), .55))
+        drop-shadow(0 0 90px  rgba(var(--glow-blue), .40))
+        drop-shadow(0 0 140px rgba(var(--glow-blue), .32)) !important;
+      will-change: filter;
+    }
+
+    /* Dial it back a touch on small screens so it doesn't bloom too hard */
+    @media (max-width: 700px){
+      .container.hero .responsiveimg{
+        filter:
+          drop-shadow(0 0 10px rgba(var(--glow-blue), .15))
+          drop-shadow(0 0 24px rgba(var(--glow-blue), .60))
+          drop-shadow(0 0 48px rgba(var(--glow-blue), .48))
+          drop-shadow(0 0 84px rgba(var(--glow-blue), .36))
+          drop-shadow(0 0 120px rgba(var(--glow-blue), .28)) !important;
+      }
+    }
+
+
+  </style>
 </head>
 
 <body>
