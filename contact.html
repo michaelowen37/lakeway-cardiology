@@ -31,8 +31,8 @@
             <tbody>
               <tr>
                 <td class="dg-c2" colspan="2">
-                  <div class="dg-wrap">
-                    Questions, feedback and suggestions welcome.  Shoot me an email or contact me on teams.  
+                  <div class="dg-wrap msg-lines">
+                    Questions, feedback and suggestions welcome. Shoot me an email or contact me on Teams.
                   </div>
                 </td>
               </tr>
@@ -46,7 +46,7 @@
       <div id="contact-email" aria-label="Email" class="email-up">
         <div class="dg-tablewrap">
           <table class="dg-table" role="table" aria-label="Email">
-            <!-- Force 50/50 so the seam is dead center -->
+            <!-- Default 50/50 on desktop so the seam is centered -->
             <colgroup>
               <col style="width:50%">
               <col style="width:50%">
@@ -58,10 +58,12 @@
                   <div class="dg-wrap email-left">Email</div>
                 </th>
 
-                <!-- Right cell: blue-bordered rectangle that matches left height -->
+                <!-- Right cell: blue-bordered rectangle that always matches row height -->
                 <td class="dg-c2 email-right">
                   <div class="email-card">
-                    <a class="email-link" href="mailto:your.name@domain.com">michael.owen@bswhealth.org</a>
+                    <a class="email-link" href="mailto:michael.owen@bswhealth.org">
+                      michael<wbr>.owen<wbr>@bswhealth<wbr>.org
+                    </a>
                   </div>
                 </td>
               </tr>
@@ -96,68 +98,80 @@
     #contact-message .dg-table .dg-wrap::-webkit-scrollbar,
     #contact-email .dg-table .dg-wrap::-webkit-scrollbar{ width:0; height:0; }
 
-    /* Center seam exact: remove padding in right cell so the rectangle meets the middle */
-    #contact-email td.email-right,
-    #contact-email td.email-right .dg-wrap { padding: 0 !important; }
-
-    /* Blue-bordered rectangle on the right half */
-    :root{ --contact-blue: var(--dg-blue, #3a7bf0); }
-    #contact-email .email-card{
-      width: 100%;
-      border: 2px solid var(--contact-blue);
-      border-radius: var(--mr-radius, 12px);
-      padding: 12px;
-      background: transparent;
-      display: flex; align-items: center; justify-content: center;
-      box-sizing: border-box;
-      /* Let JS set min-height to match left cell; this keeps perfect visual parity */
-    }
-
-    /* Email link styling */
-    #contact-email .email-link{
-      color: #c8c8c8;
-      text-decoration: underline;
-      white-space: nowrap;
-    }
-
-    /* Add a little more space between message and email row */
-    #contact-email.email-up { margin-top: 18px !important; }
-
-    /* Constrain the message width to 60% and center it */
+    /* Message tweaks */
     .msg-narrow{
       width: 60%;
       margin-left: auto;
       margin-right: auto;
     }
+    .msg-lines{ line-height: 1.15; }
 
-    /* On small screens, relax to 90% so it doesn't feel too narrow */
+    /* Ensure vertical centering consistency */
+    #contact-email th, #contact-email td { vertical-align: middle; }
+
+    /* Remove padding in right cell so the blue rectangle meets the center seam;
+       also make the right cell a positioning context for the card */
+    #contact-email td.email-right,
+    #contact-email td.email-right .dg-wrap { padding: 0 !important; }
+    #contact-email td.email-right{
+      position: relative;  /* lets the inner card fill the entire cell height */
+      overflow: visible;
+    }
+
+    /* Blue-bordered rectangle fills the entire right cell height */
+    :root{ --contact-blue: var(--dg-blue, #3a7bf0); }
+    #contact-email .email-card{
+      position: absolute;
+      inset: 0;                        /* top/right/bottom/left: 0 */
+      border: 2px solid var(--contact-blue);
+      border-radius: var(--mr-radius, 12px);
+      padding: 12px;                   /* inner breathing room */
+      background: transparent;
+      display: flex; align-items: center; justify-content: center;
+      box-sizing: border-box;
+      overflow: hidden;                /* prevent scrollbars if fonts/zoom vary */
+    }
+
+    /* Email link styling: one line by default (desktop/tablet) */
+    #contact-email .email-link{
+      color: #c8c8c8;
+      text-decoration: underline;
+      display: inline-block;
+      max-width: 100%;
+      white-space: nowrap;
+    }
+
+    /* Space between message and email row */
+    #contact-email.email-up { margin-top: 18px !important; }
+
+    /* ---------- Responsive: give the email more room on small screens ---------- */
     @media (max-width: 700px){
       .msg-narrow{ width: 90%; }
       #contact-email .email-card{ padding: 10px; }
-      #email-row .email-left{ padding: 10px 12px; } /* keep left/right feel on small screens */
+      #email-row .email-left{ padding: 10px 12px; }
+      /* Rebalance columns so the email column has more width */
+      #contact-email colgroup col:nth-child(1){ width: 38% !important; } /* label */
+      #contact-email colgroup col:nth-child(2){ width: 62% !important; } /* email */
+    }
+
+    @media (max-width: 520px){
+      #contact-email colgroup col:nth-child(1){ width: 32% !important; }
+      #contact-email colgroup col:nth-child(2){ width: 68% !important; }
+    }
+
+    /* On very small phones: allow wrapping at sensible points via <wbr> */
+    @media (max-width: 420px){
+      #contact-email colgroup col:nth-child(1){ width: 28% !important; }
+      #contact-email colgroup col:nth-child(2){ width: 72% !important; }
+      #contact-email .email-card{ padding: 8px; }
+      #contact-email .email-link{
+        white-space: normal;          /* permit wrap */
+        overflow-wrap: anywhere;      /* fallback wrapping */
+        word-break: break-word;       /* legacy fallback */
+      }
     }
   </style>
 
-  <!-- Tiny script: match the right blue rectangle height to the left 'Email' box -->
-  <script>
-    (function(){
-      function syncEmailHeights(){
-        var left = document.querySelector('#email-row .email-left');
-        var card = document.querySelector('#contact-email .email-card');
-        if (!left || !card) return;
-        // Reset before measuring (in case of repeated calls / orientation changes)
-        card.style.minHeight = '';
-        // Match the visible height of the left cell's content box
-        var h = left.offsetHeight;
-        // Include a tiny safety floor in case fonts render oddly
-        if (h && h > 0) card.style.minHeight = h + 'px';
-      }
-      window.addEventListener('load', syncEmailHeights);
-      window.addEventListener('resize', syncEmailHeights);
-      // If fonts load after onload (variable fonts), try again soon after
-      setTimeout(syncEmailHeights, 300);
-    })();
-  </script>
-
+  <!-- No JS needed for height syncing; CSS fills the right cell perfectly -->
 </body>
 </html>
