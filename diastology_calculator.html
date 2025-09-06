@@ -17,7 +17,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" type="text/css" href="./style3.css">
-  <link rel="icon" type="image/svg+xml" href="echocardio-heart.svg">
+  <link rel="icon" type="image/png" href="BSW_Thumbnail.png"/>
 </head>
 
 <body>
@@ -557,17 +557,60 @@
             }
           }
 
-          // ===== Grading logic (UNCHANGED) =====
+          // ----- helpers to build the improved "reason" text -----
+          function oxfordJoin(arr){
+            if (arr.length === 1) return arr[0];
+            if (arr.length === 2) return `${arr[0]} and ${arr[1]}`;
+            return `${arr.slice(0,-1).join(', ')}, and ${arr[arr.length-1]}`;
+          }
+
+          function makeSupportText({LAVI, LAStrain, PVSD, IVRT}){
+            const items = [];
+            if (!has(LAVI))     items.push("LAVI");
+            if (!has(LAStrain)) items.push("LA strain");
+            if (!has(PVSD))     items.push("pulmonary vein S/D");
+            if (!has(IVRT))     items.push("IVRT");
+            if (!items.length) return "";
+            return `Supportive options: ${oxfordJoin(items)}.`;
+          }
+
+          function makePrecisionNote(sepEprime, latEprime, avgEe, sepEe, latEe){
+            const usedAnyEe = [avgEe, sepEe, latEe].some(has);
+            const haveSep   = has(sepEprime);
+            const haveLat   = has(latEprime);
+            if (!usedAnyEe) return "";                  // only nudge when they used E/e′
+            if (!haveSep && !haveLat) return "For even greater precision, add individual septal/lateral e′ values.";
+            if (!haveSep && haveLat)  return "For even greater precision, add septal e′ value.";
+            if (haveSep && !haveLat)  return "For even greater precision, add lateral e′ value.";
+            return ""; // both present → no note
+          }
+
+          function insertNoteBeforeSupport(baseText, note, supportText){
+            if (!note) return baseText;
+            const txt = (baseText || "").trim();
+            const sentence = (s) => s.endsWith('.') ? s + ' ' : s + '. ';
+            if (supportText){
+              const idx = txt.indexOf(supportText);
+              if (idx !== -1){
+                const before = txt.slice(0, idx).trimEnd();
+                const after  = txt.slice(idx);
+                return sentence(before) + note + ' ' + after;
+              }
+            }
+            return sentence(txt) + note;
+          }
+
+          // ===== Grading logic (unchanged decisions; refined messaging) =====
           function gradeDiastolic({
             sepEprime, latEprime, EoverA, avgEe, sepEe, latEe, TRv, PASP, LAVI, LAStrain, PVSD, IVRT
           } = {}) {
-            const SUPPORT = "Supportive options: LAVI, LA strain, pulmonary vein S/D, and IVRT.";
 
             const hasNum = (v) => typeof v === 'number' && !Number.isNaN(v);
             const any = (...xs) => xs.some(hasNum);
 
             const haveAnyEe = hasNum(avgEe) || hasNum(sepEe) || hasNum(latEe);
             const haveAnyTRPASP = hasNum(TRv) || hasNum(PASP);
+            const haveAnyEprime = any(sepEprime, latEprime);
 
             function missingPriorityList(){
               const list = [];
@@ -613,7 +656,6 @@
             const step2_incEe = incEe_abn;
             const step2Count = [step2_EA_extreme, step2_LARS, step2_LAVI, step2_incEe].filter(Boolean).length;
 
-            const haveAnyEprime = any(sepEprime, latEprime);
             const dysfunctionPresent =
               (redE_abn && step2Count >= 1) ||
               (haveAnyEprime && !redE_abn && step2Count >= 2) ||
@@ -621,17 +663,32 @@
 
             const primaryCount = [redE_abn, incEe_abn, incTRorPASP_abn].filter(Boolean).length;
 
+            // dynamic supportive list for this call
+            const SUPPORT = makeSupportText({LAVI, LAStrain, PVSD, IVRT});
+
+            // precision note candidate (only if using E/e′ and missing e′ velocities)
+            const precisionNote = makePrecisionNote(sepEprime, latEprime, avgEe, sepEe, latEe);
+
+            // --- Helper: return paths that rely on E/A-only grading (suppress precision note here) ---
             function gradeFromEA() {
               if (hasNum(EoverA)) {
-                if (EoverA >= 2) return { grade: "Grade III", reason: "Increased LAP with restrictive filling (E/A ≥ 2)." };
-                return { grade: "Grade II", reason: "Increased LAP without restrictive filling (E/A < 2)." };
+                if (EoverA >= 2) {
+                  const base = "Increased LAP with restrictive filling (E/A ≥ 2).";
+                  return { grade: "Grade III", reason: base };          // note suppressed
+                }
+                const base = "Increased LAP without restrictive filling (E/A < 2).";
+                return { grade: "Grade II", reason: base };              // note suppressed
               }
-              return { grade: "Abnormal (Ungraded)", reason: "Increased LAP likely; add E/A to distinguish Grade II vs III." };
+              const base = "Increased LAP likely; add E/A to distinguish Grade II vs III.";
+              return { grade: "Abnormal (Ungraded)", reason: base };     // note suppressed
             }
 
             if (providedCount < 2) {
               const cta = priorityCTA("Start with priority primaries:");
-              return { grade: "Indeterminate", reason: (cta ? `${cta} ${SUPPORT}` : `Too few inputs to analyze. ${SUPPORT}`) };
+              const base = cta
+                ? (SUPPORT ? `${cta} ${SUPPORT}` : `${cta}`)
+                : (SUPPORT ? `Too few inputs to analyze. ${SUPPORT}` : `Too few inputs to analyze.`);
+              return { grade: "Indeterminate", reason: insertNoteBeforeSupport(base, precisionNote, SUPPORT) };
             }
 
             if (primaryCount === 3) return gradeFromEA();
@@ -639,7 +696,10 @@
             const noEvidenceElevatedLAP = !incEe_abn && !incTRorPASP_abn;
             if (redE_abn && hasNum(EoverA) && EoverA <= 0.8 && noEvidenceElevatedLAP) {
               const cta = priorityCTA("To confirm normal LAP:");
-              return { grade: "Grade I", reason: cta ? `Reduced e′ with E/A ≤ 0.8 and no evidence of elevated LAP. ${cta} ${SUPPORT}` : "Reduced e′ with E/A ≤ 0.8 and no evidence of elevated LAP." };
+              const base = cta
+                ? (SUPPORT ? `Reduced e′ with E/A ≤ 0.8 and no evidence of elevated LAP. ${cta} ${SUPPORT}` : `Reduced e′ with E/A ≤ 0.8 and no evidence of elevated LAP. ${cta}`)
+                : (SUPPORT ? `Reduced e′ with E/A ≤ 0.8 and no evidence of elevated LAP. ${SUPPORT}` : `Reduced e′ with E/A ≤ 0.8 and no evidence of elevated LAP.`);
+              return { grade: "Grade I", reason: insertNoteBeforeSupport(base, precisionNote, SUPPORT) };
             }
 
             if (primaryCount === 1 || primaryCount === 2) {
@@ -647,24 +707,43 @@
 
               if (dysfunctionPresent) {
                 const cta = priorityCTA("To classify and assess LAP:");
-                return { grade: "Abnormal (Ungraded)", reason: (cta ? `Diastolic dysfunction present by Figure 2; LAP not confirmed. ${cta} If LAP increases, use E/A to grade. ${SUPPORT}` : `Diastolic dysfunction present by Figure 2; LAP not confirmed. If LAP increases, use E/A to grade. ${SUPPORT}`) };
+                // Remove "If LAP increases..." if E/A already present
+                const lapLine = hasNum(EoverA) ? "" : " If LAP increases, use E/A to grade.";
+                let baseCore = `Diastolic dysfunction present by Figure 2; LAP not confirmed.`;
+                if (cta) baseCore += ` ${cta}`;
+                const base = SUPPORT ? `${baseCore}.${lapLine} ${SUPPORT}`.replace('..', '.') : `${baseCore}.${lapLine}`.replace('..','.');
+                // SUPPRESS precision note here (e′ won’t change LAP classification)
+                return { grade: "Abnormal (Ungraded)", reason: base.trim() };
               }
 
               const cta = priorityCTA();
-              return { grade: "Normal", reason: (cta ? `Insufficient evidence for elevated LAP with current inputs. ${cta} ${SUPPORT}` : `Insufficient evidence for elevated LAP with current inputs. ${SUPPORT}`) };
+              const base = cta
+                ? (SUPPORT ? `Insufficient evidence for elevated LAP with current inputs. ${cta} ${SUPPORT}` : `Insufficient evidence for elevated LAP with current inputs. ${cta}`)
+                : (SUPPORT ? `Insufficient evidence for elevated LAP with current inputs. ${SUPPORT}` : `Insufficient evidence for elevated LAP with current inputs.`);
+              return { grade: "Normal", reason: insertNoteBeforeSupport(base, precisionNote, SUPPORT) };
             }
 
             if (primaryCount === 0) {
               if (dysfunctionPresent) {
                 const cta = priorityCTA("To assess LAP and grade:");
-                return { grade: "Abnormal (Ungraded)", reason: (cta ? `Diastolic dysfunction present by Figure 2; primary LAP markers not increased. ${cta} ${SUPPORT}` : `Diastolic dysfunction present by Figure 2; primary LAP markers not increased. ${SUPPORT}`) };
+                const base = cta
+                  ? (SUPPORT ? `Diastolic dysfunction present by Figure 2; primary LAP markers not increased. ${cta} ${SUPPORT}` : `Diastolic dysfunction present by Figure 2; primary LAP markers not increased. ${cta}`)
+                  : (SUPPORT ? `Diastolic dysfunction present by Figure 2; primary LAP markers not increased. ${SUPPORT}` : `Diastolic dysfunction present by Figure 2; primary LAP markers not increased.`);
+                // SUPPRESS precision note here as well (e′ velocities won't confirm LAP)
+                return { grade: "Abnormal (Ungraded)", reason: base };
               }
               const cta = priorityCTA("If concern persists:");
-              return { grade: "Normal", reason: (cta ? `Criteria for diastolic dysfunction not met. ${cta} ${SUPPORT}` : "Criteria for diastolic dysfunction not met.") };
+              const base = cta
+                ? (SUPPORT ? `Criteria for diastolic dysfunction not met. ${cta} ${SUPPORT}` : `Criteria for diastolic dysfunction not met. ${cta}`)
+                : (SUPPORT ? `Criteria for diastolic dysfunction not met. ${SUPPORT}` : `Criteria for diastolic dysfunction not met.`);
+              return { grade: "Normal", reason: insertNoteBeforeSupport(base, precisionNote, SUPPORT) };
             }
 
             const cta = priorityCTA("Add priority primaries:");
-            return { grade: "Indeterminate", reason: (cta ? `${cta} ${SUPPORT}` : `Unable to classify with current inputs. ${SUPPORT}`) };
+            const base = cta
+              ? (SUPPORT ? `${cta} ${SUPPORT}` : `${cta}`)
+              : (SUPPORT ? `Unable to classify with current inputs. ${SUPPORT}` : `Unable to classify with current inputs.`);
+            return { grade: "Indeterminate", reason: insertNoteBeforeSupport(base, precisionNote, SUPPORT) };
           }
 
           function animateFlash(el){
