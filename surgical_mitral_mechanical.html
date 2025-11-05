@@ -33,9 +33,23 @@
   </nav>
 
   <div class="zone navigation grid-wrapper2">
-    <div class="box zone grow"><a href="mechanical_abbott_st_jude_standard_mv.html" class="words">Abbott - St. Jude (Standard)</a></div>
-    <div class="box zone grow"><a href="mechanical_livanova_carbomedics_standard_mv.html" class="words">LivaNova - Carbomedics (Standard)</a></div>
+
+
+    <div class="box zone grow"><a href="mechanical_livanova_carbomedics_standard_mv.html" class="words"><span class="main-label">Carbomedics</span>
+    <span class="sub-label">Standard</span></a></div>
+
     <div class="box zone grow"><a href="mechanical_on_x_mv.html" class="words">On-x</a></div>
+
+
+    <!-- This has a sublabel inside of the green button -->
+    <div class="box zone grow"><a href="mechanical_abbott_st_jude_standard_mv.html" class="words"><span class="main-label">St. Jude</span>
+    <span class="sub-label">Standard</span></a></div>
+
+    
+
+
+    
+    
     
     
     
@@ -172,6 +186,30 @@
         font-size: clamp(.86rem, 1.0vw, 1.06rem) !important;
       }
     }
+
+    /* Two-line button label */
+.words {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  text-decoration: none;
+  line-height: 1.15;
+  font-size: clamp(.86rem, 1vw, 1.06rem); /* match other buttons */
+  font-weight: 600;                       /* same boldness as peers */
+}
+
+.words .main-label {
+  font: inherit; /* same size and weight as .words */
+}
+
+.words .sub-label {
+  font-weight: 400;        /* lighter */
+  font-size: 0.8em;        /* relative to main label */
+  opacity: 0.85;           /* slight fade */
+  margin-top: 1px;
+}
+
   </style>
 
 </body>

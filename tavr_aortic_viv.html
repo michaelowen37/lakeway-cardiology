@@ -33,10 +33,11 @@
     </div>
 
   <div class="zone navigation grid-wrapper2">
-    <div class="box zone grow"><a href="viv_tavr_edwards_sapien_xt.html" class="words">Edwards - Sapien XT</a></div>
-    <div class="box zone grow"><a href="viv_tavr_edwards_sapien_3.html" class="words">Edwards - Sapien 3</a></div>
-    <div class="box zone grow"><a href="viv_tavr_medtronic_corevalve.html" class="words">Medtronic - Corevalve</a></div>
-    <div class="box zone grow"><a href="viv_tavr_medtronic_evolut.html" class="words">Medtronic - Evolut R</a></div>
+    <div class="box zone grow"><a href="viv_tavr_medtronic_corevalve.html" class="words">Corevalve</a></div>
+    <div class="box zone grow"><a href="viv_tavr_medtronic_evolut.html" class="words">Evolut R</a></div>
+    <div class="box zone grow"><a href="viv_tavr_edwards_sapien_xt.html" class="words">Sapien XT</a></div>
+    <div class="box zone grow"><a href="viv_tavr_edwards_sapien_3.html" class="words">Sapien 3</a></div>
+    
     <!-- <div class="box zone grow"><a href=".html" class="words"></a></div> -->
     
   </div>
@@ -172,6 +173,30 @@
         font-size: clamp(.86rem, 1.0vw, 1.06rem) !important;
       }
     }
+
+    /* Two-line button label */
+.words {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  text-decoration: none;
+  line-height: 1.15;
+  font-size: clamp(.86rem, 1vw, 1.06rem); /* match other buttons */
+  font-weight: 600;                       /* same boldness as peers */
+}
+
+.words .main-label {
+  font: inherit; /* same size and weight as .words */
+}
+
+.words .sub-label {
+  font-weight: 400;        /* lighter */
+  font-size: 0.8em;        /* relative to main label */
+  opacity: 0.85;           /* slight fade */
+  margin-top: 1px;
+}
+
   </style>
 
 </body>

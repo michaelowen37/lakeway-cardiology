@@ -33,15 +33,35 @@
   </nav>
 
   <div class="zone navigation grid-wrapper2">
-    <div class="box zone grow"><a href="bioprosthetic_abbott_epic.html" class="words">Abbott - Epic</a></div>
-    <div class="box zone grow"><a href="bioprosthetic_abbott_trifecta.html" class="words">Abbott - Trifecta</a></div>
-    <div class="box zone grow"><a href="bioprosthetic_arbor_surgical_trilogy.html" class="words">Arbor Surgical - Trilogy</a></div>
-    <div class="box zone grow"><a href="bioprosthetic_edwards_inspiris_resilia.html" class="words">Edwards - Inspiris Resilia</a></div>
-    <div class="box zone grow"><a href="bioprosthetic_edwards_intuity.html" class="words">Edwards - Intuity</a></div>
-    <div class="box zone grow"><a href="bioprosthetic_baxter_perimount.html" class="words">Edwards - Perimount</a></div>
-    <div class="box zone grow"><a href="bioprosthetic_livanova_perceval.html" class="words">LivaNova - Perceval</a></div>
-    <div class="box zone grow"><a href="bioprosthetic_medtronic_avalus.html" class="words">Medtronic - Avalus</a></div>
-    <div class="box zone grow"><a href="bioprosthetic_medtronic_mosaic.html" class="words">Medtronic - Mosaic</a></div>
+
+
+
+    <div class="box zone grow"><a href="bioprosthetic_medtronic_avalus.html" class="words">Avalus</a></div>
+
+
+    <div class="box zone grow"><a href="bioprosthetic_st_jude_biocor.html" class="words"><span class="main-label">Biocor</span>
+    <span class="sub-label">Stented</span></a></div>
+
+
+    <div class="box zone grow"><a href="bioprosthetic_st_jude_biocor_stentless.html" class="words"><span class="main-label">Biocor</span>
+    <span class="sub-label">Stentless</span></a></div>
+
+  
+
+
+    <div class="box zone grow"><a href="bioprosthetic_abbott_epic.html" class="words">Epic</a></div>
+    <div class="box zone grow"><a href="bioprosthetic_edwards_inspiris_resilia.html" class="words">Inspiris Resilia</a></div>
+    <div class="box zone grow"><a href="bioprosthetic_edwards_intuity.html" class="words">Intuity</a></div>
+    <div class="box zone grow"><a href="bioprosthetic_medtronic_mosaic.html" class="words">Mosaic</a></div>
+    <div class="box zone grow"><a href="bioprosthetic_livanova_perceval.html" class="words">Perceval</a></div>
+    <div class="box zone grow"><a href="bioprosthetic_baxter_perimount.html" class="words">Perimount</a></div>
+    <div class="box zone grow"><a href="bioprosthetic_abbott_trifecta.html" class="words">Trifecta</a></div>
+    <div class="box zone grow"><a href="bioprosthetic_arbor_surgical_trilogy.html" class="words">Trilogy</a></div>
+    
+
+
+
+
     
   </div>
 
@@ -176,6 +196,30 @@
         font-size: clamp(.86rem, 1.0vw, 1.06rem) !important;
       }
     }
+
+    /* Two-line button label */
+.words {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  text-decoration: none;
+  line-height: 1.15;
+  font-size: clamp(.86rem, 1vw, 1.06rem); /* match other buttons */
+  font-weight: 600;                       /* same boldness as peers */
+}
+
+.words .main-label {
+  font: inherit; /* same size and weight as .words */
+}
+
+.words .sub-label {
+  font-weight: 400;        /* lighter */
+  font-size: 0.8em;        /* relative to main label */
+  opacity: 0.85;           /* slight fade */
+  margin-top: 1px;
+}
+
   </style>
 
 </body>
