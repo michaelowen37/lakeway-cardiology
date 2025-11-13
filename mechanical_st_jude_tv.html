@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>Homograft PV</title>
+  <title>St. Jude TV</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" type="text/css" href="./style3.css">
@@ -14,13 +14,13 @@
     <ul class="main-nav">
       <li><a class="top-nav" href="index.html">Home</a></li>
       <!-- <li class="push"><a class="top-nav" href="about.html">About Us</a></li> -->
-      <li class="push"><a class="top-nav" href="surgical_pulmonic.html">Back</a></li>
+      <li class="push"><a class="top-nav" href="surgical_tricuspid.html">Back</a></li>
     </ul>
 
     <!-- Title only (no subtitle) -->
     <div class="title-stack">
-      <div class="container zone body dg-title">Pulmonic Valve</div>
-      <!-- <div style="text-align:center;"><em>Bioprosthetic:</em></div> -->
+      <div class="container zone body dg-title">Tricuspid Valve</div>
+      <div style="text-align:center;"><em>Mechanical:</em></div>
 
     </div>
 
@@ -47,7 +47,14 @@
         <div class="dg-headerwrap">
           <div class="dg-header dg-singlecol" role="row">
             <div class="dg-hcell" role="columnheader">
-              <div class="dg-wrap">Homograft (Donor)</div>
+
+
+              <div class="dg-wrap header-title">
+              <div>St. Jude - Standard</div>
+  
+        </div>
+
+              
 
 
             </div>
@@ -79,13 +86,29 @@
             </colgroup>
             <tbody>
               <tr>
-                <th scope="row" class="dg-col1"><div class="dg-wrap">-</div></th>
-                <td class="dg-c2"><div class="dg-wrap">-&nbsp;<span class="dg-nb">cm<sup>2</span></div></td>
-                <td class="dg-c3"><div class="dg-wrap"><15 <span class="dg-nb">mmHg</span></div></td>
-                <td class="dg-c4"><div class="dg-wrap"><25 <span class="dg-nb">mmHg</span></div></td>
+                <th scope="row" class="dg-col1"><div class="dg-wrap">27 mm</div></th>
+                <td class="dg-c2"><div class="dg-wrap">1.9 - 3.18&nbsp;<span class="dg-nb">cm<sup>2</span></div></td>
+                <td class="dg-c3"><div class="dg-wrap">1.13 - 3.67 <span class="dg-nb">mmHg</span></div></td>
+                <td class="dg-c4"><div class="dg-wrap">- <span class="dg-nb">mmHg</span></div></td>
               </tr>
-              
-              
+              <tr>
+                <th scope="row" class="dg-col1"><div class="dg-wrap">29 mm</div></th>
+                <td class="dg-c2"><div class="dg-wrap">1.87 - 2.53&nbsp;<span class="dg-nb">cm<sup>2</span></div></td>
+                <td class="dg-c3"><div class="dg-wrap">1.47 - 3.73 <span class="dg-nb">mmHg</span></div></td>
+                <td class="dg-c4"><div class="dg-wrap">- <span class="dg-nb">mmHg</span></div></td>
+              </tr>
+              <tr>
+                <th scope="row" class="dg-col1"><div class="dg-wrap">31 mm</div></th>
+                <td class="dg-c2"><div class="dg-wrap">2.04 - 2.94&nbsp;<span class="dg-nb">cm<sup>2</span></div></td>
+                <td class="dg-c3"><div class="dg-wrap">2.09 - 4.51 <span class="dg-nb">mmHg</span></div></td>
+                <td class="dg-c4"><div class="dg-wrap">- <span class="dg-nb">mmHg</span></div></td>
+              </tr>
+              <tr>
+                <th scope="row" class="dg-col1"><div class="dg-wrap">33 mm</div></th>
+                <td class="dg-c2"><div class="dg-wrap">1.87 - 3.05&nbsp;<span class="dg-nb">cm<sup>2</span></div></td>
+                <td class="dg-c3"><div class="dg-wrap">1.96 - 4.44 <span class="dg-nb">mmHg</span></div></td>
+                <td class="dg-c4"><div class="dg-wrap">- <span class="dg-nb">mmHg</span></div></td>
+              </tr>
               
             </tbody>
           </table>
@@ -221,6 +244,53 @@
   padding: 20px 12px !important;
 }
 
+/* Stack Magna Ease + note vertically and center them */
+.header-title {
+  display: flex;
+  /* Remove scrollbars and line clamps for the Magna Ease title block */
+.header-title,
+.header-title * {
+  display: block !important;
+  overflow: visible !important;
+  -webkit-line-clamp: unset !important;
+  -webkit-box-orient: initial !important;
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+.header-title::-webkit-scrollbar,
+.header-title *::-webkit-scrollbar {
+  display: none !important;
+}
+
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  line-height: 1.2;
+}
+
+.header-title .subnote {
+  font-size: 0.85em;   /* slightly smaller */
+  font-weight: 400;    /* lighter */
+  margin-top: 4px;     /* small gap below title */
+}
+
+/* Remove scrollbars and line clamps for the Magna Ease title block */
+.header-title,
+.header-title * {
+  display: block !important;
+  overflow: visible !important;
+  -webkit-line-clamp: unset !important;
+  -webkit-box-orient: initial !important;
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+.header-title::-webkit-scrollbar,
+.header-title *::-webkit-scrollbar {
+  display: none !important;
+}
 
   </style>
 
