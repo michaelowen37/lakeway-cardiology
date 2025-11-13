@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>Surgical AoV</title>
+  <title>Mechanical AoV</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" type="text/css" href="./style3.css">
@@ -33,10 +33,20 @@
   </nav>
 
   <div class="zone navigation grid-wrapper2">
-    <div class="box zone grow"><a href="mechanical_abbott_st_jude_standard_aov.html" class="words">Abbott - St. Jude Standard</a></div>
-    <div class="box zone grow"><a href="mechanical_abbott_st_jude_regent_aov.html" class="words">Abbott - St. Jude Regent</a></div>
-    <div class="box zone grow"><a href="mechanical_livanova_bicarbon_aov.html" class="words">LivaNova - Bicarbon</a></div>
-    <div class="box zone grow"><a href="mechanical_medtronic_open_pivot_aov.html" class="words">Medtronic - Open Pivot</a></div>
+    
+
+    <div class="box zone grow"><a href="mechanical_abbott_st_jude_standard_aov.html" class="words"><span class="main-label">St. Jude</span>
+    <span class="sub-label">Standard</span></a></div>
+
+
+    
+
+    <div class="box zone grow"><a href="mechanical_abbott_st_jude_regent_aov.html" class="words"><span class="main-label">St. Jude</span>
+    <span class="sub-label">Regent</span></a></div>
+
+
+    <div class="box zone grow"><a href="mechanical_livanova_bicarbon_aov.html" class="words">Bicarbon</a></div>
+    <div class="box zone grow"><a href="mechanical_medtronic_open_pivot_aov.html" class="words">Open Pivot</a></div>
     <div class="box zone grow"><a href="mechanical_on_x_aov.html" class="words">On-X</a></div>
     
     
@@ -173,6 +183,30 @@
         font-size: clamp(.86rem, 1.0vw, 1.06rem) !important;
       }
     }
+
+    /* Two-line button label */
+.words {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  text-decoration: none;
+  line-height: 1.15;
+  font-size: clamp(.86rem, 1vw, 1.06rem); /* match other buttons */
+  font-weight: 600;                       /* same boldness as peers */
+}
+
+.words .main-label {
+  font: inherit; /* same size and weight as .words */
+}
+
+.words .sub-label {
+  font-weight: 400;        /* lighter */
+  font-size: 0.8em;        /* relative to main label */
+  opacity: 0.85;           /* slight fade */
+  margin-top: 1px;
+}
+
   </style>
 
 </body>

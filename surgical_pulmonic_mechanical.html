@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>Surgical PV</title>
+  <title>Mechanical PV</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" type="text/css" href="./style3.css">
@@ -35,8 +35,8 @@
 
   <div class="zone navigation grid-wrapper2">
     <div class="box zone grow"><a href=".html" class="words">TBD</a></div>
-    <div class="box zone grow"><a href=".html" class="words">TBD</a></div>
-    <div class="box zone grow"><a href=".html" class="words">TBD</a></div>
+    <!-- <div class="box zone grow"><a href=".html" class="words">TBD</a></div> -->
+    <!-- <div class="box zone grow"><a href=".html" class="words">TBD</a></div> -->
     
     
     
@@ -173,6 +173,30 @@
         font-size: clamp(.86rem, 1.0vw, 1.06rem) !important;
       }
     }
+
+    /* Two-line button label */
+.words {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  text-decoration: none;
+  line-height: 1.15;
+  font-size: clamp(.86rem, 1vw, 1.06rem); /* match other buttons */
+  font-weight: 600;                       /* same boldness as peers */
+}
+
+.words .main-label {
+  font: inherit; /* same size and weight as .words */
+}
+
+.words .sub-label {
+  font-weight: 400;        /* lighter */
+  font-size: 0.8em;        /* relative to main label */
+  opacity: 0.85;           /* slight fade */
+  margin-top: 1px;
+}
+
   </style>
 
 </body>
