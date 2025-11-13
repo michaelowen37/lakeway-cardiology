@@ -206,6 +206,22 @@
   margin-top: 1px;
 }
 
+/* --- fix weird shading on last letter of 2-line buttons on small screens --- */
+@media (max-width: 700px) {
+  /* Make sure the grid buttons themselves are not scroll containers */
+  .grid-wrapper2 .box {
+    overflow: visible !important;
+  }
+
+  /* Pull the text slightly away from the right edge and ensure clean wrapping */
+  .grid-wrapper2 .box .words {
+    padding-right: 0.4em;      /* tiny nudge so last letter avoids the scrollbar zone */
+    white-space: normal;       /* allow wrapping cleanly */
+    overflow: visible;         /* nothing clipped */
+    text-overflow: clip;       /* no ellipsis weirdness */
+  }
+}
+
   </style>
 
 </body>
